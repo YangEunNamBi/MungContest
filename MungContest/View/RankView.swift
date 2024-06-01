@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RankView: View {
+    
     var body: some View {
         
         VStack(spacing: 0){
@@ -21,10 +22,8 @@ struct RankView: View {
                             .bold()
                             .font(.system(size: 16))
                         
-                        
                         Spacer()
                     }
-                    
                 }
                 HStack{
                     VStack{
@@ -167,7 +166,7 @@ struct RankView: View {
         .cornerRadius(30)
         
         
-        // List 순위
+        // List 순위.
         VStack{
             Text("Dddadfadfadfadsfa")
         }

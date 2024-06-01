@@ -48,7 +48,7 @@ struct MainView: View {
             }
             
             HStack{
-                Text("원의 멍때리기 대회 ")
+                Text("원의 멍때리기 대회 ") // 나중에 제목 바인딩으로 받음
                     .font(.system(size: 28))
                     .bold()
                 Spacer()
@@ -78,26 +78,11 @@ struct MainView: View {
             
             HStack{
                 if selectedSegment == 0 {
-                     RankView()
+                    // RankView()
                 } else {
                     // RecordView()
                     
                 }
-                //                VStack{
-                //                    Text("왼쪽 뷰")
-                //                }
-                //                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                //                .background(Color.gray)
-                //                .padding(.trailing, 5 )
-                //
-                //
-                //                VStack{
-                //                    Text("오른쪽 뷰")
-                //                }
-                //                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                //                .background(Color.gray)
-                //                .padding(.leading, 5)
-                
             }
             .padding(.top)
             Spacer()
@@ -106,9 +91,14 @@ struct MainView: View {
         .padding(.top, 50)
     }
     
-    // 세팅에서 시간과 분을 바인딩으로 받아서 초로 환산
+    // 프로그레스바 Value : 세팅에서 시간과 분을 바인딩으로 받아서 초로 환산
     private func calculateTotalSeconds() {
            totalSeconds = hour * 60 * 60 + minute * 60
+    }
+    
+    // 남은 시간 Text : 분&초로만 변형
+    private func formatTime(minute: Int, second: Int) -> String {
+        return String(format: "%02d:%02d", minute, second)
     }
 }
 
@@ -119,7 +109,7 @@ struct CustomProgressView: View {
     
     var body: some View {
         HStack {
-            ProgressView(value: time, total: 100) // total도 totalSecondsㄹ
+            ProgressView(value: time, total: 100) // total도 totalSeconds로 변경하기
                 .progressViewStyle(LinearProgressViewStyle())
                 .scaleEffect(CGSize(width: 1.0, height: 3.0))
                 .tint(Color(UIColor(hex: "#FFF7AB")))
@@ -152,6 +142,5 @@ struct MainView_Previews: PreviewProvider {
         MainView()
             .environment(NavigationManager())
             .previewInterfaceOrientation(.landscapeLeft)
-        
     }
 }
