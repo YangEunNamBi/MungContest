@@ -38,12 +38,6 @@ struct MainView: View {
                     .colorMultiply(Color(UIColor(hex: "#FFF7AB")))
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(height: 50)
-                    
-                    if selectedSegment == 0 {
-                        //BView()
-                    } else {
-                        //CView()
-                    }
                 }
                 .frame(width: 200)
             }
@@ -67,9 +61,30 @@ struct MainView: View {
                 .padding(.leading)
             }
            
-           
-           
-            
+            HStack{
+                if selectedSegment == 0 {
+                    // RankView()
+                } else {
+                    // RecordView()
+                    
+                }
+//                VStack{
+//                    Text("왼쪽 뷰")
+//                }
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .background(Color.gray)
+//                .padding(.trailing, 5 )
+//                
+//                
+//                VStack{
+//                    Text("오른쪽 뷰")
+//                }
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .background(Color.gray)
+//                .padding(.leading, 5)
+                
+            }
+            .padding(.top)
             Spacer()
         }
         .padding(.horizontal, 50)
@@ -91,22 +106,6 @@ struct CustomProgressView: View {
                 .tint(Color(UIColor(hex: "#FFF7AB")))
         
         }
-    }
-}
-
-// 임시 뷰
-struct BView: View {
-    var body: some View {
-        Text("B View")
-            .font(.largeTitle)
-            .foregroundColor(.blue)
-    }
-}
-struct CView: View {
-    var body: some View {
-        Text("C View")
-            .font(.largeTitle)
-            .foregroundColor(.green)
     }
 }
 
