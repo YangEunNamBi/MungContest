@@ -18,6 +18,7 @@
 		BDFCE3782C0B5D03004FAFAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDFCE3772C0B5D03004FAFAC /* Assets.xcassets */; };
 		BDFCE37B2C0B5D03004FAFAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDFCE37A2C0B5D03004FAFAC /* Preview Assets.xcassets */; };
 		BDFCE3822C0B5D29004FAFAC /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = BDFCE3812C0B5D29004FAFAC /* .gitignore */; };
+		BDFCE3852C0B6D84004FAFAC /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFCE3842C0B6D84004FAFAC /* Player.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		BDFCE3772C0B5D03004FAFAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BDFCE37A2C0B5D03004FAFAC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BDFCE3812C0B5D29004FAFAC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		BDFCE3842C0B6D84004FAFAC /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		BDFCE3722C0B5D02004FAFAC /* MungContest */ = {
 			isa = PBXGroup;
 			children = (
+				BDFCE3832C0B6927004FAFAC /* Model */,
 				510A28A02C0B61D90011A9A3 /* View */,
 				BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */,
 				510A28A12C0B61F70011A9A3 /* NavigationManager.swift */,
@@ -94,6 +97,14 @@
 				BDFCE37A2C0B5D03004FAFAC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BDFCE3832C0B6927004FAFAC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BDFCE3842C0B6D84004FAFAC /* Player.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,6 +185,7 @@
 				510A28A22C0B61F70011A9A3 /* NavigationManager.swift in Sources */,
 				510A28A82C0B629F0011A9A3 /* StandbyView.swift in Sources */,
 				510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */,
+				BDFCE3852C0B6D84004FAFAC /* Player.swift in Sources */,
 				510A28AD2C0B62DA0011A9A3 /* FinishView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
