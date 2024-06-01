@@ -15,8 +15,13 @@ struct MainView: View {
     @State private var selectedSegment = 0
     private let segments = ["chart.bar.fill", "tablecells.badge.ellipsis"]
     
-    // 프로그레스 바
-    @State private var progress: Double = 70
+    // 프로그레스 바 타이머
+    @State private var time: Double = 100 // 임시 값
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // every 1: 1초마다
+    
+    @State private var hour: Int = 0
+    @State private var minute: Int = 0
+    @State private var totalSeconds: Int = 0 // 이걸 나중에 time변수로 넣어야함
     
     var body: some View {
         VStack{
@@ -25,7 +30,7 @@ struct MainView: View {
                     .font(.system(size: 28))
                     .foregroundColor(Color(UIColor(hex: "#FFF7AB")))
                     .bold()
-                    
+                
                 Spacer()
                 
                 HStack{
@@ -43,7 +48,7 @@ struct MainView: View {
             }
             
             HStack{
-                Text("원의 멍때리기 대회 ")
+                Text("원의 멍때리기 대회 ") // 나중에 제목 바인딩으로 받음
                     .font(.system(size: 28))
                     .bold()
                 Spacer()
@@ -51,7 +56,17 @@ struct MainView: View {
             }
             
             HStack{
-                CustomProgressView(progress: progress)
+                CustomProgressView(time: time)
+                    .onReceive(timer) { _ in
+                        if time > 0 { // 설정한 시간이 0초 이상 남았을경우 감소
+                            time -= 1
+                        } else {
+                            
+                            // 0초일 경우 게임 종료
+                            
+                        }
+                    }
+                
                 HStack{
                     Image(systemName: "timer")
                     Text("-29:30")
@@ -60,7 +75,7 @@ struct MainView: View {
                 }
                 .padding(.leading)
             }
-           
+            
             HStack{
                 if selectedSegment == 0 {
                     // RankView()
@@ -68,43 +83,36 @@ struct MainView: View {
                     // RecordView()
                     
                 }
-//                VStack{
-//                    Text("왼쪽 뷰")
-//                }
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(Color.gray)
-//                .padding(.trailing, 5 )
-//                
-//                
-//                VStack{
-//                    Text("오른쪽 뷰")
-//                }
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(Color.gray)
-//                .padding(.leading, 5)
-                
             }
             .padding(.top)
             Spacer()
         }
         .padding(.horizontal, 50)
         .padding(.top, 50)
-        
+    }
+    
+    // 프로그레스바 Value : 세팅에서 시간과 분을 바인딩으로 받아서 초로 환산
+    private func calculateTotalSeconds() {
+           totalSeconds = hour * 60 * 60 + minute * 60
+    }
+    
+    // 남은 시간 Text : 분&초로만 변형
+    private func formatTime(minute: Int, second: Int) -> String {
+        return String(format: "%02d:%02d", minute, second)
     }
 }
 
 // ProgressBar
 struct CustomProgressView: View {
     
-    var progress: Double
+    var time: Double
     
     var body: some View {
         HStack {
-            ProgressView(value: progress, total: 100)
+            ProgressView(value: time, total: 100) // total도 totalSeconds로 변경하기
                 .progressViewStyle(LinearProgressViewStyle())
                 .scaleEffect(CGSize(width: 1.0, height: 3.0))
                 .tint(Color(UIColor(hex: "#FFF7AB")))
-        
         }
     }
 }
