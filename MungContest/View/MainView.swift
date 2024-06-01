@@ -7,14 +7,16 @@
 
 import SwiftUI
 
-
 struct MainView: View {
     
     @Environment(NavigationManager.self) var navigationManager
     
+    // MainView 세그먼트 컨트롤
     @State private var selectedSegment = 0
     private let segments = ["chart.bar.fill", "tablecells.badge.ellipsis"]
     
+    // 프로그레스 바
+    @State private var progress: Double = 70
     
     var body: some View {
         VStack{
@@ -25,6 +27,7 @@ struct MainView: View {
                     .bold()
                     
                 Spacer()
+                
                 HStack{
                     Picker("SegmentControl", selection: $selectedSegment) {
                         ForEach(0..<segments.count) { index in
@@ -32,8 +35,8 @@ struct MainView: View {
                             
                         }
                     }
+                    .colorMultiply(Color(UIColor(hex: "#FFF7AB")))
                     .pickerStyle(SegmentedPickerStyle())
-                    .padding()
                     .frame(height: 50)
                     
                     if selectedSegment == 0 {
@@ -44,6 +47,7 @@ struct MainView: View {
                 }
                 .frame(width: 200)
             }
+            
             HStack{
                 Text("원의 멍때리기 대회 ")
                     .font(.system(size: 28))
@@ -51,18 +55,46 @@ struct MainView: View {
                 Spacer()
                 
             }
-            Spacer()
+            
+            HStack{
+                CustomProgressView(progress: progress)
+                HStack{
+                    Image(systemName: "timer")
+                    Text("-29:30")
+                        .font(.system(size: 14))
+                        .bold()
+                }
+                .padding(.leading)
+            }
            
+           
+           
+            
+            Spacer()
         }
         .padding(.horizontal, 50)
-        .padding(.top, 64)
-        
-        
+        .padding(.top, 50)
         
     }
 }
 
-// BView 정의
+// ProgressBar
+struct CustomProgressView: View {
+    
+    var progress: Double
+    
+    var body: some View {
+        HStack {
+            ProgressView(value: progress, total: 100)
+                .progressViewStyle(LinearProgressViewStyle())
+                .scaleEffect(CGSize(width: 1.0, height: 3.0))
+                .tint(Color(UIColor(hex: "#FFF7AB")))
+        
+        }
+    }
+}
+
+// 임시 뷰
 struct BView: View {
     var body: some View {
         Text("B View")
@@ -70,8 +102,6 @@ struct BView: View {
             .foregroundColor(.blue)
     }
 }
-
-// CView 정의
 struct CView: View {
     var body: some View {
         Text("C View")
