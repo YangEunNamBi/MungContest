@@ -10,9 +10,7 @@ import SwiftUI
 struct RankView: View {
     
     var body: some View {
-        
         VStack(spacing: 0){
-           
             VStack{
                 HStack{
                     HStack{
@@ -34,12 +32,13 @@ struct RankView: View {
                         ZStack {
                             Rectangle()
                                 .frame(width: 100, height: 125)
-                                .cornerRadius(10)
+                                .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
                             
                             Text("2")
                                 .bold()
                                 .font(.system(size: 24))
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
+                                .padding(.bottom, 60)
                         }
                     }
                     VStack{
@@ -50,15 +49,16 @@ struct RankView: View {
                         
                         ZStack {
                             Rectangle()
-                                .frame(width: 100, height: 150)
-                                .cornerRadius(10)
+                                .frame(width: 100, height: 128)
+                                .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
                             
                             Text("1")
                                 .bold()
                                 .font(.system(size: 24))
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
+                                .padding(.bottom, 80)
                             
-                           
+                            
                         }
                         
                     }
@@ -70,38 +70,40 @@ struct RankView: View {
                         ZStack {
                             Rectangle()
                                 .frame(width: 100, height: 100)
-                                .cornerRadius(10)
+                                .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
                             
                             Text("3")
                                 .bold()
                                 .font(.system(size: 24))
-                                .foregroundColor(.white)
-                            
-                           
+                                .foregroundColor(.black)
+                                .padding(.bottom, 40)
                         }
-                        
                     }
                 }
-               
             }
-           
-
+            
+            Rectangle()
+                .frame(width: 400, height: 1)
+                            .foregroundColor(Color(UIColor(hex: "#1C1C1D")))
+                            .background(DashedLine())
+//            Divider()
+//                .frame(width: 100)
+            
             VStack{
                 HStack{
                     VStack{
                         ZStack {
                             Rectangle()
                                 .frame(width: 100, height: 100)
-                                
-                            
-                                .cornerRadius(10)
+                                .clipShape(CustomCorners(corners: [.bottomLeft, .bottomRight], radius: 10))
                             
                             Text("3")
                                 .bold()
                                 .font(.system(size: 24))
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
+                                .padding(.top, 40)
                             
-                           
+                            
                         }
                         
                         Circle()
@@ -114,14 +116,13 @@ struct RankView: View {
                         ZStack {
                             Rectangle()
                                 .frame(width: 100, height: 150)
-                                .cornerRadius(10)
+                                .clipShape(CustomCorners(corners: [.bottomLeft, .bottomRight], radius: 10))
                             
                             Text("1")
                                 .bold()
                                 .font(.system(size: 24))
-                                .foregroundColor(.white)
-                            
-                           
+                                .foregroundColor(.black)
+                                .padding(.top, 80)
                         }
                         
                         Circle()
@@ -135,12 +136,14 @@ struct RankView: View {
                         ZStack {
                             Rectangle()
                                 .frame(width: 100, height: 125)
-                                .cornerRadius(10)
+                                .clipShape(CustomCorners(corners: [.bottomLeft, .bottomRight], radius: 10))
+                            
                             
                             Text("2")
                                 .bold()
                                 .font(.system(size: 24))
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
+                                .padding(.top, 60)
                         }
                         Circle()
                             .frame(width: 60, height: 60)
@@ -158,13 +161,10 @@ struct RankView: View {
                     
                     Spacer()
                 }
-                
-                
             }
         }
         .background(Color(UIColor(hex: "#1C1C1D")))
         .cornerRadius(30)
-        
         
         // List 순위.
         VStack{
@@ -173,7 +173,35 @@ struct RankView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.blue)
         .cornerRadius(30)
-        
+    }
+}
+
+// Rectangle 특정모서리만 둥글게
+struct CustomCorners: Shape {
+    var corners: UIRectCorner
+    var radius: CGFloat
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
+    }
+}
+
+struct DashedLine: View {
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                let width = geometry.size.width
+                path.move(to: CGPoint(x: 0, y: 0))
+                path.addLine(to: CGPoint(x: width, y: 0))
+            }
+            .stroke(style: StrokeStyle(lineWidth: 1, dash: [5, 3]))
+            .foregroundColor(Color.gray)
+        }
     }
 }
 
