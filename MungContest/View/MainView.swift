@@ -15,9 +15,10 @@ struct MainView: View {
     @State private var selectedSegment = 0
     private let segments = ["chart.bar.fill", "tablecells.badge.ellipsis"]
     
-    // 프로그레스 바 타이머
-    @State private var time: Double = 100 // 임시 값
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // every 1: 1초마다
+    // MARK: 프로그레스 바 ( 타이머 )
+    @State private var time: Double = 100 // 전체 게임 시간
+    @State private var initialTime: Double = 100 // 초기 값 저장( time이랑 같은 값이어야함 )
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // every 1 = 1초마다
     
     @State private var hour: Int = 0
     @State private var minute: Int = 0
@@ -56,7 +57,7 @@ struct MainView: View {
             }
             
             HStack{
-                CustomProgressView(time: time)
+                CustomProgressView(time: time, initialTime: initialTime)
                     .onReceive(timer) { _ in
                         if time > 0 { // 설정한 시간이 0초 이상 남았을경우 감소
                             time -= 1
@@ -92,12 +93,12 @@ struct MainView: View {
         .padding(.top, 50)
     }
     
-    // 프로그레스바 Value : 세팅에서 시간과 분을 바인딩으로 받아서 초로 환산
+    // MARK: 프로그레스바 Value : UserDefaults의 시간&분 -> 초로 환산
     private func calculateTotalSeconds() {
            totalSeconds = hour * 60 * 60 + minute * 60
     }
     
-    // 남은 시간 Text : 분&초로만 변형
+    // MARK: 남은 시간 Text - 분&초로만 변형
     private func formatTime(minute: Int, second: Int) -> String {
         return String(format: "%02d:%02d", minute, second)
     }
@@ -107,10 +108,11 @@ struct MainView: View {
 struct CustomProgressView: View {
     
     var time: Double
+    var initialTime: Double
     
     var body: some View {
         HStack {
-            ProgressView(value: time, total: 100) // total도 totalSeconds로 변경하기
+            ProgressView(value: time, total: initialTime)
                 .progressViewStyle(LinearProgressViewStyle())
                 .scaleEffect(CGSize(width: 1.0, height: 3.0))
                 .tint(Color.accentColor)
