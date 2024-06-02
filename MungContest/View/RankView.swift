@@ -35,8 +35,9 @@ struct RankView: View {
                                 .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
                             
                             Text("2")
-                                .bold()
-                                .font(.system(size: 24))
+                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
+                                    .weight(.bold)
+                                )
                                 .foregroundColor(.black)
                                 .padding(.bottom, 60)
                         }
@@ -49,12 +50,13 @@ struct RankView: View {
                         
                         ZStack {
                             Rectangle()
-                                .frame(width: 100, height: 128)
+                                .frame(width: 100, height: 150)
                                 .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
                             
                             Text("1")
-                                .bold()
-                                .font(.system(size: 24))
+                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
+                                    .weight(.bold)
+                                )
                                 .foregroundColor(.black)
                                 .padding(.bottom, 80)
                             
@@ -73,8 +75,9 @@ struct RankView: View {
                                 .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
                             
                             Text("3")
-                                .bold()
-                                .font(.system(size: 24))
+                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
+                                    .weight(.bold)
+                                )
                                 .foregroundColor(.black)
                                 .padding(.bottom, 40)
                         }
@@ -98,8 +101,9 @@ struct RankView: View {
                                 .clipShape(CustomCorners(corners: [.bottomLeft, .bottomRight], radius: 10))
                             
                             Text("3")
-                                .bold()
-                                .font(.system(size: 24))
+                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
+                                    .weight(.bold)
+                                )
                                 .foregroundColor(.black)
                                 .padding(.top, 40)
                             
@@ -119,8 +123,9 @@ struct RankView: View {
                                 .clipShape(CustomCorners(corners: [.bottomLeft, .bottomRight], radius: 10))
                             
                             Text("1")
-                                .bold()
-                                .font(.system(size: 24))
+                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
+                                    .weight(.bold)
+                                )
                                 .foregroundColor(.black)
                                 .padding(.top, 80)
                         }
@@ -140,8 +145,9 @@ struct RankView: View {
                             
                             
                             Text("2")
-                                .bold()
-                                .font(.system(size: 24))
+                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
+                                    .weight(.bold)
+                                )
                                 .foregroundColor(.black)
                                 .padding(.top, 60)
                         }
@@ -164,14 +170,6 @@ struct RankView: View {
             }
         }
         .background(Color(UIColor(hex: "#1C1C1D")))
-        .cornerRadius(30)
-        
-        // List 순위.
-        VStack{
-            Text("Dddadfadfadfadsfa")
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.blue)
         .cornerRadius(30)
     }
 }
