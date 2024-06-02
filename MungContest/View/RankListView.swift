@@ -88,7 +88,7 @@ struct GridCellView: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: 72)
-        .background(Color(UIColor(hex: "#1C1C1D")))
+        .background(Color.mcGray)
         .cornerRadius(20)
         
     }
@@ -100,7 +100,7 @@ struct GridCellView: View {
             Image(systemName: "arrowtriangle.down.fill")
                 .resizable()
                 .frame(width: 12, height: 12)
-                .foregroundColor(.blue)
+                .foregroundColor(Color.mcBlue)
             
             Text("3")
                 .font(.system(size: 12))
@@ -123,10 +123,10 @@ struct GridCellView: View {
                 .foregroundColor(.black)
             
             HStack {
-                Text("128") // 심박수
+                Text("78") // 심박수
                     .bold()
                     .font(.system(size: 20))
-                    .foregroundColor(Color(UIColor(hex: "#FFF7AB")))
+                    .foregroundColor(Color.accentColor)
                 
                 Text("bpm")
                     .font(.system(size: 14))
@@ -143,7 +143,7 @@ struct GridCellView: View {
             
             HStack {
                 Text("20")
-                    .foregroundColor(Color(UIColor(hex: "#FFF7AB")))
+                    .foregroundColor(Color.accentColor)
                     .font(.system(size: 20))
                     .bold()
             }

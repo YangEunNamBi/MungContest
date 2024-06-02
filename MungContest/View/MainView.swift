@@ -76,16 +76,17 @@ struct MainView: View {
                 .padding(.leading)
             }
             
-            HStack{
+            HStack(spacing: 20){
                 if selectedSegment == 0 {
-                    // RankView()
+                     RankView()
+                     RankListView()
                 } else {
                     // RecordView()
                     
                 }
             }
             .padding(.top)
-            Spacer()
+           
         }
         .padding(.horizontal, 50)
         .padding(.top, 50)
@@ -142,5 +143,6 @@ struct MainView_Previews: PreviewProvider {
         MainView()
             .environment(NavigationManager())
             .previewInterfaceOrientation(.landscapeLeft)
+            .preferredColorScheme(.dark)
     }
 }
