@@ -28,7 +28,7 @@ struct MungContestApp: App {
         WindowGroup {
             ContentView()
                 .modelContainer(modelContainer)
-                .preferredColorScheme(.dark)
+                .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
         }
     }
 }
