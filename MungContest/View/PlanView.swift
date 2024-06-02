@@ -21,19 +21,33 @@ struct PlanView: View {
                 .padding(.vertical, 20)
                 .background(
                     RoundedRectangle(cornerRadius: 40)
-                        .stroke(Color.gray, lineWidth: 1)
+                        .fill(Color.mcGray)
                 )
                 .padding(.horizontal, 50)
             
             HStack {
                 Group {
                     VStack {
-                        Text("대회 시간")
+                        HStack {
+                            Text("대회 시간")
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding(24)
+                            Spacer()
+                        }
+                        Spacer()
+                        
                     }
-                    .padding(.horizontal, 20)
+                    .frame(width: 338, height: 360)
+                            .background(Color.mcGray)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.horizontal, 20)
                     
                     VStack {
                         Text("측정 횟수")
+                            .font(.system(size: 20))
+                            .bold()
+                            .padding(24)
                         Button {
                             incrementCount()
                         } label: {
@@ -49,10 +63,20 @@ struct PlanView: View {
                         }
                         
                     }
-                    .padding(.horizontal, 20)
+                    .frame(width: 338, height: 360)
+                            .background(Color.mcGray)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.horizontal, 20)
                     
                     VStack {
-                        Text("랜덤 여부")
+                        HStack {
+                            Text("랜덤 여부")
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding(24)
+                            Spacer()
+                        }
+                        
                         HStack {
                             Button {
                                 setCircle()
@@ -68,10 +92,15 @@ struct PlanView: View {
                             }
                             .opacity(isRandom ? 0 : 1)
                         }
+                        
+                        Spacer()
                     }
-                    .padding(.horizontal, 20)
-                    .background()
+                    .frame(width: 338, height: 360)
+                            .background(Color.mcGray)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                            .padding(.horizontal, 20)
                 }
+                .padding(.vertical, 40)
                 
             }
             .padding(.horizontal, 10)
@@ -84,10 +113,29 @@ struct PlanView: View {
                 }
             }
             
-            // 다음으로 버튼
-            Button("대기 화면으로") {
+            //MARK: - 대기 화면으로
+            Button {
                 navigationManager.push(to: .standby)
+            } label: {
+                HStack {
+                    Text("다음으로")
+                        .font(.system(size: 24))
+                        .bold()
+                        .foregroundColor(Color.black)
+                    
+                    Image(systemName: "arrowtriangle.right.fill")
+                        .resizable()
+                        .foregroundColor(Color.black)
+                        .frame(width: 22, height: 22)
+                }
+                .padding(.vertical, 14)
+                .padding(.horizontal, 30)
+                .background(Color.accentColor)
+                .cornerRadius(25)
+                
             }
+            .buttonStyle(PlainButtonStyle())
+            .padding(.horizontal, 50)
         }
     }
     
