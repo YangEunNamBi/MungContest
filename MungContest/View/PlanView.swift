@@ -10,6 +10,8 @@ import SwiftUI
 struct PlanView: View {
     @Environment(NavigationManager.self) var navigationManager
     @State private var title: String = UserDefaults.standard.contestTitle
+    @State private var measurementCount: Int = UserDefaults.standard.integer(forKey: "measurementCount")
+    @State private var isRandom: Bool = UserDefaults.standard.bool(forKey: "isRandom")
     
     var body: some View {
         VStack {
@@ -28,30 +30,57 @@ struct PlanView: View {
                     VStack {
                         Text("대회 시간")
                     }
+                    .padding(.horizontal, 20)
+                    
                     VStack {
                         Text("측정 횟수")
-                        Image(systemName: "chevron.up")
-                        Text("1")
-                        Image(systemName: "chevron.down")
+                        Button {
+                            incrementCount()
+                        } label: {
+                            Image(systemName: "chevron.up")
+                        }
+                        
+                        Text("\(measurementCount)")
+                        
+                        Button {
+                            decrementCount()
+                        } label: {
+                            Image(systemName: "chevron.down")
+                        }
                         
                     }
+                    .padding(.horizontal, 20)
+                    
                     VStack {
                         Text("랜덤 여부")
                         HStack {
-                            Image(systemName: "chevron.left")
-                            Text("1")
-                            Image(systemName: "chevron.right")
+                            Button {
+                                setCircle()
+                            } label: {
+                                Image(systemName: "chevron.left")
+                            }
+                            .opacity(isRandom ? 1 : 0)
+                            Image(systemName: isRandom ? "xmark" : "circle")
+                            Button {
+                                setXmark()
+                            } label: {
+                                Image(systemName: "chevron.right")
+                            }
+                            .opacity(isRandom ? 0 : 1)
                         }
                     }
+                    .padding(.horizontal, 20)
+                    .background()
                 }
                 
             }
+            .padding(.horizontal, 10)
             
             VStack(alignment: .leading) {
                 Text("참가자 파일 불러오기")
                 HStack {
-                    Text("참가자 사진 불러오기")
-                    Text("참가자 명단 불러오기")
+                    Text("구글 폼 불러오기")
+                    Text("참가자 이미지 불러오기")
                 }
             }
             
@@ -60,6 +89,40 @@ struct PlanView: View {
                 navigationManager.push(to: .standby)
             }
         }
+    }
+    
+    //MARK: - 측정 횟수 함수
+    private func incrementCount() {
+        if measurementCount < 5 {
+            measurementCount += 1
+            saveCount()
+        }
+    }
+    
+    private func decrementCount() {
+        if measurementCount > 1 {
+            measurementCount -= 1
+            saveCount()
+        }
+    }
+    
+    private func saveCount() {
+        UserDefaults.standard.set(measurementCount, forKey: "measurementCount")
+    }
+    
+    //MARK: - 랜덤 여부 함수
+    private func setCircle() {
+        isRandom = false
+        saveState()
+    }
+    
+    private func setXmark() {
+        isRandom = true
+        saveState()
+    }
+    
+    private func saveState() {
+        UserDefaults.standard.set(isRandom, forKey: "isRandom")
     }
 }
 
