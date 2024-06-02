@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F00C62B2C0BAE81007E03EB /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F00C62A2C0BAE81007E03EB /* RankView.swift */; };
+		1F00C62D2C0C411C007E03EB /* RankListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F00C62C2C0C411C007E03EB /* RankListView.swift */; };
 		510A28A22C0B61F70011A9A3 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A12C0B61F70011A9A3 /* NavigationManager.swift */; };
 		510A28A42C0B622D0011A9A3 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A32C0B622D0011A9A3 /* SplashView.swift */; };
 		510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A52C0B62800011A9A3 /* PlanView.swift */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F00C62A2C0BAE81007E03EB /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
+		1F00C62C2C0C411C007E03EB /* RankListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankListView.swift; sourceTree = "<group>"; };
 		510A28A12C0B61F70011A9A3 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		510A28A32C0B622D0011A9A3 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		510A28A52C0B62800011A9A3 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
@@ -55,6 +59,8 @@
 				BDFCE3752C0B5D02004FAFAC /* ContentView.swift */,
 				510A28A52C0B62800011A9A3 /* PlanView.swift */,
 				510A28A72C0B629F0011A9A3 /* StandbyView.swift */,
+				1F00C62A2C0BAE81007E03EB /* RankView.swift */,
+				1F00C62C2C0C411C007E03EB /* RankListView.swift */,
 				510A28AA2C0B62C30011A9A3 /* MainView.swift */,
 				510A28AC2C0B62DA0011A9A3 /* FinishView.swift */,
 			);
@@ -182,8 +188,10 @@
 				510A28AB2C0B62C30011A9A3 /* MainView.swift in Sources */,
 				510A28A42C0B622D0011A9A3 /* SplashView.swift in Sources */,
 				BDFCE3742C0B5D02004FAFAC /* MungContestApp.swift in Sources */,
+				1F00C62D2C0C411C007E03EB /* RankListView.swift in Sources */,
 				510A28A22C0B61F70011A9A3 /* NavigationManager.swift in Sources */,
 				510A28A82C0B629F0011A9A3 /* StandbyView.swift in Sources */,
+				1F00C62B2C0BAE81007E03EB /* RankView.swift in Sources */,
 				510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */,
 				BDFCE3852C0B6D84004FAFAC /* Player.swift in Sources */,
 				510A28AD2C0B62DA0011A9A3 /* FinishView.swift in Sources */,
