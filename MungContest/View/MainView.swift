@@ -16,8 +16,8 @@ struct MainView: View {
     private let segments = ["chart.bar.fill", "tablecells.badge.ellipsis"]
     
     // MARK: 프로그레스 바 ( 타이머 )
-    @State private var time: Double = 100 // 전체 게임 시간
-    @State private var initialTime: Double = 100 // 초기 값 저장( time이랑 같은 값이어야함 )
+    @State private var time: Double = 60 // 전체 게임 시간
+    @State private var initialTime: Double = 60 // 초기 값 저장( time이랑 같은 값이어야함 )
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // every 1 = 1초마다
     
     @State private var hour: Int = 0
@@ -70,24 +70,26 @@ struct MainView: View {
                 
                 HStack{
                     Image(systemName: "timer")
-                    Text("-29:30")
+                    Text(formatTime(seconds: Int(time))) // 남은시간 Text
                         .font(.system(size: 14))
                         .bold()
+                        .frame(width: 50)
+                    
                 }
                 .padding(.leading)
             }
             
             HStack(spacing: 20){
                 if selectedSegment == 0 {
-                     RankView()
-                     RankListView()
+                    RankView()
+                    RankListView()
                 } else {
                     // RecordView()
                     
                 }
             }
             .padding(.top)
-           
+            
         }
         .padding(.horizontal, 50)
         .padding(.top, 50)
@@ -95,16 +97,19 @@ struct MainView: View {
     
     // MARK: 프로그레스바 Value : UserDefaults의 시간&분 -> 초로 환산
     private func calculateTotalSeconds() {
-           totalSeconds = hour * 60 * 60 + minute * 60
+        totalSeconds = hour * 60 * 60 + minute * 60
     }
     
-    // MARK: 남은 시간 Text - 분&초로만 변형
-    private func formatTime(minute: Int, second: Int) -> String {
-        return String(format: "%02d:%02d", minute, second)
+    
+    // MARK: 남은 시간 Text - 분&초로 변형
+    private func formatTime(seconds: Int) -> String {
+        let minutes = seconds / 60
+        let remainingSeconds = seconds % 60
+        return String(format: "%02d:%02d", minutes, remainingSeconds)
     }
 }
 
-// ProgressBar
+// MARK: ProgressBar
 struct CustomProgressView: View {
     
     var time: Double
