@@ -87,8 +87,8 @@ struct RankView: View {
             
             Rectangle()
                 .frame(width: 400, height: 1)
-                            .foregroundColor(Color(UIColor(hex: "#1C1C1D")))
-                            .background(DashedLine())
+                .foregroundColor(Color.gray)
+                .background(DashedLine())
 //            Divider()
 //                .frame(width: 100)
             
@@ -169,7 +169,7 @@ struct RankView: View {
                 }
             }
         }
-        .background(Color(UIColor(hex: "#1C1C1D")))
+        .background(Color.mcGray)
         .cornerRadius(30)
     }
 }
