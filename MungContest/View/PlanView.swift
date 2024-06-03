@@ -162,12 +162,61 @@ struct PlanView: View {
             }
             .padding(.horizontal, 10)
             
-            VStack(alignment: .leading) {
-                Text("참가자 파일 불러오기")
-                HStack {
-                    Text("구글 폼 불러오기")
-                    Text("참가자 이미지 불러오기")
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("참가자 파일 불러오기")
+                        .padding(.horizontal, 12)
+                    HStack {
+                        HStack {
+                            Spacer().frame(width: 12)
+                            
+                            Text("구글 폼 불러오기")
+                                .font(.system(size: 24))
+                                .padding(.vertical, 12)
+                            
+                            Spacer().frame(width: 18)
+                            
+                            Image(systemName: "square.and.arrow.down")
+                                .resizable()
+                                .bold()
+                                .scaledToFit()
+                                .frame(width: 18)
+                                .padding(.vertical, 12)
+                            
+                            Spacer().frame(width: 12)
+                        }
+                        .padding(.horizontal, 12)
+                        .background(Color("mcGray800")) // 사용하려는 색상을 정의해야 함
+                        .cornerRadius(40)
+                        .padding(.horizontal, 10)
+                        
+                        HStack {
+                            Spacer().frame(width: 12)
+                            
+                            Text("참가자 이미지 불러오기")
+                                .font(.system(size: 24))
+                                .padding(.vertical, 12)
+                            
+                            Spacer().frame(width: 18)
+                            
+                            Image(systemName: "square.and.arrow.down")
+                                .resizable()
+                                .bold()
+                                .scaledToFit()
+                                .frame(width: 18)
+                                .padding(.vertical, 12)
+                            
+                            Spacer().frame(width: 12)
+                        }
+                        .padding(.horizontal, 12)
+                        .background(Color("mcGray800")) // 사용하려는 색상을 정의해야 함
+                        .cornerRadius(40)
+                        
+                    }
+                    .foregroundStyle(Color.accentColor)
                 }
+                .padding(.horizontal, 38)
+                Spacer()
             }
             
             //MARK: - 대기 화면으로
