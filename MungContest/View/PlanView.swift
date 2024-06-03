@@ -21,7 +21,7 @@ struct PlanView: View {
                 .padding(.vertical, 20)
                 .background(
                     RoundedRectangle(cornerRadius: 40)
-                        .fill(Color.mcGray)
+                        .fill(Color.mcGray800)
                 )
                 .padding(.horizontal, 50)
             
@@ -39,32 +39,51 @@ struct PlanView: View {
                         
                     }
                     .frame(width: 338, height: 360)
-                            .background(Color.mcGray)
+                            .background(Color.mcGray800)
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .padding(.horizontal, 20)
                     
                     VStack {
-                        Text("측정 횟수")
-                            .font(.system(size: 20))
-                            .bold()
-                            .padding(24)
-                        Button {
-                            incrementCount()
-                        } label: {
-                            Image(systemName: "chevron.up")
+                        HStack {
+                            Text("측정 횟수")
+                                .font(.system(size: 20))
+                                .bold()
+                                .padding(24)
+                            Spacer()
+                        }
+                        ZStack {
+                            VStack {
+                                Button {
+                                    incrementCount()
+                                } label: {
+                                    Image(systemName: "chevron.up")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 48)
+                                }
+                                
+                                Spacer()
+                                
+                                Button {
+                                    decrementCount()
+                                } label: {
+                                    Image(systemName: "chevron.down")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 48)
+                                }
+                            }
+                            .padding(.bottom, 74)
+                            
+                            Text("\(measurementCount)")
+                                .font(.system(size: 128))
+                                .padding(.bottom, 74)
                         }
                         
-                        Text("\(measurementCount)")
-                        
-                        Button {
-                            decrementCount()
-                        } label: {
-                            Image(systemName: "chevron.down")
-                        }
-                        
+                        Spacer()
                     }
                     .frame(width: 338, height: 360)
-                            .background(Color.mcGray)
+                            .background(Color.mcGray800)
                             .clipShape(RoundedRectangle(cornerRadius: 20))
                             .padding(.horizontal, 20)
                     
@@ -73,32 +92,67 @@ struct PlanView: View {
                             Text("랜덤 여부")
                                 .font(.system(size: 20))
                                 .bold()
-                                .padding(24)
+                                .padding(.top, 24)
+                                .padding(.leading, 24)
                             Spacer()
                         }
                         
+                        VStack(alignment: .leading) {
+                            Text("랜덤 여부를 ‘ON’으로 설정하면 측정\n시간을 불규칙하게 배정해줍니다.")
+                                .lineSpacing(4)
+                                
+                        }
+                        .font(.system(size: 16))
+                        .padding(.horizontal, 30)
+                        .padding(.vertical, 16)
+                        .background(Color.mcGray700)
+                        .cornerRadius(12)
+                        
                         HStack {
                             Button {
-                                setCircle()
+                                setRandom(true)
                             } label: {
-                                Image(systemName: "chevron.left")
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 100, height: 100)
+                                    .background(isRandom ? Color.accentColor : Color.mcGray700)
+                                    .cornerRadius(12)
+                                    .padding(.horizontal, 15)
+                                    .overlay {
+                                        Image(systemName: "circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50)
+                                            .foregroundColor(isRandom ? .black : .white)
+                                    }
                             }
-                            .opacity(isRandom ? 1 : 0)
-                            Image(systemName: isRandom ? "xmark" : "circle")
+                            
                             Button {
-                                setXmark()
+                                setRandom(false)
                             } label: {
-                                Image(systemName: "chevron.right")
+                                Rectangle()
+                                    .foregroundColor(.clear)
+                                    .frame(width: 100, height: 100)
+                                    .background(isRandom ? Color.mcGray700 : Color.accentColor)
+                                    .cornerRadius(12)
+                                    .padding(.horizontal, 15)
+                                    .overlay {
+                                        Image(systemName: "xmark")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 50)
+                                            .foregroundColor(isRandom ? .white : .black)
+                                    }
                             }
-                            .opacity(isRandom ? 0 : 1)
                         }
+                        .padding(.top, 40)
                         
                         Spacer()
                     }
                     .frame(width: 338, height: 360)
-                            .background(Color.mcGray)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .padding(.horizontal, 20)
+                    .background(Color.mcGray800)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding(.horizontal, 20)
                 }
                 .padding(.vertical, 40)
                 
@@ -159,17 +213,8 @@ struct PlanView: View {
     }
     
     //MARK: - 랜덤 여부 함수
-    private func setCircle() {
-        isRandom = false
-        saveState()
-    }
-    
-    private func setXmark() {
-        isRandom = true
-        saveState()
-    }
-    
-    private func saveState() {
+    private func setRandom(_ value: Bool) {
+        isRandom = value
         UserDefaults.standard.set(isRandom, forKey: "isRandom")
     }
 }
