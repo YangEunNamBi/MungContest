@@ -39,9 +39,9 @@ struct PlanView: View {
                         
                     }
                     .frame(width: 338, height: 360)
-                            .background(Color.mcGray800)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .padding(.horizontal, 20)
+                    .background(Color.mcGray800)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding(.horizontal, 20)
                     
                     VStack {
                         HStack {
@@ -86,9 +86,9 @@ struct PlanView: View {
                         }
                     }
                     .frame(width: 338, height: 360)
-                            .background(Color.mcGray800)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .padding(.horizontal, 20)
+                    .background(Color.mcGray800)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding(.horizontal, 20)
                     
                     VStack {
                         HStack {
@@ -103,7 +103,7 @@ struct PlanView: View {
                         VStack(alignment: .leading) {
                             Text("랜덤 여부를 ‘ON’으로 설정하면 측정\n시간을 불규칙하게 배정해줍니다.")
                                 .lineSpacing(4)
-                                
+                            
                         }
                         .font(.system(size: 16))
                         .padding(.horizontal, 30)
@@ -186,7 +186,7 @@ struct PlanView: View {
                             Spacer().frame(width: 12)
                         }
                         .padding(.horizontal, 12)
-                        .background(Color("mcGray800")) // 사용하려는 색상을 정의해야 함
+                        .background(Color.mcGray800)
                         .cornerRadius(40)
                         .padding(.horizontal, 10)
                         
@@ -196,6 +196,7 @@ struct PlanView: View {
                             Text("참가자 이미지 불러오기")
                                 .font(.system(size: 24))
                                 .padding(.vertical, 12)
+                            
                             
                             Spacer().frame(width: 18)
                             
@@ -209,7 +210,7 @@ struct PlanView: View {
                             Spacer().frame(width: 12)
                         }
                         .padding(.horizontal, 12)
-                        .background(Color("mcGray800")) // 사용하려는 색상을 정의해야 함
+                        .background(Color.mcGray800)
                         .cornerRadius(40)
                         
                     }
@@ -218,30 +219,61 @@ struct PlanView: View {
                 .padding(.horizontal, 38)
                 Spacer()
             }
+            .padding(.bottom, 24)
             
             //MARK: - 대기 화면으로
-            Button {
-                navigationManager.push(to: .standby)
-            } label: {
+            HStack {
+                Spacer().frame(width: 12)
                 HStack {
-                    Text("다음으로")
-                        .font(.system(size: 24))
-                        .bold()
-                        .foregroundColor(Color.black)
+                    Spacer().frame(width: 12)
                     
-                    Image(systemName: "arrowtriangle.right.fill")
+                    Text("IMG_1C7761A221B8-1.jpeg")
+                        .font(.system(size: 24))
+                        .padding(.vertical, 12)
+                        
+                    
+                    Spacer().frame(width: 18)
+                    
+                    Image(systemName: "xmark")
                         .resizable()
-                        .foregroundColor(Color.black)
-                        .frame(width: 22, height: 22)
+                        .bold()
+                        .scaledToFit()
+                        .frame(width: 18)
+                        .padding(.vertical, 12)
+                    
+                    Spacer().frame(width: 12)
                 }
-                .padding(.vertical, 14)
-                .padding(.horizontal, 30)
-                .background(Color.accentColor)
-                .cornerRadius(25)
+                .padding(.horizontal, 12)
+                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
+                .background(Color("mcGray800")) // 사용하려는 색상을 정의해야 함
+                .cornerRadius(40)
                 
+                Spacer()
+                
+                Button {
+                    navigationManager.push(to: .standby)
+                } label: {
+                    HStack {
+                        Text("다음으로")
+                            .font(.system(size: 24))
+                            .bold()
+                            .foregroundColor(Color.black)
+                        
+                        Image(systemName: "arrowtriangle.right.fill")
+                            .resizable()
+                            .foregroundColor(Color.black)
+                            .frame(width: 22, height: 22)
+                    }
+                    .padding(.vertical, 14)
+                    .padding(.horizontal, 30)
+                    .background(Color.accentColor)
+                    .cornerRadius(25)
+                    
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(.horizontal, 12)
             }
-            .buttonStyle(PlainButtonStyle())
-            .padding(.horizontal, 50)
+            .padding(.horizontal, 38)
         }
     }
     
