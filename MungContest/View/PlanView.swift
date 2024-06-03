@@ -60,7 +60,10 @@ struct PlanView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 48)
+                                        .foregroundColor(measurementCount >= 5 ? Color.mcGray500 : Color.accentColor)
                                 }
+                                .padding(.bottom, 20)
+                                .disabled(measurementCount >= 5)
                                 
                                 Spacer()
                                 
@@ -71,16 +74,16 @@ struct PlanView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 48)
+                                        .foregroundColor(measurementCount <= 1 ? Color.mcGray500 : Color.accentColor)
                                 }
+                                .disabled(measurementCount <= 1)
                             }
-                            .padding(.bottom, 74)
+                            .padding(.bottom, 64)
                             
                             Text("\(measurementCount)")
                                 .font(.system(size: 128))
-                                .padding(.bottom, 74)
+                                .padding(.bottom, 64)
                         }
-                        
-                        Spacer()
                     }
                     .frame(width: 338, height: 360)
                             .background(Color.mcGray800)
