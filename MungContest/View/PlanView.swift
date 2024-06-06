@@ -10,6 +10,8 @@ import SwiftUI
 struct PlanView: View {
     @Environment(NavigationManager.self) var navigationManager
     @State private var title: String = UserDefaults.standard.contestTitle
+    @State var hours: Int = 0
+    @State var minutes: Int = 0
     @State private var measurementCount: Int = UserDefaults.standard.integer(forKey: "measurementCount")
     @State private var isRandom: Bool = UserDefaults.standard.bool(forKey: "isRandom")
     
@@ -35,6 +37,18 @@ struct PlanView: View {
                                 .padding(24)
                             Spacer()
                         }
+                        HStack {
+                            Picker("", selection: $hours){
+                                ForEach(0..<24, id: \.self) { i in
+                                    Text("\(i) 시간").tag(i)
+                                }
+                            }.pickerStyle(.wheel)
+                            Picker("", selection: $minutes){
+                                ForEach(0..<60, id: \.self) { i in
+                                    Text("\(i) 분").tag(i)
+                                }
+                            }.pickerStyle(.wheel)
+                        }.padding(.horizontal)
                         Spacer()
                         
                     }
@@ -245,12 +259,14 @@ struct PlanView: View {
                 }
                 .padding(.horizontal, 12)
                 .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-                .background(Color("mcGray800")) // 사용하려는 색상을 정의해야 함
+                .background(Color.mcGray800) // 사용하려는 색상을 정의해야 함
                 .cornerRadius(40)
                 
                 Spacer()
                 
                 Button {
+                    saveTime(hours: hours, minutes: minutes)
+                    print("\(hours), \(minutes),")
                     navigationManager.push(to: .standby)
                 } label: {
                     HStack {
@@ -275,6 +291,12 @@ struct PlanView: View {
             }
             .padding(.horizontal, 38)
         }
+    }
+    
+    //MARK: - 대회 시간 저장
+    private func saveTime(hours: Int, minutes: Int) {
+        UserDefaults.standard.set(hours, forKey: "selectedHours")
+        UserDefaults.standard.set(minutes, forKey: "selectedMinutes")
     }
     
     //MARK: - 측정 횟수 함수
