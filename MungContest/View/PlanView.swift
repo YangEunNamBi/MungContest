@@ -12,7 +12,10 @@ struct PlanView: View {
     @State private var title: String = UserDefaults.standard.contestTitle
     @State var hours: Int = 0
     @State var minutes: Int = 0
-    @State private var measurementCount: Int = UserDefaults.standard.integer(forKey: "measurementCount")
+    @State private var measurementCount: Int = {
+            let count = UserDefaults.standard.integer(forKey: "measurementCount")
+            return count == 0 ? 1 : count
+        }()
     @State private var isRandom: Bool = UserDefaults.standard.bool(forKey: "isRandom")
     
     var body: some View {
