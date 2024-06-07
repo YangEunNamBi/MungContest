@@ -192,6 +192,7 @@ struct PlanView: View {
                         .padding(.horizontal, 12)
                     HStack {
                         Button(action: {
+                            requestFileAccessPermission()
                             isShowingFilePicker.toggle()
                         }) {
                             HStack {
@@ -233,6 +234,7 @@ struct PlanView: View {
                         }
                         
                         Button(action: {
+                            requestFileAccessPermission()
                             isShowingFileImage.toggle()
                             
                         }) {
@@ -265,12 +267,12 @@ struct PlanView: View {
                             allowsMultipleSelection: true
                         ) { result in
                             switch result {
-                                case .success(let urls):
-                                    selectedImageURLs = urls
-                                    loadImages()
-                                case .failure(let error):
-                                    print("Failed to import files: \(error.localizedDescription)")
-                                }
+                            case .success(let urls):
+                                selectedImageURLs = urls
+                                loadImages()
+                            case .failure(let error):
+                                print("Failed to import files: \(error.localizedDescription)")
+                            }
                         }
                         
                         List(players, id: \.id) { player in
@@ -366,8 +368,12 @@ struct PlanView: View {
     
     
     //MARK: - CSV 파싱
-    
     func importCSVFile(url: URL) {
+        guard url.startAccessingSecurityScopedResource() else {
+            return
+        }
+        
+        defer { url.stopAccessingSecurityScopedResource() }
         do {
             let fileContent = try String(contentsOf: url)
             parseCSV(fileContent: fileContent)
@@ -410,7 +416,13 @@ struct PlanView: View {
     
     //MARK: - 이미지 불러오기
     func loadImages() {
+        
         for imageURL in selectedImageURLs {
+            guard imageURL.startAccessingSecurityScopedResource() else {
+                return
+            }
+            
+            defer { imageURL.stopAccessingSecurityScopedResource() }
             guard let imageData = try? Data(contentsOf: imageURL) else {
                 print("Failed to load image data from URL: \(imageURL)")
                 continue
@@ -424,8 +436,22 @@ struct PlanView: View {
             players.append(player)
         }
     }
-
-
+    
+    func requestFileAccessPermission() {
+        let fileManager = FileManager.default
+        guard let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("문서 디렉토리를 찾을 수 없습니다.")
+            return
+        }
+        
+        do {
+            try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
+            print("파일 액세스 권한이 허용되었습니다.")
+        } catch {
+            print("파일 액세스 권한을 요청합니다.")
+        }
+    }
+    
 }
 
 #Preview {
