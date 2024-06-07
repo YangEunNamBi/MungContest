@@ -9,14 +9,21 @@ import SwiftUI
 
 struct PlanView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @Environment(\.modelContext) var modelContext
     @State private var title: String = UserDefaults.standard.contestTitle
     @State var hours: Int = 0
     @State var minutes: Int = 0
     @State private var measurementCount: Int = {
-            let count = UserDefaults.standard.integer(forKey: "measurementCount")
-            return count == 0 ? 1 : count
-        }()
+        let count = UserDefaults.standard.integer(forKey: "measurementCount")
+        return count == 0 ? 1 : count
+    }()
     @State private var isRandom: Bool = UserDefaults.standard.bool(forKey: "isRandom")
+    
+    @State private var isShowingFilePicker = false
+    @State private var isShowingFileImage = false
+    @State private var selectedImageURLs: [URL] = []
+    
+    @State private var players: [Player] = []
     
     var body: some View {
         VStack {
@@ -184,51 +191,106 @@ struct PlanView: View {
                     Text("참가자 파일 불러오기")
                         .padding(.horizontal, 12)
                     HStack {
-                        HStack {
-                            Spacer().frame(width: 12)
-                            
-                            Text("구글 폼 불러오기")
-                                .font(.system(size: 24))
-                                .padding(.vertical, 12)
-                            
-                            Spacer().frame(width: 18)
-                            
-                            Image(systemName: "square.and.arrow.down")
-                                .resizable()
-                                .bold()
-                                .scaledToFit()
-                                .frame(width: 18)
-                                .padding(.vertical, 12)
-                            
-                            Spacer().frame(width: 12)
+                        Button(action: {
+                            isShowingFilePicker.toggle()
+                        }) {
+                            HStack {
+                                Spacer().frame(width: 12)
+                                
+                                Text("구글 폼 불러오기")
+                                    .font(.system(size: 24))
+                                    .padding(.vertical, 12)
+                                
+                                Spacer().frame(width: 18)
+                                
+                                Image(systemName: "square.and.arrow.down")
+                                    .resizable()
+                                    .bold()
+                                    .scaledToFit()
+                                    .frame(width: 18)
+                                    .padding(.vertical, 12)
+                                
+                                Spacer().frame(width: 12)
+                            }
+                            .padding(.horizontal, 12)
+                            .background(Color.mcGray800)
+                            .cornerRadius(40)
+                            .padding(.horizontal, 10)
                         }
-                        .padding(.horizontal, 12)
-                        .background(Color.mcGray800)
-                        .cornerRadius(40)
-                        .padding(.horizontal, 10)
+                        .fileImporter(
+                            isPresented: $isShowingFilePicker,
+                            allowedContentTypes: [.commaSeparatedText],
+                            allowsMultipleSelection: false
+                        ) { result in
+                            switch result {
+                            case .success(let urls):
+                                if let url = urls.first {
+                                    importCSVFile(url: url)
+                                }
+                            case .failure(let error):
+                                print("Failed to import file: \(error.localizedDescription)")
+                            }
+                        }
                         
-                        HStack {
-                            Spacer().frame(width: 12)
+                        Button(action: {
+                            isShowingFileImage.toggle()
                             
-                            Text("참가자 이미지 불러오기")
-                                .font(.system(size: 24))
-                                .padding(.vertical, 12)
-                            
-                            
-                            Spacer().frame(width: 18)
-                            
-                            Image(systemName: "square.and.arrow.down")
-                                .resizable()
-                                .bold()
-                                .scaledToFit()
-                                .frame(width: 18)
-                                .padding(.vertical, 12)
-                            
-                            Spacer().frame(width: 12)
+                        }) {
+                            HStack {
+                                Spacer().frame(width: 12)
+                                
+                                Text("참가자 이미지 불러오기")
+                                    .font(.system(size: 24))
+                                    .padding(.vertical, 12)
+                                
+                                Spacer().frame(width: 18)
+                                
+                                Image(systemName: "square.and.arrow.down")
+                                    .resizable()
+                                    .bold()
+                                    .scaledToFit()
+                                    .frame(width: 18)
+                                    .padding(.vertical, 12)
+                                
+                                Spacer().frame(width: 12)
+                            }
+                            .padding(.horizontal, 12)
+                            .background(Color.mcGray800)
+                            .cornerRadius(40)
+                            .padding(.horizontal, 10)
                         }
-                        .padding(.horizontal, 12)
-                        .background(Color.mcGray800)
-                        .cornerRadius(40)
+                        .fileImporter(
+                            isPresented: $isShowingFileImage,
+                            allowedContentTypes: [.image],
+                            allowsMultipleSelection: true
+                        ) { result in
+                            switch result {
+                                case .success(let urls):
+                                    selectedImageURLs = urls
+                                    loadImages()
+                                case .failure(let error):
+                                    print("Failed to import files: \(error.localizedDescription)")
+                                }
+                        }
+                        
+                        List(players, id: \.id) { player in
+                            VStack {
+                                if let uiImage = UIImage(data: player.profileImage) {
+                                    Image(uiImage: uiImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .clipShape(Circle())
+                                        .padding(.trailing, 10)
+                                }
+                                VStack(alignment: .leading) {
+                                    Text(player.name)
+                                        .font(.headline)
+                                    Text(player.comment)
+                                        .font(.subheadline)
+                                }
+                            }
+                        }
                         
                     }
                     .foregroundStyle(Color.accentColor)
@@ -240,31 +302,6 @@ struct PlanView: View {
             
             //MARK: - 대기 화면으로
             HStack {
-                Spacer().frame(width: 12)
-                HStack {
-                    Spacer().frame(width: 12)
-                    
-                    Text("IMG_1C7761A221B8-1.jpeg")
-                        .font(.system(size: 24))
-                        .padding(.vertical, 12)
-                        
-                    
-                    Spacer().frame(width: 18)
-                    
-                    Image(systemName: "xmark")
-                        .resizable()
-                        .bold()
-                        .scaledToFit()
-                        .frame(width: 18)
-                        .padding(.vertical, 12)
-                    
-                    Spacer().frame(width: 12)
-                }
-                .padding(.horizontal, 12)
-                .opacity(/*@START_MENU_TOKEN@*/0.8/*@END_MENU_TOKEN@*/)
-                .background(Color.mcGray800) // 사용하려는 색상을 정의해야 함
-                .cornerRadius(40)
-                
                 Spacer()
                 
                 Button {
@@ -326,6 +363,69 @@ struct PlanView: View {
         isRandom = value
         UserDefaults.standard.set(isRandom, forKey: "isRandom")
     }
+    
+    
+    //MARK: - CSV 파싱
+    
+    func importCSVFile(url: URL) {
+        do {
+            let fileContent = try String(contentsOf: url)
+            parseCSV(fileContent: fileContent)
+        } catch {
+            print("Failed to read file content: \(error.localizedDescription)")
+        }
+    }
+    
+    func parseCSV(fileContent: String) {
+        let rows = fileContent.components(separatedBy: "\n")
+        for (index, row) in rows.enumerated() {
+            // Skip the header row
+            if index == 0 { continue }
+            
+            let columns = row.split(separator: ",", omittingEmptySubsequences: false).map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+            if columns.count >= 4 {
+                let name = columns[1]
+                let comment = columns[2]
+                
+                print("Parsed Player: \(name), \(comment)")
+                
+                let player = Player(name: name, profileImage: Data(), comment: comment, defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
+                DispatchQueue.main.async {
+                    players.append(player)
+                }
+            } else {
+                print("Skipping row: \(row)")
+            }
+        }
+    }
+    
+    func savePlayer(_ player: Player) {
+        do {
+            try modelContext.insert(player)
+            try modelContext.save()
+        } catch {
+            print("Failed to save player: \(error.localizedDescription)")
+        }
+    }
+    
+    //MARK: - 이미지 불러오기
+    func loadImages() {
+        for imageURL in selectedImageURLs {
+            guard let imageData = try? Data(contentsOf: imageURL) else {
+                print("Failed to load image data from URL: \(imageURL)")
+                continue
+            }
+            let playerName = imageURL.lastPathComponent.replacingOccurrences(of: ".jpeg", with: "")
+            
+            // 가져온 플레이어 이름으로 모델을 만듭니다.
+            let player = Player(name: playerName, profileImage: imageData, comment: "", defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
+            
+            // 생성된 플레이어를 리스트에 추가합니다.
+            players.append(player)
+        }
+    }
+
+
 }
 
 #Preview {
