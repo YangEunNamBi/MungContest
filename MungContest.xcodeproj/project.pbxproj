@@ -31,6 +31,11 @@
 		510A28AC2C0B62DA0011A9A3 /* FinishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishView.swift; sourceTree = "<group>"; };
 		510A28B12C0B9BDB0011A9A3 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		510A39A22C1277EC00C64B49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		510A39A62C149E6100C64B49 /* SpoqaHanSansNeo-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Light.otf"; sourceTree = "<group>"; };
+		510A39A72C149E6100C64B49 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
+		510A39A82C149E6200C64B49 /* SpoqaHanSansNeo-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Bold.otf"; sourceTree = "<group>"; };
+		510A39A92C149E6200C64B49 /* SpoqaHanSansNeo-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Medium.otf"; sourceTree = "<group>"; };
+		510A39AA2C149E6200C64B49 /* SpoqaHanSansNeo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Thin.otf"; sourceTree = "<group>"; };
 		BDFCE3702C0B5D02004FAFAC /* MungContest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MungContest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MungContestApp.swift; sourceTree = "<group>"; };
 		BDFCE3752C0B5D02004FAFAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -72,6 +77,18 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		510A39A52C149E3300C64B49 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				510A39A82C149E6200C64B49 /* SpoqaHanSansNeo-Bold.otf */,
+				510A39A62C149E6100C64B49 /* SpoqaHanSansNeo-Light.otf */,
+				510A39A92C149E6200C64B49 /* SpoqaHanSansNeo-Medium.otf */,
+				510A39A72C149E6100C64B49 /* SpoqaHanSansNeo-Regular.otf */,
+				510A39AA2C149E6200C64B49 /* SpoqaHanSansNeo-Thin.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		BDFCE3672C0B5D02004FAFAC = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +109,7 @@
 		BDFCE3722C0B5D02004FAFAC /* MungContest */ = {
 			isa = PBXGroup;
 			children = (
+				510A39A52C149E3300C64B49 /* Fonts */,
 				510A39A22C1277EC00C64B49 /* Info.plist */,
 				510A28AE2C0B9B590011A9A3 /* Extensions */,
 				BDFCE3832C0B6927004FAFAC /* Model */,
