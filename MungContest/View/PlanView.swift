@@ -42,8 +42,7 @@ struct PlanView: View {
                     VStack {
                         HStack {
                             Text("대회 시간")
-                                .font(.system(size: 20))
-                                .bold()
+                                .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
                                 .padding(24)
                             Spacer()
                         }
@@ -70,7 +69,7 @@ struct PlanView: View {
                     VStack {
                         HStack {
                             Text("측정 횟수")
-                                .font(.system(size: 20))
+                                .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
                                 .bold()
                                 .padding(24)
                             Spacer()
@@ -117,8 +116,7 @@ struct PlanView: View {
                     VStack {
                         HStack {
                             Text("랜덤 여부")
-                                .font(.system(size: 20))
-                                .bold()
+                                .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
                                 .padding(.top, 24)
                                 .padding(.leading, 24)
                             Spacer()
@@ -126,6 +124,7 @@ struct PlanView: View {
                         
                         VStack(alignment: .leading) {
                             Text("랜덤 여부를 ‘ON’으로 설정하면 측정\n시간을 불규칙하게 배정해줍니다.")
+                                .font(.custom("SpoqaHanSansNeo-Regular", size: 16))
                                 .lineSpacing(4)
                             
                         }
@@ -146,10 +145,8 @@ struct PlanView: View {
                                     .cornerRadius(12)
                                     .padding(.horizontal, 15)
                                     .overlay {
-                                        Image(systemName: "circle")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 50)
+                                        Text("O")
+                                            .font(.custom("Poppins-Regular", size: 64))
                                             .foregroundColor(isRandom ? .black : .white)
                                     }
                             }
@@ -164,10 +161,8 @@ struct PlanView: View {
                                     .cornerRadius(12)
                                     .padding(.horizontal, 15)
                                     .overlay {
-                                        Image(systemName: "xmark")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 50)
+                                        Text("X")
+                                            .font(.custom("Poppins-Regular", size: 64))
                                             .foregroundColor(isRandom ? .white : .black)
                                     }
                             }
@@ -189,6 +184,7 @@ struct PlanView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("참가자 파일 불러오기")
+                        .font(.custom("SpoqaHanSansNeo-Medium", size: 16))
                         .padding(.horizontal, 12)
                     HStack {
                         Button(action: {
@@ -199,7 +195,7 @@ struct PlanView: View {
                                 Spacer().frame(width: 12)
                                 
                                 Text("구글 폼 불러오기")
-                                    .font(.system(size: 24))
+                                    .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
                                 
                                 Spacer().frame(width: 18)
@@ -242,7 +238,7 @@ struct PlanView: View {
                                 Spacer().frame(width: 12)
                                 
                                 Text("참가자 이미지 불러오기")
-                                    .font(.system(size: 24))
+                                    .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
                                 
                                 Spacer().frame(width: 18)
