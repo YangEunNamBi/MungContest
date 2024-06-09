@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SpoqaHanSansNeo-Bold.otf</string>
+		<string>SpoqaHanSansNeo-Light.otf</string>
+		<string>SpoqaHanSansNeo-Medium.otf</string>
+		<string>SpoqaHanSansNeo-Regular.otf</string>
+		<string>SpoqaHanSansNeo-Thin.otf</string>
+		<string>Poppins-Regular.ttf</string>
+	</array>
+	<key>NSFileProviderDomainUsageDescription</key>
+	<string>CSV 파일 접근</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string></string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>CSV 파일을 읽어오기 위해 권한이 필요합니다.</string>
+</dict>
+</plist>
