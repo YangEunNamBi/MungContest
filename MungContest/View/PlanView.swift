@@ -28,7 +28,7 @@ struct PlanView: View {
     var body: some View {
         VStack {
             TextField("대회 제목을 입력해주세요", text: $title)
-                .font(.system(size: 28))
+                .font(.custom("SpoqaHanSansNeo-Medium", size: 28))
                 .padding(.horizontal, 30)
                 .padding(.vertical, 20)
                 .background(
@@ -74,7 +74,9 @@ struct PlanView: View {
                                 .padding(24)
                             Spacer()
                         }
-                        ZStack {
+                        Spacer()
+                        
+                        .overlay{
                             VStack {
                                 Button {
                                     incrementCount()
@@ -85,10 +87,10 @@ struct PlanView: View {
                                         .frame(width: 48)
                                         .foregroundColor(measurementCount >= 5 ? Color.mcGray500 : Color.accentColor)
                                 }
-                                .padding(.bottom, 20)
                                 .disabled(measurementCount >= 5)
-                                
+                                .padding()
                                 Spacer()
+                                        .frame(height: 128)
                                 
                                 Button {
                                     decrementCount()
@@ -100,12 +102,14 @@ struct PlanView: View {
                                         .foregroundColor(measurementCount <= 1 ? Color.mcGray500 : Color.accentColor)
                                 }
                                 .disabled(measurementCount <= 1)
+                                .padding()
+                                .padding(.bottom, 20)
+                                
                             }
-                            .padding(.bottom, 64)
                             
                             Text("\(measurementCount)")
-                                .font(.system(size: 128))
-                                .padding(.bottom, 64)
+                                .font(.custom("Poppins-Regular", size: 128))
+                                .padding(.bottom, 20)
                         }
                     }
                     .frame(width: 338, height: 360)
@@ -271,24 +275,25 @@ struct PlanView: View {
                             }
                         }
                         
-                        List(players, id: \.id) { player in
-                            VStack {
-                                if let uiImage = UIImage(data: player.profileImage) {
-                                    Image(uiImage: uiImage)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 50, height: 50)
-                                        .clipShape(Circle())
-                                        .padding(.trailing, 10)
-                                }
-                                VStack(alignment: .leading) {
-                                    Text(player.name)
-                                        .font(.headline)
-                                    Text(player.comment)
-                                        .font(.subheadline)
-                                }
-                            }
-                        }
+                        //MARK: - 명단과 이미지를 불러왔을 때 보는용도, 추후 삭제 바람
+//                        List(players, id: \.id) { player in
+//                            VStack {
+//                                if let uiImage = UIImage(data: player.profileImage) {
+//                                    Image(uiImage: uiImage)
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .frame(width: 50, height: 50)
+//                                        .clipShape(Circle())
+//                                        .padding(.trailing, 10)
+//                                }
+//                                VStack(alignment: .leading) {
+//                                    Text(player.name)
+//                                        .font(.headline)
+//                                    Text(player.comment)
+//                                        .font(.subheadline)
+//                                }
+//                            }
+//                        }
                         
                     }
                     .foregroundStyle(Color.accentColor)
