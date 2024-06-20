@@ -3,17 +3,21 @@ import SwiftUI
 struct StandbyView: View {
     @Environment(NavigationManager.self) var navigationManager
     
-    private let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
-    @State private var currentIndex = 0
+    @State private var currentIndex: Int?
     
     private let images: [String] = ["jen", "junyo", "mars", "won", "hash"]
-    @State var dummieData : [Player] = [
+    var dummieData : [Player] = [
         Player(name: "준요", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
         Player(name: "원", profileImage: Data(), comment: "내가 준요는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
         Player(name: "젠", profileImage: Data(), comment: "내가 원은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
         Player(name: "해시", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
         Player(name: "마스", profileImage: Data(), comment: "내가 해시는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0)
     ]
+    
+    @State private var itemsArray: [[Player]] = []
+    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    private let animationDuration: CGFloat = 0.3
+    @State private var scrollViewProxy: ScrollViewProxy?
     
     static let dateformat: DateFormatter = {
         let formatter = DateFormatter()
@@ -24,6 +28,7 @@ struct StandbyView: View {
     var today = Date()
     
     var body: some View {
+        let itemsTemp = itemsArray.flatMap { $0 }
         
         //                VStack {
         //                    Button("대회 메인 화면으로") {
@@ -39,38 +44,65 @@ struct StandbyView: View {
                 .clipShape(Capsule())
                 .padding(.bottom, 64)
             
-            ScrollViewReader { scrollProxy in
-                ScrollView(.horizontal, showsIndicators: false) {
+            ScrollView(.horizontal) {
+                ScrollViewReader { proxy in
                     HStack(alignment: .center, spacing: 0) {
-                        ForEach(0..<dummieData.count, id: \.self) { i in
-                            GeometryReader { geometry in
-                                let scale = getScale(proxy: geometry)
-                                VStack{
-                                    Image(images[i % images.count])
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 260 * scale, height: 260 * scale)
-                                        .clipShape(Circle())
-                                        .overlay {
-                                            Circle()
-                                                .stroke(i == currentIndex ? Color.yellow : Color.gray, lineWidth: 10 * scale)
-                                        }
-                                        .border(.white)
-                                }
-                                .frame(width: 280, height: 280)
-                                .border(.white)
+                        ForEach(0..<itemsTemp.count, id: \.self) { i in
+                            VStack{
+                                Image(images[i % images.count])
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 260, height: 260)
+                                    .clipShape(Circle())
+                                    .overlay {
+                                        Circle()
+                                            .stroke(i == currentIndex ? Color.yellow : Color.gray, lineWidth: 10)
+                                    }
+                                    .border(.white)
                             }
-                        }
-                        .frame(width: 280, height: 280)
-                    }
-                    .onReceive(timer) { _ in
-                        currentIndex = currentIndex < dummieData.count - 1 ? currentIndex + 1 : 0
-                        withAnimation {
-                            scrollProxy.scrollTo(currentIndex, anchor: .center) // scroll to next .id
+                            .frame(width: 280, height: 280)
+                            .border(.white)
                         }
                     }
                 }
             }
+            .scrollPosition(id: $currentIndex)
+            .scrollIndicators(.hidden)
+            .onAppear {
+                self.itemsArray = [dummieData, dummieData, dummieData]
+                currentIndex = dummieData.count
+            }
+            .onChange(of: currentIndex) {
+                guard let currentIndex = currentIndex else {return}
+                print(currentIndex)
+                let itemCount = dummieData.count
+                
+                // 첫번째 배열의 마지막일 때 (좌측으로 스크롤)
+                if currentIndex < itemCount  {
+                    print("첫번째 배열의 마지막이다")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                        itemsArray.removeLast()
+                        itemsArray.insert(dummieData, at: 0)
+                        self.currentIndex = currentIndex + itemCount
+                    }
+                }
+                
+                // 마지막 배열의 첫번째일 때 (우측으로 스크롤)
+                if currentIndex >= itemCount * 2 {
+                    print("마지막 배열의 첫번째다")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                        itemsArray.removeFirst()
+                        itemsArray.append(dummieData)
+                        self.currentIndex = currentIndex - itemCount
+                    }
+                }
+            }
+            .onReceive(timer) { _ in
+                          guard let currentIndex = currentIndex else { return }
+                          let itemCount = dummieData.count
+                          let newIndex = (currentIndex + 1) % (itemCount * 3)
+                          self.currentIndex = newIndex
+                      }
             
             Button(action: {
             }, label: {
@@ -89,16 +121,6 @@ struct StandbyView: View {
             })
             .padding(.top, 50)
         }
-    }
-    //MARK: 스케일 설정 함수
-    private func getScale(proxy: GeometryProxy) -> CGFloat {
-        let midPoint: CGFloat = 200
-        let viewFrame = proxy.frame(in: .global)
-        let distanceFromCenter = abs(viewFrame.midX - UIScreen.main.bounds.width / 2)
-        let minScale: CGFloat = 0.76
-        let maxScale: CGFloat = 1.0
-        
-        return max(maxScale - (distanceFromCenter / midPoint) * (maxScale - minScale), minScale)
     }
 }
 
