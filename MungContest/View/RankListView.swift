@@ -1,18 +1,18 @@
-//
-//  RankListView.swift
-//  MungContest
-//
-//  Created by 이상도 on 6/2/24.
-//
 
 import SwiftUI
 import SwiftData
 
 struct RankListView: View {
     
-    let items = ["1", "2", "3", "4", "5","6"]
     
     let columns = [GridItem(.flexible())]
+    
+    var players: [Player] = []
+    
+    init() {
+        players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
+    }
+    
     
     var body: some View {
         VStack{
@@ -20,27 +20,28 @@ struct RankListView: View {
                 HStack {
                     Spacer()
                     HStack(alignment: .center){
-                    Text("순위")
-                        .customStyle()
-                       
+                        Text("순위")
+                            .customStyle()
                     }
+                    
                     Spacer()
                     HStack(alignment: .center){
                         Text("순위 변동")
                             .customStyle()
                     }
+                    
                     Spacer()
                     HStack(alignment: .center){
                         Text("이름")
                             .customStyle()
-                            
+                        
                     }
-                    Spacer()
                     
+                    Spacer()
                     HStack(alignment: .center){
                         Text("현재 심박수")
                             .customStyle()
-                            
+                        
                     }
                     .padding(.horizontal, 45)
                     Spacer()
@@ -53,30 +54,124 @@ struct RankListView: View {
                     Spacer()
                     
                 }
-                .padding()
                 .padding(.trailing, 20)
+                .padding(.bottom)
                 
                 LazyVGrid(columns: columns, spacing: 15) {
-                    ForEach(items, id: \.self) { item in
-                        GridCellView(item: item)
+                    ForEach(Array(players.prefix(6).enumerated()), id: \.offset) { index, player in
+                        GridCellView(rank: index + 1, player: player)
+                        //                            .frame(maxHeight: .infinity) // 각 셀의 높이를 동적으로 조정
+                        //                            .aspectRatio(contentMode: .fit)
                     }
                 }
+                .frame(maxHeight: .infinity)
                 
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        //.background(.green)
         .cornerRadius(30)
+    }
+    
+    // 임시 데이터
+    func createDummyPlayers() -> [Player] {
+        func calculateDifferenceHeartrates(defaultHeartrate: Int, heartrates: [Int]) -> [Int] {
+            return heartrates.map { abs(defaultHeartrate - $0) }
+        }
+        
+        let player1 = Player(
+            name: "Player 1",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 1",
+            defaultHeartrate: 70,
+            heartrates: [70, 75, 73, 72],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 70, heartrates: [70, 75, 73, 72]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 70, heartrates: [70, 75, 73, 72]).reduce(0, +)
+        )
+        
+        let player2 = Player(
+            name: "Player 2",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 2",
+            defaultHeartrate: 115,
+            heartrates: [65, 68, 66, 67],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 115, heartrates: [65, 68, 66, 67]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 115, heartrates: [65, 68, 66, 67]).reduce(0, +)
+        )
+        
+        let player3 = Player(
+            name: "Player 3",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 3",
+            defaultHeartrate: 80,
+            heartrates: [80, 82, 81, 79],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 80, heartrates: [80, 82, 81, 79]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 80, heartrates: [80, 82, 81, 79]).reduce(0, +)
+        )
+        
+        let player4 = Player(
+            name: "Player 4",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 4",
+            defaultHeartrate: 75,
+            heartrates: [75, 77, 76, 78],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 75, heartrates: [75, 77, 76, 78]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 75, heartrates: [75, 77, 76, 78]).reduce(0, +)
+        )
+        
+        let player5 = Player(
+            name: "Player 5",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 5",
+            defaultHeartrate: 110,
+            heartrates: [60, 62, 61, 63],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 110, heartrates: [60, 62, 61, 63]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 110, heartrates: [60, 62, 61, 63]).reduce(0, +)
+        )
+        
+        let player6 = Player(
+            name: "Player 6",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 6",
+            defaultHeartrate: 85,
+            heartrates: [85, 87, 86, 88],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 85, heartrates: [85, 87, 86, 88]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 85, heartrates: [85, 87, 86, 88]).reduce(0, +)
+        )
+        
+        let player7 = Player(
+            name: "Player 7",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 7",
+            defaultHeartrate: 55,
+            heartrates: [55, 57, 56, 58],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 55, heartrates: [55, 57, 56, 58]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 55, heartrates: [55, 57, 56, 58]).reduce(0, +)
+        )
+        
+        let player8 = Player(
+            name: "Player 8",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        return [player1, player2, player3, player4, player5, player6, player7, player8]
     }
 }
 
 struct GridCellView: View {
     
-    let item: String
+    let rank: Int
+    let player: Player
     
     var body: some View {
         HStack(spacing: 50){
-            Text(item) // 순위 1위부터 ~
+            Text("\(rank)") // 순위 1위부터 ~
                 .font(.system(size: 20))
                 .bold()
             
@@ -87,7 +182,9 @@ struct GridCellView: View {
             
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 72)
+        //        .frame(maxHeight: .infinity) // 각 셀의 높이를 동적으로 조정
+        //        .aspectRatio(contentMode: .fill)
+        .frame(height: 79)
         .background(Color.mcGray)
         .cornerRadius(20)
         
@@ -110,7 +207,7 @@ struct GridCellView: View {
     // 유저 이름
     func playerName() -> some View {
         VStack{
-            Text("해시")
+            Text(player.name)
                 .font(.system(size: 20))
         }
     }
@@ -123,7 +220,7 @@ struct GridCellView: View {
                 .foregroundColor(.black)
             
             HStack {
-                Text("78") // 심박수
+                Text("\(player.heartrates.last!)") // 심박수
                     .bold()
                     .font(.system(size: 20))
                     .foregroundColor(Color.accentColor)
@@ -136,23 +233,23 @@ struct GridCellView: View {
     
     // 편차 합계
     func totalDeviation() -> some View {
-        ZStack {
+        let deviationSum = player.differenceHeartrates.reduce(0, +)
+        return ZStack {
             Capsule()
                 .frame(width: 52, height: 40)
                 .foregroundColor(.black)
             
             HStack {
-                Text("20")
+                Text("\(player.resultHeartrate)")
                     .foregroundColor(Color.accentColor)
                     .font(.system(size: 20))
                     .bold()
             }
         }
     }
-    
 }
 
-// Text 속성 - 뷰 모디파이어
+// MARK: Text 속성 - 뷰 모디파이어
 struct CustomTextStyle: ViewModifier {
     func body(content: Content) -> some View {
         content

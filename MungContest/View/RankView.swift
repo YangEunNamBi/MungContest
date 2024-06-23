@@ -59,11 +59,9 @@ struct RankView: View {
                                 )
                                 .foregroundColor(.black)
                                 .padding(.bottom, 80)
-                            
-                            
                         }
-                        
                     }
+                    
                     VStack{
                         Spacer()
                         Circle()
