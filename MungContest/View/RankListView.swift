@@ -9,6 +9,9 @@ struct RankListView: View {
     
     var players: [Player] = []
     
+    @State private var currentStartIndex = 0
+    private let interval: TimeInterval = 5.0
+    
     init() {
         players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
     }
@@ -58,10 +61,8 @@ struct RankListView: View {
                 .padding(.bottom)
                 
                 LazyVGrid(columns: columns, spacing: 15) {
-                    ForEach(Array(players.prefix(6).enumerated()), id: \.offset) { index, player in
-                        GridCellView(rank: index + 1, player: player)
-                        //                            .frame(maxHeight: .infinity) // 각 셀의 높이를 동적으로 조정
-                        //                            .aspectRatio(contentMode: .fit)
+                    ForEach(Array(players[currentStartIndex..<min(currentStartIndex + 6, players.count)]), id: \.id) { player in
+                        GridCellView(rank: players.firstIndex(where: { $0.id == player.id })! + 1, player: player)
                     }
                 }
                 .frame(maxHeight: .infinity)
@@ -72,6 +73,17 @@ struct RankListView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .cornerRadius(30)
+        .onAppear {
+            Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+                withAnimation {
+                    if currentStartIndex + 6 >= players.count {
+                        currentStartIndex = 0
+                    } else {
+                        currentStartIndex += 6
+                    }
+                }
+            }
+        }
     }
     
     // 임시 데이터
@@ -160,7 +172,59 @@ struct RankListView: View {
             resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
         )
         
-        return [player1, player2, player3, player4, player5, player6, player7, player8]
+        let player9 = Player(
+            name: "Player 8",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player10 = Player(
+            name: "Player 8",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player11 = Player(
+            name: "Player 8",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player12 = Player(
+            name: "Player 8",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player13 = Player(
+            name: "Player 8",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        
+        
+        return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12, player13]
     }
 }
 
