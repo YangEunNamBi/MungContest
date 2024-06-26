@@ -13,6 +13,14 @@
 		510A28A82C0B629F0011A9A3 /* StandbyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A72C0B629F0011A9A3 /* StandbyView.swift */; };
 		510A28AB2C0B62C30011A9A3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28AA2C0B62C30011A9A3 /* MainView.swift */; };
 		510A28AD2C0B62DA0011A9A3 /* FinishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28AC2C0B62DA0011A9A3 /* FinishView.swift */; };
+		510A28B22C0B9BDB0011A9A3 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28B12C0B9BDB0011A9A3 /* UserDefaults+.swift */; };
+		510A39AC2C15B84600C64B49 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 510A39AB2C15B84600C64B49 /* Poppins-Regular.ttf */; };
+		510A39B22C15B87000C64B49 /* SpoqaHanSansNeo-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 510A39AD2C15B86E00C64B49 /* SpoqaHanSansNeo-Thin.otf */; };
+		510A39B32C15B87000C64B49 /* SpoqaHanSansNeo-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 510A39AE2C15B86F00C64B49 /* SpoqaHanSansNeo-Medium.otf */; };
+		510A39B42C15B87000C64B49 /* SpoqaHanSansNeo-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 510A39AF2C15B86F00C64B49 /* SpoqaHanSansNeo-Bold.otf */; };
+		510A39B52C15B87000C64B49 /* SpoqaHanSansNeo-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 510A39B02C15B86F00C64B49 /* SpoqaHanSansNeo-Regular.otf */; };
+		510A39B62C15B87000C64B49 /* SpoqaHanSansNeo-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 510A39B12C15B87000C64B49 /* SpoqaHanSansNeo-Light.otf */; };
+		90B3004A2C22EFB000157872 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B300492C22EFB000157872 /* RecordView.swift */; };
 		BDFCE3742C0B5D02004FAFAC /* MungContestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */; };
 		BDFCE3762C0B5D02004FAFAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFCE3752C0B5D02004FAFAC /* ContentView.swift */; };
 		BDFCE3782C0B5D03004FAFAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDFCE3772C0B5D03004FAFAC /* Assets.xcassets */; };
@@ -28,6 +36,15 @@
 		510A28A72C0B629F0011A9A3 /* StandbyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandbyView.swift; sourceTree = "<group>"; };
 		510A28AA2C0B62C30011A9A3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		510A28AC2C0B62DA0011A9A3 /* FinishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishView.swift; sourceTree = "<group>"; };
+		510A28B12C0B9BDB0011A9A3 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		510A39A22C1277EC00C64B49 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		510A39AB2C15B84600C64B49 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		510A39AD2C15B86E00C64B49 /* SpoqaHanSansNeo-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Thin.otf"; sourceTree = "<group>"; };
+		510A39AE2C15B86F00C64B49 /* SpoqaHanSansNeo-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Medium.otf"; sourceTree = "<group>"; };
+		510A39AF2C15B86F00C64B49 /* SpoqaHanSansNeo-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Bold.otf"; sourceTree = "<group>"; };
+		510A39B02C15B86F00C64B49 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
+		510A39B12C15B87000C64B49 /* SpoqaHanSansNeo-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Light.otf"; sourceTree = "<group>"; };
+		90B300492C22EFB000157872 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		BDFCE3702C0B5D02004FAFAC /* MungContest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MungContest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MungContestApp.swift; sourceTree = "<group>"; };
 		BDFCE3752C0B5D02004FAFAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,8 +74,30 @@
 				510A28A72C0B629F0011A9A3 /* StandbyView.swift */,
 				510A28AA2C0B62C30011A9A3 /* MainView.swift */,
 				510A28AC2C0B62DA0011A9A3 /* FinishView.swift */,
+				90B300492C22EFB000157872 /* RecordView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		510A28AE2C0B9B590011A9A3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				510A28B12C0B9BDB0011A9A3 /* UserDefaults+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		510A39A52C149E3300C64B49 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				510A39AF2C15B86F00C64B49 /* SpoqaHanSansNeo-Bold.otf */,
+				510A39B12C15B87000C64B49 /* SpoqaHanSansNeo-Light.otf */,
+				510A39AE2C15B86F00C64B49 /* SpoqaHanSansNeo-Medium.otf */,
+				510A39B02C15B86F00C64B49 /* SpoqaHanSansNeo-Regular.otf */,
+				510A39AD2C15B86E00C64B49 /* SpoqaHanSansNeo-Thin.otf */,
+				510A39AB2C15B84600C64B49 /* Poppins-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		BDFCE3672C0B5D02004FAFAC = {
@@ -81,6 +120,9 @@
 		BDFCE3722C0B5D02004FAFAC /* MungContest */ = {
 			isa = PBXGroup;
 			children = (
+				510A39A52C149E3300C64B49 /* Fonts */,
+				510A39A22C1277EC00C64B49 /* Info.plist */,
+				510A28AE2C0B9B590011A9A3 /* Extensions */,
 				BDFCE3832C0B6927004FAFAC /* Model */,
 				510A28A02C0B61D90011A9A3 /* View */,
 				BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */,
@@ -166,8 +208,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDFCE37B2C0B5D03004FAFAC /* Preview Assets.xcassets in Resources */,
+				510A39B62C15B87000C64B49 /* SpoqaHanSansNeo-Light.otf in Resources */,
+				510A39B42C15B87000C64B49 /* SpoqaHanSansNeo-Bold.otf in Resources */,
+				510A39B22C15B87000C64B49 /* SpoqaHanSansNeo-Thin.otf in Resources */,
+				510A39B52C15B87000C64B49 /* SpoqaHanSansNeo-Regular.otf in Resources */,
 				BDFCE3822C0B5D29004FAFAC /* .gitignore in Resources */,
 				BDFCE3782C0B5D03004FAFAC /* Assets.xcassets in Resources */,
+				510A39AC2C15B84600C64B49 /* Poppins-Regular.ttf in Resources */,
+				510A39B32C15B87000C64B49 /* SpoqaHanSansNeo-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +228,8 @@
 			files = (
 				BDFCE3762C0B5D02004FAFAC /* ContentView.swift in Sources */,
 				510A28AB2C0B62C30011A9A3 /* MainView.swift in Sources */,
+				510A28B22C0B9BDB0011A9A3 /* UserDefaults+.swift in Sources */,
+				90B3004A2C22EFB000157872 /* RecordView.swift in Sources */,
 				510A28A42C0B622D0011A9A3 /* SplashView.swift in Sources */,
 				BDFCE3742C0B5D02004FAFAC /* MungContestApp.swift in Sources */,
 				510A28A22C0B61F70011A9A3 /* NavigationManager.swift in Sources */,
@@ -320,8 +370,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MungContest/Preview Content\"";
+				DEVELOPMENT_TEAM = 2U3B7G3F2A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MungContest/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "CSV 파일 접근권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -352,8 +406,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"MungContest/Preview Content\"";
+				DEVELOPMENT_TEAM = 2U3B7G3F2A;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MungContest/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "CSV 파일 접근권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
