@@ -37,7 +37,7 @@ struct StandbyView: View {
         //                        navigationManager.push(to: .main)
         //                    }
         //                }
-        VStack{
+        VStack(spacing: 0){
             HStack(spacing: 30) {
                 //MARK: 대회 정보 상단바
                 HStack(spacing: 0){
@@ -97,38 +97,44 @@ struct StandbyView: View {
             .padding(.bottom, 64)
             
             //MARK: 말풍선
-            //TODO: 말풍선 뾰족 삼각형 넣기
-            //TODO: 따옴표 변경
-            if let index = currentIndex {
-                /// images만 3배 늘리고 dummieData는 그대로 둬서 currentIndex를 dummieData에 적용할 수 없음
-                /// realIndex 임시로 넣어줌
-                let realIndex = index % dummieData.count
-                
-                HStack(alignment: .top){
-                    Image(systemName: "quote.opening")
-                        .foregroundColor(.mcGray500)
+            VStack(spacing: -8){
+                if let index = currentIndex {
+                    /// images만 3배 늘리고 dummieData는 그대로 둬서 currentIndex를 dummieData에 적용할 수 없음
+                    /// realIndex 임시로 넣어줌
+                    let realIndex = index % dummieData.count
                     
-                    VStack(alignment: .leading, spacing: 6){
-                        Text(dummieData[realIndex].name)
-                            .font(.system(size: 16))
-                            .fontWeight(.bold)
+                    //TODO: 따옴표 변경
+                    HStack(alignment: .top){
+                        Image(systemName: "quote.opening")
                             .foregroundColor(.mcGray500)
                         
-                        Text(dummieData[realIndex].comment)
-                            .font(.system(size: 20))
-                            .fontWeight(.bold)
-                            .foregroundColor(.black)
+                        VStack(alignment: .leading, spacing: 6){
+                            Text(dummieData[realIndex].name)
+                                .font(.system(size: 16))
+                                .fontWeight(.bold)
+                                .foregroundColor(.mcGray500)
+                            
+                            Text(dummieData[realIndex].comment)
+                                .font(.system(size: 20))
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                        }
+                        
+                        Image(systemName: "quote.closing")
+                            .foregroundColor(.mcGray500)
                     }
-                    
-                    Image(systemName: "quote.closing")
-                        .foregroundColor(.mcGray500)
-                }
                     .padding(.horizontal, 40)
                     .padding(.vertical, 16)
                     .background(.white)
                     .clipShape(Capsule())
+                    
+                    Text(Image(systemName: "triangle.fill"))
+                        .font(.title2)
+                        .foregroundColor(.white)
+                        .rotationEffect(.degrees(180))
                 }
-          
+            }
+            
             
             ScrollView(.horizontal) {
                 ScrollViewReader { proxy in
@@ -144,10 +150,10 @@ struct StandbyView: View {
                                         Circle()
                                             .stroke(i == currentIndex ? Color.accent : Color.gray, lineWidth: 10)
                                     }
-                                    .border(.white)
+//                                    .border(.white)
                             }
                             .frame(width: 280, height: 280)
-                            .border(.white)
+//                            .border(.white)
                         }
                     }
                 }
