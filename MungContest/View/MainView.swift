@@ -10,8 +10,8 @@ struct MainView: View {
     private let segments = ["chart.bar.fill", "tablecells.badge.ellipsis"]
     
     // MARK: 프로그레스 바 ( 타이머 )
-    @State private var time: Double = 60 // 전체 게임 시간 ( UserDefaults받으면 0으로 해놓기 )
-    @State private var initialTime: Double = 60 // 초기 값 저장( time이랑 같은 값이어야함 )
+    @State private var time: Double = 0
+    @State private var initialTime: Double = 0
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // every 1 = 1초마다
     
     @State private var hour: Int = 0
@@ -32,7 +32,6 @@ struct MainView: View {
                     Picker("SegmentControl", selection: $selectedSegment) {
                         ForEach(0..<segments.count) { index in
                             Image(systemName: self.segments[index]).tag(index)
-                            
                         }
                     }
                     .colorMultiply(Color.accentColor)
@@ -56,9 +55,8 @@ struct MainView: View {
                         if time > 0 { // 설정한 시간이 0초 이상 남았을경우 감소
                             time -= 1
                         } else {
-                            print("게임종료")
+                            // print("게임종료")
                             // 0초일 경우 게임 종료
-                            
                         }
                     }
                 
@@ -75,18 +73,17 @@ struct MainView: View {
             
             HStack(spacing: 20){
                 if selectedSegment == 0 {
-                    RankView()
-                    RankListView()
+                    RankView() // 상위/하위 3명 랭킹 뷰
+                    RankListView() // 전체 인원 랭킹 리스트 뷰
                 } else {
-                    // RecordView()
-                    
+                    RecordView() // 심박 수 측정 뷰
                 }
             }
             .padding(.top)
             
         }
         .padding(.horizontal, 50)
-//       .padding(.top, 50) // Navigation영역이랑과의 Padding 값
+        //       .padding(.top, 50) // Navigation영역이랑과의 Padding 값
         .onAppear { /// UserDefaults에서 대회 시간받아서 초로 환산
             loadSavedTime()
             calculateTotalSeconds()

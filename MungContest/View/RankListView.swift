@@ -4,7 +4,6 @@ import SwiftData
 
 struct RankListView: View {
     
-    
     let columns = [GridItem(.flexible())]
     
     var players: [Player] = []
@@ -15,7 +14,6 @@ struct RankListView: View {
     init() {
         players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
     }
-    
     
     var body: some View {
         VStack{
@@ -233,7 +231,7 @@ struct GridCellView: View {
     
     var body: some View {
         HStack(spacing: 50){
-            Text("\(rank)") // 순위 1위부터 ~
+            Text("\(rank)") // 순위 1위부터
                 .font(.system(size: 20))
                 .bold()
             
@@ -245,7 +243,7 @@ struct GridCellView: View {
         }
         .frame(maxWidth: .infinity)
         .frame(height: 80)
-        .background(Color.mcGray)
+        .background(Color.mcGray800)
         .cornerRadius(20)
         
     }
@@ -269,7 +267,9 @@ struct GridCellView: View {
         VStack{
             HStack {
                 Text(player.name)
-                    .font(.system(size: 20))
+                    .font(Font.custom("Spoqa Han Sans Neo", size: 20)
+                        .weight(.bold)
+                    )
             }
             .frame(width: 60)
         }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RankView: View {
     
@@ -26,7 +27,7 @@ struct RankView: View {
                     .font(Font.custom("Spoqa Han Sans Neo", size: 16)
                         .weight(.bold)
                     )
-                    .foregroundColor(Color.mcGray)
+                    .foregroundColor(Color.mcGray300)
                     .padding(.leading)
                 
                 Spacer()
@@ -35,7 +36,7 @@ struct RankView: View {
             HStack(spacing: 20) {
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray)
+                        .foregroundColor(.mcGray800)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
@@ -62,12 +63,13 @@ struct RankView: View {
                                 .weight(.bold)
                             )
                             .padding(.top, 10)
+                            .foregroundColor(.mcGray300)
                     }
                     
                 }
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray)
+                        .foregroundColor(.mcGray800)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
@@ -94,13 +96,14 @@ struct RankView: View {
                                 .weight(.bold)
                             )
                             .padding(.top, 10)
+                            .foregroundColor(.mcGray300)
                     }
                     
                 }
                 
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray)
+                        .foregroundColor(.mcGray800)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
@@ -126,6 +129,7 @@ struct RankView: View {
                                 .weight(.bold)
                             )
                             .padding(.top, 10)
+                            .foregroundColor(.mcGray300)
                     }
                 }
             }
@@ -135,7 +139,8 @@ struct RankView: View {
                     .font(Font.custom("Spoqa Han Sans Neo", size: 16)
                         .weight(.bold)
                     )
-                    .foregroundColor(Color.mcGray)
+                    .foregroundColor(Color.mcGray300)
+                    .padding(.leading)
                 
                 Spacer()
             }
@@ -143,7 +148,7 @@ struct RankView: View {
             HStack(spacing: 20) {
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray)
+                        .foregroundColor(.mcGray800)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
@@ -168,11 +173,12 @@ struct RankView: View {
                                 .weight(.bold)
                             )
                             .padding(.top, 10)
+                            .foregroundColor(.mcGray300)
                     }
                 }
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray)
+                        .foregroundColor(.mcGray800)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
@@ -197,12 +203,13 @@ struct RankView: View {
                                 .weight(.bold)
                             )
                             .padding(.top, 10)
+                            .foregroundColor(.mcGray300)
                     }
                 }
                 
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray)
+                        .foregroundColor(.mcGray800)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
@@ -227,6 +234,7 @@ struct RankView: View {
                                 .weight(.bold)
                             )
                             .padding(.top, 10)
+                            .foregroundColor(.mcGray300)
                     }
                     
                 }
