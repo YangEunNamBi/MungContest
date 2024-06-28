@@ -22,8 +22,6 @@ struct PlanView: View {
     @State private var isShowingFilePicker = false
     @State private var isShowingFileImage = false
     @State private var selectedImageURLs: [URL] = []
-    @State private var isFileLoaded = false
-    @State private var isImageLoaded = false
     
     @State private var players: [Player] = []
     
@@ -200,17 +198,16 @@ struct PlanView: View {
                             HStack {
                                 Spacer().frame(width: 12)
                                 
-                                Text("구글 폼 불러오기")
+                                Text(canLoadFiles() ? "\(players.count)명의 참가자 명단 불러오기 완료" : "참가자 명단 불러오기")
                                     .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
                                     
-                                
                                 Spacer().frame(width: 18)
                                 
-                                Image(systemName: "square.and.arrow.down")
+                                Image(systemName: canLoadFiles() ? "xmark" : "square.and.arrow.down")
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .bold()
-                                    .scaledToFit()
                                     .frame(width: 18)
                                     .padding(.vertical, 12)
                                 
@@ -218,7 +215,7 @@ struct PlanView: View {
                             }
                             .padding(.horizontal, 12)
                             .background(Color.mcGray800)
-                            .foregroundColor(isFileLoaded ? Color.accentColor : Color.mcGray300)
+                            .foregroundColor(canLoadFiles() ? Color.accentColor : Color.mcGray300)
                             .cornerRadius(40)
                             .padding(.horizontal, 10)
                         }
@@ -231,31 +228,30 @@ struct PlanView: View {
                             case .success(let urls):
                                 if let url = urls.first {
                                     importCSVFile(url: url)
-                                    isFileLoaded = true
                                 }
                             case .failure(let error):
                                 print("Failed to import file: \(error.localizedDescription)")
                             }
                         }
                         
+                        
                         Button(action: {
                             requestFileAccessPermission()
                             isShowingFileImage.toggle()
-                            
                         }) {
                             HStack {
                                 Spacer().frame(width: 12)
                                 
-                                Text(players.isEmpty ? "참가자 이미지 불러오기" : "\(players.count)명의 참가자 불러오기 완료")
+                                Text(canLoadImages() ? "\(players.count)명의 참가자 불러오기 완료" : "참가자 이미지 불러오기")
                                     .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
                                 
                                 Spacer().frame(width: 18)
                                 
-                                Image(systemName: "square.and.arrow.down")
+                                Image(systemName: canLoadImages() ? "xmark" : "square.and.arrow.down")
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit) 
                                     .bold()
-                                    .scaledToFit()
                                     .frame(width: 18)
                                     .padding(.vertical, 12)
                                 
@@ -263,7 +259,7 @@ struct PlanView: View {
                             }
                             .padding(.horizontal, 12)
                             .background(Color.mcGray800)
-                            .foregroundColor(isImageLoaded ? Color.accentColor : Color.mcGray300)
+                            .foregroundColor(canLoadImages() ? Color.accentColor : Color.mcGray300)
                             .cornerRadius(40)
                             .padding(.horizontal, 10)
                         }
@@ -276,7 +272,6 @@ struct PlanView: View {
                             case .success(let urls):
                                 selectedImageURLs = urls
                                 loadImages()
-                                isImageLoaded = true
                             case .failure(let error):
                                 print("Failed to import files: \(error.localizedDescription)")
                             }
@@ -443,6 +438,24 @@ struct PlanView: View {
             // 생성된 플레이어를 리스트에 추가합니다.
             players.append(player)
         }
+    }
+    
+    func canLoadImages() -> Bool {
+        for player in players {
+            if player.profileImage.isEmpty || player.name.isEmpty {
+                return false
+            }
+        }
+        return !players.isEmpty
+    }
+    
+    func canLoadFiles() -> Bool {
+        for player in players {
+            if  player.name.isEmpty {
+                return false
+            }
+        }
+        return !players.isEmpty
     }
     
     func requestFileAccessPermission() {
