@@ -1,9 +1,3 @@
-//
-//  MainView.swift
-//  MungContest
-//
-//  Created by Woowon Kang on 6/1/24.
-//
 
 import SwiftUI
 

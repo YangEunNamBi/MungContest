@@ -37,14 +37,12 @@ struct RankListView: View {
                     HStack(alignment: .center){
                         Text("이름")
                             .customStyle()
-                        
                     }
                     
                     Spacer()
                     HStack(alignment: .center){
                         Text("현재 심박수")
                             .customStyle()
-                        
                     }
                     .padding(.horizontal, 45)
                     Spacer()
@@ -224,8 +222,6 @@ struct RankListView: View {
             resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
         )
         
-        
-        
         return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12, player13]
     }
 }
@@ -248,8 +244,6 @@ struct GridCellView: View {
             
         }
         .frame(maxWidth: .infinity)
-        //        .frame(maxHeight: .infinity) // 각 셀의 높이를 동적으로 조정
-        //        .aspectRatio(contentMode: .fill)
         .frame(height: 80)
         .background(Color.mcGray)
         .cornerRadius(20)
