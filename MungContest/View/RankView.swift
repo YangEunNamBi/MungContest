@@ -32,23 +32,23 @@ struct RankView: View {
                 Spacer()
             }
             
-            
             HStack(spacing: 20) {
                 ZStack {
                     Rectangle()
                         .foregroundColor(.mcGray)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
-                        
+                    
                     VStack {
-                        Text("⚠️")
-                            .font(.system(size: 28))
-                            .foregroundColor(.black)
+                        
+                        Image("1stUnion")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 36, height: 21 )
                         
                         VStack {
                             ZStack {
                                 Circle()
-                                    
                                 
                                 Image(systemName: "house")
                                     .foregroundColor(.black)
@@ -58,6 +58,9 @@ struct RankView: View {
                         .padding(.horizontal, 30)
                         
                         Text(players[0].name ?? "")
+                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
+                                .weight(.bold)
+                            )
                             .padding(.top, 10)
                     }
                     
@@ -67,16 +70,17 @@ struct RankView: View {
                         .foregroundColor(.mcGray)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
-                        
+                    
                     VStack {
-                        Text("⚠️")
-                            .font(.system(size: 28))
-                            .foregroundColor(.black)
+                        Image("2ndUnion")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 36, height: 21 )
                         
                         VStack {
                             ZStack {
                                 Circle()
-                                    
+                                
                                 
                                 Image(systemName: "house")
                                     .foregroundColor(.black)
@@ -86,6 +90,9 @@ struct RankView: View {
                         .padding(.horizontal, 30)
                         
                         Text(players[1].name ?? "")
+                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
+                                .weight(.bold)
+                            )
                             .padding(.top, 10)
                     }
                     
@@ -96,16 +103,16 @@ struct RankView: View {
                         .foregroundColor(.mcGray)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
-                        
+                    
                     VStack {
-                        Text("⚠️")
-                            .font(.system(size: 28))
-                            .foregroundColor(.black)
+                        Image("3rdUnion")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 36, height: 21 )
                         
                         VStack {
                             ZStack {
                                 Circle()
-                                    
                                 
                                 Image(systemName: "house")
                                     .foregroundColor(.black)
@@ -115,9 +122,11 @@ struct RankView: View {
                         .padding(.horizontal, 30)
                         
                         Text(players[2].name ?? "")
+                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
+                                .weight(.bold)
+                            )
                             .padding(.top, 10)
                     }
-                    
                 }
             }
             
@@ -127,7 +136,7 @@ struct RankView: View {
                         .weight(.bold)
                     )
                     .foregroundColor(Color.mcGray)
-                    .padding(.leading)
+                
                 Spacer()
             }
             
@@ -137,7 +146,7 @@ struct RankView: View {
                         .foregroundColor(.mcGray)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
-                        
+                    
                     VStack {
                         Text("⚠️")
                             .font(.system(size: 28))
@@ -146,7 +155,6 @@ struct RankView: View {
                         VStack {
                             ZStack {
                                 Circle()
-                                    
                                 
                                 Image(systemName: "house")
                                     .foregroundColor(.black)
@@ -156,16 +164,18 @@ struct RankView: View {
                         .padding(.horizontal, 30)
                         
                         Text(players[players.count-1].name ?? "")
+                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
+                                .weight(.bold)
+                            )
                             .padding(.top, 10)
                     }
-                    
                 }
                 ZStack {
                     Rectangle()
                         .foregroundColor(.mcGray)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
-                        
+                    
                     VStack {
                         Text("⚠️")
                             .font(.system(size: 28))
@@ -174,7 +184,6 @@ struct RankView: View {
                         VStack {
                             ZStack {
                                 Circle()
-                                    
                                 
                                 Image(systemName: "house")
                                     .foregroundColor(.black)
@@ -184,9 +193,11 @@ struct RankView: View {
                         .padding(.horizontal, 30)
                         
                         Text(players[players.count-2].name ?? "")
+                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
+                                .weight(.bold)
+                            )
                             .padding(.top, 10)
                     }
-                    
                 }
                 
                 ZStack {
@@ -194,7 +205,7 @@ struct RankView: View {
                         .foregroundColor(.mcGray)
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
-                        
+                    
                     VStack {
                         Text("⚠️")
                             .font(.system(size: 28))
@@ -203,7 +214,6 @@ struct RankView: View {
                         VStack {
                             ZStack {
                                 Circle()
-                                    
                                 
                                 Image(systemName: "house")
                                     .foregroundColor(.black)
@@ -213,17 +223,20 @@ struct RankView: View {
                         .padding(.horizontal, 30)
                         
                         Text(players[players.count-3].name ?? "")
+                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
+                                .weight(.bold)
+                            )
                             .padding(.top, 10)
                     }
                     
                 }
             }
-//            LazyHGrid(rows: columns, spacing: 15) {
-//                ForEach(players.suffix(3).reversed(), id: \.name) { player in
-//                    RankCellView(player: player)
-//                }
-//            }
-//            .padding()
+            //            LazyHGrid(rows: columns, spacing: 15) {
+            //                ForEach(players.suffix(3).reversed(), id: \.name) { player in
+            //                    RankCellView(player: player)
+            //                }
+            //            }
+            //            .padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -367,27 +380,24 @@ struct RankView: View {
     }
 }
 
-
-struct RankCellView: View {
-    
-    var player: Player
-    
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .fill()
-                .cornerRadius(10)
-            
-            VStack {
-                Text(player.name)
-                    .font(.headline)
-                    .foregroundColor(.black)
-                Text("Result: \(player.resultHeartrate)")
-                    .foregroundColor(.white)
-            }
-        }
-    }
-}
+//struct RankCellView: View {
+//
+//    var player: Player
+//
+//    var body: some View {
+//        ZStack {
+//            Rectangle()
+//                .fill()
+//                .cornerRadius(10)
+//
+//            VStack {
+//                Text(player.name)
+//                    .font(.headline)
+//                    .foregroundColor(.black)
+//            }
+//        }
+//    }
+//}
 
 struct RankView_Previews: PreviewProvider {
     static var previews: some View {
