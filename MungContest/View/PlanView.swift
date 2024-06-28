@@ -250,7 +250,7 @@ struct PlanView: View {
                                 
                                 Image(systemName: canLoadImages() ? "xmark" : "square.and.arrow.down")
                                     .resizable()
-                                    .aspectRatio(contentMode: .fit) 
+                                    .aspectRatio(contentMode: .fit)
                                     .bold()
                                     .frame(width: 18)
                                     .padding(.vertical, 12)
@@ -277,28 +277,9 @@ struct PlanView: View {
                             }
                         }
                         
-                        //MARK: - 명단과 이미지를 불러왔을 때 보는용도, 추후 삭제 바람
-//                        List(players, id: \.id) { player in
-//                            VStack {
-//                                if let uiImage = UIImage(data: player.profileImage) {
-//                                    Image(uiImage: uiImage)
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 50, height: 50)
-//                                        .clipShape(Circle())
-//                                        .padding(.trailing, 10)
-//                                }
-//                                VStack(alignment: .leading) {
-//                                    Text(player.name)
-//                                        .font(.headline)
-//                                    Text(player.comment)
-//                                        .font(.subheadline)
-//                                }
-//                            }
-//                        }
-                        
                     }
                     .foregroundStyle(Color.accentColor)
+                    .frame(height: 50)
                 }
                 .padding(.horizontal, 38)
                 Spacer()
@@ -419,31 +400,39 @@ struct PlanView: View {
     
     //MARK: - 이미지 불러오기
     func loadImages() {
-        
         for imageURL in selectedImageURLs {
             guard imageURL.startAccessingSecurityScopedResource() else {
                 return
             }
             
             defer { imageURL.stopAccessingSecurityScopedResource() }
+            
             guard let imageData = try? Data(contentsOf: imageURL) else {
                 print("Failed to load image data from URL: \(imageURL)")
                 continue
             }
-            let playerName = imageURL.lastPathComponent.replacingOccurrences(of: ".jpeg", with: "")
             
-            // 가져온 플레이어 이름으로 모델을 만듭니다.
-            let player = Player(name: playerName, profileImage: imageData, comment: "", defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
+            let playerName = imageURL.lastPathComponent.replacingOccurrences(of: ".JPEG", with: "")
             
-            // 생성된 플레이어를 리스트에 추가합니다.
-            players.append(player)
+            // Find existing player with matching name
+            if let existingPlayer = players.first(where: { $0.name == playerName }) {
+                // Update profileImage for the existing player
+                existingPlayer.profileImage = imageData
+                // Optionally save the updated player to your data store
+                savePlayer(existingPlayer)
+            } else {
+                print("No player found with name: \(playerName)")
+                // If no player found, you can choose to ignore or handle this case
+            }
         }
     }
+
     
     func canLoadImages() -> Bool {
         for player in players {
             if player.profileImage.isEmpty || player.name.isEmpty {
                 return false
+                print("둘 중 하나 없음")
             }
         }
         return !players.isEmpty
@@ -451,7 +440,7 @@ struct PlanView: View {
     
     func canLoadFiles() -> Bool {
         for player in players {
-            if  player.name.isEmpty {
+            if player.name.isEmpty {
                 return false
             }
         }
