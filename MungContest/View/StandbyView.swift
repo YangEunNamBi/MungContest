@@ -2,6 +2,8 @@ import SwiftUI
 
 struct StandbyView: View {
     @Environment(NavigationManager.self) var navigationManager
+    @Environment(\.modelContext) var modelContext
+    @State private var title: String = UserDefaults.standard.contestTitle
     
     @State private var currentIndex: Int?
     
@@ -19,16 +21,16 @@ struct StandbyView: View {
     private let animationDuration: CGFloat = 0.3
     @State private var scrollViewProxy: ScrollViewProxy?
     
-    static let dateformat: DateFormatter = {
+    private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY년 M월 d일"
         return formatter
     }()
-    
-    var today = Date()
-    
+
     var body: some View {
         let itemsTemp = itemsArray.flatMap { $0 }
+        
+        let today = dateFormatter.string(from: Date())
         
         //                VStack {
         //                    Button("대회 메인 화면으로") {
@@ -36,13 +38,46 @@ struct StandbyView: View {
         //                    }
         //                }
         VStack{
-            Text("\(today)")
-                .font(.largeTitle)
-                .fontWeight(.medium)
-                .frame(width: 978, height: 76)
-                .background(.gray)
-                .clipShape(Capsule())
-                .padding(.bottom, 64)
+            HStack(spacing: 0){
+                HStack(spacing: 12){
+                    Text("\(Image(systemName: "calendar"))")
+                        .foregroundStyle(.accent)
+                    Text("\(today)")
+                }
+                .padding(.horizontal, 30)
+                .padding(.vertical, 20)
+                
+                Rectangle()
+                    .frame(width: 1)
+                    .foregroundColor(.mcGray700)
+                
+                HStack(spacing: 12){
+                    Text("\(Image(systemName: "person.crop.circle"))")
+                        .foregroundStyle(.accent)
+                    Text("30명")
+                }
+                .padding(.horizontal, 30)
+                .padding(.vertical, 20)
+                
+                Rectangle()
+                    .frame(width: 1)
+                    .foregroundColor(.mcGray700)
+                
+                VStack {
+                    //                Text("\(title)")
+                    Text("원의 멍때리기 대회")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 30)
+                .padding(.vertical, 20)
+                
+            }
+            .font(.system(size: 28))
+            .fontWeight(.medium)
+            .frame(width: 978, height: 76)
+            .background(.mcGray800)
+            .clipShape(Capsule())
+            .padding(.bottom, 64)
             
             ScrollView(.horizontal) {
                 ScrollViewReader { proxy in
@@ -56,7 +91,7 @@ struct StandbyView: View {
                                     .clipShape(Circle())
                                     .overlay {
                                         Circle()
-                                            .stroke(i == currentIndex ? Color.yellow : Color.gray, lineWidth: 10)
+                                            .stroke(i == currentIndex ? Color.accent : Color.gray, lineWidth: 10)
                                     }
                                     .border(.white)
                             }
@@ -106,19 +141,23 @@ struct StandbyView: View {
             
             Button(action: {
             }, label: {
-                Text("심박수 입력하기")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                    .padding(.horizontal, 30)
-                    .padding(.vertical, 14)
-                    .background(.yellow)
-                    .clipShape(Capsule())
-                    .overlay(
-                        Capsule()
-                            .stroke(.pink, lineWidth: 1)
-                    )
+                HStack{
+                    Text("심박수 입력하기")
+                    Image(systemName: "pencil")
+                }
+                .font(.system(size: 24))
+                .bold()
+                .fontWeight(.bold)
+                .foregroundColor(.black)
             })
+            .padding(.horizontal, 30)
+            .padding(.vertical, 14)
+            .background(.accent)
+            .clipShape(Capsule())
+            .overlay(
+                Capsule()
+                    .stroke(.pink, lineWidth: 1)
+            )
             .padding(.top, 50)
         }
     }
