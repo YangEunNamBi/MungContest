@@ -63,6 +63,8 @@ struct RankListView: View {
                 LazyVGrid(columns: columns, spacing: 15) {
                     ForEach(Array(players[currentStartIndex..<min(currentStartIndex + 6, players.count)]), id: \.id) { player in
                         GridCellView(rank: players.firstIndex(where: { $0.id == player.id })! + 1, player: player)
+                        
+                        
                     }
                 }
                 .frame(maxHeight: .infinity)
@@ -93,7 +95,7 @@ struct RankListView: View {
         }
         
         let player1 = Player(
-            name: "Player 1",
+            name: "나다",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 1",
             defaultHeartrate: 70,
@@ -103,7 +105,7 @@ struct RankListView: View {
         )
         
         let player2 = Player(
-            name: "Player 2",
+            name: "마스",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 2",
             defaultHeartrate: 115,
@@ -113,7 +115,7 @@ struct RankListView: View {
         )
         
         let player3 = Player(
-            name: "Player 3",
+            name: "태오",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 3",
             defaultHeartrate: 80,
@@ -123,7 +125,7 @@ struct RankListView: View {
         )
         
         let player4 = Player(
-            name: "Player 4",
+            name: "라라",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 4",
             defaultHeartrate: 75,
@@ -133,7 +135,7 @@ struct RankListView: View {
         )
         
         let player5 = Player(
-            name: "Player 5",
+            name: "예",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 5",
             defaultHeartrate: 110,
@@ -143,7 +145,7 @@ struct RankListView: View {
         )
         
         let player6 = Player(
-            name: "Player 6",
+            name: "혜디",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 6",
             defaultHeartrate: 85,
@@ -153,7 +155,7 @@ struct RankListView: View {
         )
         
         let player7 = Player(
-            name: "Player 7",
+            name: "제니스",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 7",
             defaultHeartrate: 55,
@@ -163,7 +165,7 @@ struct RankListView: View {
         )
         
         let player8 = Player(
-            name: "Player 8",
+            name: "베로",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 8",
             defaultHeartrate:128,
@@ -173,7 +175,7 @@ struct RankListView: View {
         )
         
         let player9 = Player(
-            name: "Player 8",
+            name: "원",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 8",
             defaultHeartrate:128,
@@ -183,7 +185,7 @@ struct RankListView: View {
         )
         
         let player10 = Player(
-            name: "Player 8",
+            name: "하래",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 8",
             defaultHeartrate:128,
@@ -193,7 +195,7 @@ struct RankListView: View {
         )
         
         let player11 = Player(
-            name: "Player 8",
+            name: "자운드",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 8",
             defaultHeartrate:128,
@@ -203,7 +205,7 @@ struct RankListView: View {
         )
         
         let player12 = Player(
-            name: "Player 8",
+            name: "젠",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 8",
             defaultHeartrate:128,
@@ -213,7 +215,7 @@ struct RankListView: View {
         )
         
         let player13 = Player(
-            name: "Player 8",
+            name: "루시아",
             profileImage: Data(), // 실제 이미지 데이터로 대체 필요
             comment: "Comment 8",
             defaultHeartrate:128,
@@ -248,7 +250,7 @@ struct GridCellView: View {
         .frame(maxWidth: .infinity)
         //        .frame(maxHeight: .infinity) // 각 셀의 높이를 동적으로 조정
         //        .aspectRatio(contentMode: .fill)
-        .frame(height: 79)
+        .frame(height: 80)
         .background(Color.mcGray)
         .cornerRadius(20)
         
@@ -271,8 +273,11 @@ struct GridCellView: View {
     // 유저 이름
     func playerName() -> some View {
         VStack{
-            Text(player.name)
-                .font(.system(size: 20))
+            HStack {
+                Text(player.name)
+                    .font(.system(size: 20))
+            }
+            .frame(width: 60)
         }
     }
     

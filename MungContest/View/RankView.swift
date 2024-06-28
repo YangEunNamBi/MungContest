@@ -9,194 +9,382 @@ import SwiftUI
 
 struct RankView: View {
     
+    var players: [Player] = []
+    
+    let columns: [GridItem] = [
+        GridItem(.flexible())
+    ]
+    
+    init() {
+        players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
+    }
+    
     var body: some View {
-        VStack(spacing: 0){
-            VStack{
-                HStack{
-                    HStack{
-                        Text("상위 랭킹")
-                            .padding(.top, 30)
-                            .padding(.leading, 30)
-                            .bold()
-                            .font(.system(size: 16))
-                        
-                        Spacer()
-                    }
-                }
-                HStack{
-                    VStack{
-                        Spacer()
-                        Circle()
-                            .frame(width: 60, height: 60)
-                        
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 100, height: 125)
-                                .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
-                            
-                            Text("2")
-                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
-                                    .weight(.bold)
-                                )
-                                .foregroundColor(.black)
-                                .padding(.bottom, 60)
-                        }
-                    }
-                    VStack{
-                        Spacer()
-                        Circle()
-                            .frame(width: 60, height: 60)
-                        
-                        
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 100, height: 150)
-                                .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
-                            
-                            Text("1")
-                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
-                                    .weight(.bold)
-                                )
-                                .foregroundColor(.black)
-                                .padding(.bottom, 80)
-                        }
-                    }
-                    
-                    VStack{
-                        Spacer()
-                        Circle()
-                            .frame(width: 60, height: 60)
-                        
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 100, height: 100)
-                                .clipShape(CustomCorners(corners: [.topLeft, .topRight], radius: 10))
-                            
-                            Text("3")
-                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
-                                    .weight(.bold)
-                                )
-                                .foregroundColor(.black)
-                                .padding(.bottom, 40)
-                        }
-                    }
-                }
+        VStack {
+            HStack {
+                Text("순위권")
+                    .font(Font.custom("Spoqa Han Sans Neo", size: 16)
+                        .weight(.bold)
+                    )
+                    .foregroundColor(Color.mcGray)
+                    .padding(.leading)
+                
+                Spacer()
             }
             
-            Rectangle()
-                .frame(width: 400, height: 1)
-                .foregroundColor(Color.gray)
-                .background(DashedLine())
-//            Divider()
-//                .frame(width: 100)
             
-            VStack{
-                HStack{
-                    VStack{
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 100, height: 100)
-                                .clipShape(CustomCorners(corners: [.bottomLeft, .bottomRight], radius: 10))
-                            
-                            Text("3")
-                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
-                                    .weight(.bold)
-                                )
-                                .foregroundColor(.black)
-                                .padding(.top, 40)
-                            
-                            
+            HStack(spacing: 20) {
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.mcGray)
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(10)
+                        
+                    VStack {
+                        Text("⚠️")
+                            .font(.system(size: 28))
+                            .foregroundColor(.black)
+                        
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    
+                                
+                                Image(systemName: "house")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 80))
+                            }
                         }
+                        .padding(.horizontal, 30)
                         
-                        Circle()
-                            .frame(width: 60, height: 60)
-                        
-                        Spacer()
-                        
+                        Text(players[0].name ?? "")
+                            .padding(.top, 10)
                     }
-                    VStack{
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 100, height: 150)
-                                .clipShape(CustomCorners(corners: [.bottomLeft, .bottomRight], radius: 10))
-                            
-                            Text("1")
-                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
-                                    .weight(.bold)
-                                )
-                                .foregroundColor(.black)
-                                .padding(.top, 80)
+                    
+                }
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.mcGray)
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(10)
+                        
+                    VStack {
+                        Text("⚠️")
+                            .font(.system(size: 28))
+                            .foregroundColor(.black)
+                        
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    
+                                
+                                Image(systemName: "house")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 80))
+                            }
                         }
+                        .padding(.horizontal, 30)
                         
-                        Circle()
-                            .frame(width: 60, height: 60)
-                        
-                        Spacer()
-                        
+                        Text(players[1].name ?? "")
+                            .padding(.top, 10)
                     }
-                    VStack{
-                        
-                        ZStack {
-                            Rectangle()
-                                .frame(width: 100, height: 125)
-                                .clipShape(CustomCorners(corners: [.bottomLeft, .bottomRight], radius: 10))
-                            
-                            
-                            Text("2")
-                                . font(Font.custom("Spoqa Han Sans Neo", size: 24)
-                                    .weight(.bold)
-                                )
-                                .foregroundColor(.black)
-                                .padding(.top, 60)
-                        }
-                        Circle()
-                            .frame(width: 60, height: 60)
-                        
-                        Spacer()
-                    }
+                    
                 }
                 
-                HStack{
-                    Text("하위 랭킹")
-                        .padding(.leading, 30)
-                        .padding(.bottom, 30)
-                        .bold()
-                        .font(.system(size: 16))
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.mcGray)
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(10)
+                        
+                    VStack {
+                        Text("⚠️")
+                            .font(.system(size: 28))
+                            .foregroundColor(.black)
+                        
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    
+                                
+                                Image(systemName: "house")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 80))
+                            }
+                        }
+                        .padding(.horizontal, 30)
+                        
+                        Text(players[2].name ?? "")
+                            .padding(.top, 10)
+                    }
                     
-                    Spacer()
                 }
             }
-        }
-        .background(Color.mcGray)
-        .cornerRadius(30)
-    }
-}
-
-// Rectangle 특정모서리만 둥글게
-struct CustomCorners: Shape {
-    var corners: UIRectCorner
-    var radius: CGFloat
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(
-            roundedRect: rect,
-            byRoundingCorners: corners,
-            cornerRadii: CGSize(width: radius, height: radius)
-        )
-        return Path(path.cgPath)
-    }
-}
-
-struct DashedLine: View {
-    var body: some View {
-        GeometryReader { geometry in
-            Path { path in
-                let width = geometry.size.width
-                path.move(to: CGPoint(x: 0, y: 0))
-                path.addLine(to: CGPoint(x: width, y: 0))
+            
+            HStack {
+                Text("하위권")
+                    .font(Font.custom("Spoqa Han Sans Neo", size: 16)
+                        .weight(.bold)
+                    )
+                    .foregroundColor(Color.mcGray)
+                    .padding(.leading)
+                Spacer()
             }
-            .stroke(style: StrokeStyle(lineWidth: 1, dash: [5, 3]))
-            .foregroundColor(Color.gray)
+            
+            HStack(spacing: 20) {
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.mcGray)
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(10)
+                        
+                    VStack {
+                        Text("⚠️")
+                            .font(.system(size: 28))
+                            .foregroundColor(.black)
+                        
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    
+                                
+                                Image(systemName: "house")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 80))
+                            }
+                        }
+                        .padding(.horizontal, 30)
+                        
+                        Text(players[players.count-1].name ?? "")
+                            .padding(.top, 10)
+                    }
+                    
+                }
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.mcGray)
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(10)
+                        
+                    VStack {
+                        Text("⚠️")
+                            .font(.system(size: 28))
+                            .foregroundColor(.black)
+                        
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    
+                                
+                                Image(systemName: "house")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 80))
+                            }
+                        }
+                        .padding(.horizontal, 30)
+                        
+                        Text(players[players.count-2].name ?? "")
+                            .padding(.top, 10)
+                    }
+                    
+                }
+                
+                ZStack {
+                    Rectangle()
+                        .foregroundColor(.mcGray)
+                        .frame(maxWidth: .infinity)
+                        .cornerRadius(10)
+                        
+                    VStack {
+                        Text("⚠️")
+                            .font(.system(size: 28))
+                            .foregroundColor(.black)
+                        
+                        VStack {
+                            ZStack {
+                                Circle()
+                                    
+                                
+                                Image(systemName: "house")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 80))
+                            }
+                        }
+                        .padding(.horizontal, 30)
+                        
+                        Text(players[players.count-3].name ?? "")
+                            .padding(.top, 10)
+                    }
+                    
+                }
+            }
+//            LazyHGrid(rows: columns, spacing: 15) {
+//                ForEach(players.suffix(3).reversed(), id: \.name) { player in
+//                    RankCellView(player: player)
+//                }
+//            }
+//            .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    // 임시 데이터
+    func createDummyPlayers() -> [Player] {
+        func calculateDifferenceHeartrates(defaultHeartrate: Int, heartrates: [Int]) -> [Int] {
+            return heartrates.map { abs(defaultHeartrate - $0) }
+        }
+        
+        let player1 = Player(
+            name: "나다",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 1",
+            defaultHeartrate: 70,
+            heartrates: [70, 75, 73, 72],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 70, heartrates: [70, 75, 73, 72]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 70, heartrates: [70, 75, 73, 72]).reduce(0, +)
+        )
+        
+        let player2 = Player(
+            name: "마스",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 2",
+            defaultHeartrate: 115,
+            heartrates: [65, 68, 66, 67],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 115, heartrates: [65, 68, 66, 67]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 115, heartrates: [65, 68, 66, 67]).reduce(0, +)
+        )
+        
+        let player3 = Player(
+            name: "태오",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 3",
+            defaultHeartrate: 80,
+            heartrates: [80, 82, 81, 79],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 80, heartrates: [80, 82, 81, 79]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 80, heartrates: [80, 82, 81, 79]).reduce(0, +)
+        )
+        
+        let player4 = Player(
+            name: "라라",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 4",
+            defaultHeartrate: 75,
+            heartrates: [75, 77, 76, 78],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 75, heartrates: [75, 77, 76, 78]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 75, heartrates: [75, 77, 76, 78]).reduce(0, +)
+        )
+        
+        let player5 = Player(
+            name: "예",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 5",
+            defaultHeartrate: 110,
+            heartrates: [60, 62, 61, 63],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 110, heartrates: [60, 62, 61, 63]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 110, heartrates: [60, 62, 61, 63]).reduce(0, +)
+        )
+        
+        let player6 = Player(
+            name: "혜디",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 6",
+            defaultHeartrate: 85,
+            heartrates: [85, 87, 86, 88],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 85, heartrates: [85, 87, 86, 88]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 85, heartrates: [85, 87, 86, 88]).reduce(0, +)
+        )
+        
+        let player7 = Player(
+            name: "제니스",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 7",
+            defaultHeartrate: 55,
+            heartrates: [55, 57, 56, 58],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 55, heartrates: [55, 57, 56, 58]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 55, heartrates: [55, 57, 56, 58]).reduce(0, +)
+        )
+        
+        let player8 = Player(
+            name: "베로",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player9 = Player(
+            name: "원",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player10 = Player(
+            name: "하래",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player11 = Player(
+            name: "자운드",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player12 = Player(
+            name: "젠",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        
+        let player13 = Player(
+            name: "루시아",
+            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
+            comment: "Comment 8",
+            defaultHeartrate:128,
+            heartrates: [90, 92, 91, 93],
+            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
+            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
+        )
+        return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12, player13]
+    }
+}
+
+
+struct RankCellView: View {
+    
+    var player: Player
+    
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill()
+                .cornerRadius(10)
+            
+            VStack {
+                Text(player.name)
+                    .font(.headline)
+                    .foregroundColor(.black)
+                Text("Result: \(player.resultHeartrate)")
+                    .foregroundColor(.white)
+            }
         }
     }
 }
