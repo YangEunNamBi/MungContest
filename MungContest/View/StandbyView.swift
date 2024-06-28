@@ -7,13 +7,13 @@ struct StandbyView: View {
     
     @State private var currentIndex: Int?
     
-    private let images: [String] = ["jen", "junyo", "mars", "won", "hash"]
+    private let images: [String] = ["junyo", "won", "jen", "hash", "mars"]
     var dummieData : [Player] = [
-        Player(name: "준요", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "원", profileImage: Data(), comment: "내가 준요는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "젠", profileImage: Data(), comment: "내가 원은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "해시", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "마스", profileImage: Data(), comment: "내가 해시는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0)
+        Player(name: "준요", profileImage: Data(), comment: "준요의 코멘트!!!!는 짧게", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
+        Player(name: "원", profileImage: Data(), comment: "원의 멍 때리기 대회 드디어 공개!! 두두둥", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
+        Player(name: "젠", profileImage: Data(), comment: "젠의 멍 때리기 대회 드디어 공개 오늘의 멍 우승자는 젠이다!", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
+        Player(name: "해시", profileImage: Data(), comment: "정해시의 멍 때리기 대회 드디어 공개 오늘의 멍 우승자는 해시다!", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
+        Player(name: "마스", profileImage: Data(), comment: "마스의 코멘트!!!!는 길어요 ~~~", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0)
     ]
     
     @State private var itemsArray: [[Player]] = []
@@ -26,7 +26,7 @@ struct StandbyView: View {
         formatter.dateFormat = "YYYY년 M월 d일"
         return formatter
     }()
-
+    
     var body: some View {
         let itemsTemp = itemsArray.flatMap { $0 }
         
@@ -96,6 +96,40 @@ struct StandbyView: View {
             }
             .padding(.bottom, 64)
             
+            //MARK: 말풍선
+            //TODO: 말풍선 뾰족 삼각형 넣기
+            //TODO: 따옴표 변경
+            if let index = currentIndex {
+                /// images만 3배 늘리고 dummieData는 그대로 둬서 currentIndex를 dummieData에 적용할 수 없음
+                /// realIndex 임시로 넣어줌
+                let realIndex = index % dummieData.count
+                
+                HStack(alignment: .top){
+                    Image(systemName: "quote.opening")
+                        .foregroundColor(.mcGray500)
+                    
+                    VStack(alignment: .leading, spacing: 6){
+                        Text(dummieData[realIndex].name)
+                            .font(.system(size: 16))
+                            .fontWeight(.bold)
+                            .foregroundColor(.mcGray500)
+                        
+                        Text(dummieData[realIndex].comment)
+                            .font(.system(size: 20))
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                    }
+                    
+                    Image(systemName: "quote.closing")
+                        .foregroundColor(.mcGray500)
+                }
+                    .padding(.horizontal, 40)
+                    .padding(.vertical, 16)
+                    .background(.white)
+                    .clipShape(Capsule())
+                }
+          
+            
             ScrollView(.horizontal) {
                 ScrollViewReader { proxy in
                     HStack(alignment: .center, spacing: 0) {
@@ -150,11 +184,11 @@ struct StandbyView: View {
                 }
             }
             .onReceive(timer) { _ in
-                          guard let currentIndex = currentIndex else { return }
-                          let itemCount = dummieData.count
-                          let newIndex = (currentIndex + 1) % (itemCount * 3)
-                          self.currentIndex = newIndex
-                      }
+                guard let currentIndex = currentIndex else { return }
+                let itemCount = dummieData.count
+                let newIndex = (currentIndex + 1) % (itemCount * 3)
+                self.currentIndex = newIndex
+            }
             
             Button(action: {
             }, label: {
