@@ -38,45 +38,62 @@ struct StandbyView: View {
         //                    }
         //                }
         VStack{
-            HStack(spacing: 0){
-                HStack(spacing: 12){
-                    Text("\(Image(systemName: "calendar"))")
-                        .foregroundStyle(.accent)
-                    Text("\(today)")
+            HStack(spacing: 30) {
+                //MARK: 대회 정보 상단바
+                HStack(spacing: 0){
+                    HStack(spacing: 12){
+                        Text("\(Image(systemName: "calendar"))")
+                            .foregroundStyle(.accent)
+                        Text("\(today)")
+                    }
+                    .padding(.horizontal, 30)
+                    .padding(.vertical, 20)
+                    
+                    Rectangle()
+                        .frame(width: 1)
+                        .foregroundColor(.mcGray700)
+                    
+                    HStack(spacing: 12){
+                        Text("\(Image(systemName: "person.crop.circle"))")
+                            .foregroundStyle(.accent)
+                        Text("30명")
+                    }
+                    .padding(.horizontal, 30)
+                    .padding(.vertical, 20)
+                    
+                    Rectangle()
+                        .frame(width: 1)
+                        .foregroundColor(.mcGray700)
+                    
+                    VStack {
+                        //                Text("\(title)")
+                        Text("원의 멍때리기 대회")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 30)
+                    .padding(.vertical, 20)
+                    
                 }
-                .padding(.horizontal, 30)
-                .padding(.vertical, 20)
+                .font(.system(size: 28))
+                .fontWeight(.medium)
+                .frame(width: 978, height: 76)
+                .background(.mcGray800)
+                .clipShape(Capsule())
                 
-                Rectangle()
-                    .frame(width: 1)
-                    .foregroundColor(.mcGray700)
-                
-                HStack(spacing: 12){
-                    Text("\(Image(systemName: "person.crop.circle"))")
-                        .foregroundStyle(.accent)
-                    Text("30명")
-                }
-                .padding(.horizontal, 30)
-                .padding(.vertical, 20)
-                
-                Rectangle()
-                    .frame(width: 1)
-                    .foregroundColor(.mcGray700)
-                
-                VStack {
-                    //                Text("\(title)")
-                    Text("원의 멍때리기 대회")
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 30)
-                .padding(.vertical, 20)
-                
+                //MARK: 새로운 참가자 추가 버튼
+                Button(action: {
+                }, label: {
+                    HStack{
+                        Image(systemName: "person.crop.circle.badge.plus")
+                    }
+                    .font(.system(size: 28))
+                    .fontWeight(.bold)
+                    .foregroundColor(.accent)
+                })
+                .frame(width: 76, height: 76)
+                .background(.mcGray800)
+                .clipShape(Circle())
             }
-            .font(.system(size: 28))
-            .fontWeight(.medium)
-            .frame(width: 978, height: 76)
-            .background(.mcGray800)
-            .clipShape(Capsule())
             .padding(.bottom, 64)
             
             ScrollView(.horizontal) {
