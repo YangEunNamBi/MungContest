@@ -137,7 +137,7 @@ struct StandbyView: View {
                 ScrollViewReader { proxy in
                     HStack(spacing: 0) {
                         ForEach(0..<itemsTemp.count, id: \.self) { i in
-                            if let image = UIImage(data: players[i % images.count].profileImage){
+                            if let image = UIImage(data: players[i % players.count].profileImage){
                                 Image(uiImage: image)
                                     .resizable()
                                     .scaledToFit()
@@ -191,10 +191,11 @@ struct StandbyView: View {
             
             //MARK: - 심박수 입력 버튼
             Button(action: {
+                navigationManager.push(to: .main)
             }, label: {
                 HStack{
-                    Text("심박수 입력하기")
-                    Image(systemName: "pencil")
+                    Text("대회 시작하기")
+                    Image(systemName: "arrowtriangle.right.fill")
                 }
                 .font(.system(size: 24))
                 .bold()
