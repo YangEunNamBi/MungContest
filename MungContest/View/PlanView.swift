@@ -10,7 +10,7 @@ import SwiftUI
 struct PlanView: View {
     @Environment(NavigationManager.self) var navigationManager
     @Environment(\.modelContext) var modelContext
-    @State private var title: String = UserDefaults.standard.contestTitle
+    @State private var title: String = ""
     @State var hours: Int = 0
     @State var minutes: Int = 0
     @State private var measurementCount: Int = {
@@ -35,7 +35,7 @@ struct PlanView: View {
                     RoundedRectangle(cornerRadius: 40)
                         .fill(Color.mcGray800)
                 )
-                .padding(.horizontal, 50)
+                .padding(.horizontal, 30)
             
             HStack {
                 Group {
@@ -293,6 +293,7 @@ struct PlanView: View {
                 Button {
                     saveTime(hours: hours, minutes: minutes)
                     print("\(hours), \(minutes),")
+                    UserDefaults.standard.contestTitle = title
                     navigationManager.push(to: .standby)
                 } label: {
                     HStack {
