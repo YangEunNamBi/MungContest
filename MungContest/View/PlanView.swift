@@ -151,7 +151,7 @@ struct PlanView: View {
                                     .overlay {
                                         Text("O")
                                             .font(.custom("Poppins-Regular", size: 64))
-                                            .foregroundColor(isRandom ? .black : .white)
+                                            .foregroundColor(isRandom ? .black : .mcGray300)
                                     }
                             }
                             
@@ -167,7 +167,7 @@ struct PlanView: View {
                                     .overlay {
                                         Text("X")
                                             .font(.custom("Poppins-Regular", size: 64))
-                                            .foregroundColor(isRandom ? .white : .black)
+                                            .foregroundColor(isRandom ? .mcGray300 : .black)
                                     }
                             }
                         }
@@ -198,16 +198,16 @@ struct PlanView: View {
                             HStack {
                                 Spacer().frame(width: 12)
                                 
-                                Text("구글 폼 불러오기")
+                                Text(canLoadFiles() ? "\(players.count)명의 참가자 명단 불러오기 완료" : "참가자 명단 불러오기")
                                     .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
-                                
+                                    
                                 Spacer().frame(width: 18)
                                 
-                                Image(systemName: "square.and.arrow.down")
+                                Image(systemName: canLoadFiles() ? "xmark" : "square.and.arrow.down")
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .bold()
-                                    .scaledToFit()
                                     .frame(width: 18)
                                     .padding(.vertical, 12)
                                 
@@ -215,6 +215,7 @@ struct PlanView: View {
                             }
                             .padding(.horizontal, 12)
                             .background(Color.mcGray800)
+                            .foregroundColor(canLoadFiles() ? Color.accentColor : Color.mcGray300)
                             .cornerRadius(40)
                             .padding(.horizontal, 10)
                         }
@@ -233,24 +234,24 @@ struct PlanView: View {
                             }
                         }
                         
+                        
                         Button(action: {
                             requestFileAccessPermission()
                             isShowingFileImage.toggle()
-                            
                         }) {
                             HStack {
                                 Spacer().frame(width: 12)
                                 
-                                Text("참가자 이미지 불러오기")
+                                Text(canLoadImages() ? "\(players.count)명의 참가자 불러오기 완료" : "참가자 이미지 불러오기")
                                     .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
                                 
                                 Spacer().frame(width: 18)
                                 
-                                Image(systemName: "square.and.arrow.down")
+                                Image(systemName: canLoadImages() ? "xmark" : "square.and.arrow.down")
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .bold()
-                                    .scaledToFit()
                                     .frame(width: 18)
                                     .padding(.vertical, 12)
                                 
@@ -258,6 +259,7 @@ struct PlanView: View {
                             }
                             .padding(.horizontal, 12)
                             .background(Color.mcGray800)
+                            .foregroundColor(canLoadImages() ? Color.accentColor : Color.mcGray300)
                             .cornerRadius(40)
                             .padding(.horizontal, 10)
                         }
@@ -275,28 +277,9 @@ struct PlanView: View {
                             }
                         }
                         
-                        //MARK: - 명단과 이미지를 불러왔을 때 보는용도, 추후 삭제 바람
-//                        List(players, id: \.id) { player in
-//                            VStack {
-//                                if let uiImage = UIImage(data: player.profileImage) {
-//                                    Image(uiImage: uiImage)
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 50, height: 50)
-//                                        .clipShape(Circle())
-//                                        .padding(.trailing, 10)
-//                                }
-//                                VStack(alignment: .leading) {
-//                                    Text(player.name)
-//                                        .font(.headline)
-//                                    Text(player.comment)
-//                                        .font(.subheadline)
-//                                }
-//                            }
-//                        }
-                        
                     }
                     .foregroundStyle(Color.accentColor)
+                    .frame(height: 50)
                 }
                 .padding(.horizontal, 38)
                 Spacer()
@@ -417,25 +400,47 @@ struct PlanView: View {
     
     //MARK: - 이미지 불러오기
     func loadImages() {
-        
         for imageURL in selectedImageURLs {
             guard imageURL.startAccessingSecurityScopedResource() else {
                 return
             }
             
             defer { imageURL.stopAccessingSecurityScopedResource() }
+            
             guard let imageData = try? Data(contentsOf: imageURL) else {
                 print("Failed to load image data from URL: \(imageURL)")
                 continue
             }
-            let playerName = imageURL.lastPathComponent.replacingOccurrences(of: ".jpeg", with: "")
             
-            // 가져온 플레이어 이름으로 모델을 만듭니다.
-            let player = Player(name: playerName, profileImage: imageData, comment: "", defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
-            
-            // 생성된 플레이어를 리스트에 추가합니다.
-            players.append(player)
+            let playerName = imageURL.lastPathComponent.split(separator: ".").dropLast().joined(separator: ".")
+
+            if let existingPlayer = players.first(where: { $0.name == playerName }) {
+                existingPlayer.profileImage = imageData
+                savePlayer(existingPlayer)
+            } else {
+                print("No player found with name: \(playerName)")
+            }
         }
+    }
+
+    
+    func canLoadImages() -> Bool {
+        for player in players {
+            if player.profileImage.isEmpty || player.name.isEmpty {
+                return false
+                print("둘 중 하나 없음")
+            }
+        }
+        return !players.isEmpty
+    }
+    
+    func canLoadFiles() -> Bool {
+        for player in players {
+            if player.name.isEmpty {
+                return false
+            }
+        }
+        return !players.isEmpty
     }
     
     func requestFileAccessPermission() {
