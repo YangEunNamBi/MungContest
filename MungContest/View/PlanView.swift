@@ -412,17 +412,13 @@ struct PlanView: View {
                 continue
             }
             
-            let playerName = imageURL.lastPathComponent.replacingOccurrences(of: ".JPEG", with: "")
-            
-            // Find existing player with matching name
+            let playerName = imageURL.lastPathComponent.split(separator: ".").dropLast().joined(separator: ".")
+
             if let existingPlayer = players.first(where: { $0.name == playerName }) {
-                // Update profileImage for the existing player
                 existingPlayer.profileImage = imageData
-                // Optionally save the updated player to your data store
                 savePlayer(existingPlayer)
             } else {
                 print("No player found with name: \(playerName)")
-                // If no player found, you can choose to ignore or handle this case
             }
         }
     }
