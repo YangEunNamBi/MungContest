@@ -167,7 +167,7 @@ struct PlanView: View {
                                     .overlay {
                                         Text("X")
                                             .font(.custom("Poppins-Regular", size: 64))
-                                            .foregroundColor(isRandom ? .white : .black)
+                                            .foregroundColor(isRandom ? .mcGray300 : .black)
                                     }
                             }
                         }
