@@ -28,12 +28,12 @@ struct StandbyView: View {
     }()
     
     var body: some View {
-        let itemsTemp = itemsArray.flatMap { $0 }
+        var itemsTemp = itemsArray.flatMap { $0 }
         
         let today = dateFormatter.string(from: Date())
         
         //                VStack {
-        //                    Button("대회 메인 화면으로") {
+        //                    Button("대회 메인 화면으로") {itemsTemp
         //                        navigationManager.push(to: .main)
         //                    }
         //                }
@@ -111,12 +111,12 @@ struct StandbyView: View {
                         VStack(alignment: .leading, spacing: 6){
                             Text(dummieData[realIndex].name)
                                 .font(.system(size: 16))
-                                .fontWeight(.bold)
+                                .fontWeight(.medium)
                                 .foregroundColor(.mcGray500)
                             
                             Text(dummieData[realIndex].comment)
                                 .font(.system(size: 20))
-                                .fontWeight(.bold)
+                                .fontWeight(.medium)
                                 .foregroundColor(.black)
                         }
                         
@@ -135,25 +135,30 @@ struct StandbyView: View {
                 }
             }
             
-            
+            //MARK: 참가자 이미지 스크롤
             ScrollView(.horizontal) {
                 ScrollViewReader { proxy in
                     HStack(alignment: .center, spacing: 0) {
                         ForEach(0..<itemsTemp.count, id: \.self) { i in
-                            VStack{
-                                Image(images[i % images.count])
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 260, height: 260)
-                                    .clipShape(Circle())
-                                    .overlay {
-                                        Circle()
-                                            .stroke(i == currentIndex ? Color.accent : Color.gray, lineWidth: 10)
-                                    }
-//                                    .border(.white)
-                            }
-                            .frame(width: 280, height: 280)
-//                            .border(.white)
+                            Image(images[i % images.count])
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 260, height: 260)
+                                .clipShape(Circle())
+                                .overlay {
+                                    Circle()
+                                        .stroke(i == currentIndex ? Color.accent : Color.gray, lineWidth: 6)
+                                        .stroke(i == currentIndex ? Color.accent.opacity(0.3) : Color.clear, lineWidth: i == currentIndex ? 25 : 0)
+                                        .stroke(i == currentIndex ? Color.accent.opacity(0.2) : Color.clear, lineWidth: i == currentIndex ? 40 : 0)
+                                }
+                                .frame(width: 280, height: 321)
+                        }
+                    }
+                    .onChange(of: currentIndex) {
+                        guard let currentIndex = currentIndex else { return }
+                        withAnimation {
+                            // Scroll to the currentIndex, and adjust to center
+                            proxy.scrollTo(currentIndex, anchor: .center)
                         }
                     }
                 }
@@ -169,23 +174,24 @@ struct StandbyView: View {
                 print(currentIndex)
                 let itemCount = dummieData.count
                 
-                // 첫번째 배열의 마지막일 때 (좌측으로 스크롤)
-                if currentIndex < itemCount  {
-                    print("첫번째 배열의 마지막이다")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
-                        itemsArray.removeLast()
-                        itemsArray.insert(dummieData, at: 0)
-                        self.currentIndex = currentIndex + itemCount
-                    }
-                }
+//                // 첫번째 배열의 마지막일 때 (좌측으로 스크롤)
+//                if currentIndex < itemCount  {
+//                    print("첫번째 배열의 마지막이다")
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+//                        itemsTemp.removeLast()
+//                        itemsTemp.insert(contentsOf: dummieData, at: 0)
+//                        self.currentIndex = currentIndex + itemCount
+//                    }
+//                }
                 
                 // 마지막 배열의 첫번째일 때 (우측으로 스크롤)
                 if currentIndex >= itemCount * 2 {
                     print("마지막 배열의 첫번째다")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
-                        itemsArray.removeFirst()
-                        itemsArray.append(dummieData)
-                        self.currentIndex = currentIndex - itemCount
+                        let removedElement = itemsTemp.removeFirst()
+                        itemsTemp.append(removedElement)
+                        print(itemsTemp)
+//                        self.currentIndex = currentIndex - itemCount
                     }
                 }
             }
@@ -196,6 +202,7 @@ struct StandbyView: View {
                 self.currentIndex = newIndex
             }
             
+            //MARK: 심박수 입력 버튼
             Button(action: {
             }, label: {
                 HStack{
