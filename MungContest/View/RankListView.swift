@@ -13,8 +13,9 @@ struct RankListView: View {
     @State private var previousRanks: [UUID: Int] = [:] // Player들의 이전 순위 배열
     
     var players: [Player] = [] // 임시 더미 데이터
-    // resultHeartrate를 기준으로 계속 정렬해서 초기화
+    
     init() {
+        // resultHeartrate를 기준으로 계속 정렬해서 초기화
         players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
     }
     
