@@ -137,7 +137,7 @@ struct StandbyView: View {
                 ScrollViewReader { proxy in
                     HStack(spacing: 0) {
                         ForEach(0..<itemsTemp.count, id: \.self) { i in
-                            if let image = UIImage(data: players[i % images.count].profileImage){
+                            if let image = UIImage(data: players[i % players.count].profileImage){
                                 Image(uiImage: image)
                                     .resizable()
                                     .scaledToFit()
