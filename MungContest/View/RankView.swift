@@ -389,16 +389,7 @@ struct RankView: View {
             resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
         )
         
-        let player13 = Player(
-            name: "루시아",
-            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
-            comment: "Comment 8",
-            defaultHeartrate:128,
-            heartrates: [90, 92, 91, 93],
-            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
-            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
-        )
-        return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12, player13]
+        return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12]
     }
 }
 
