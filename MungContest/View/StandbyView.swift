@@ -191,10 +191,11 @@ struct StandbyView: View {
             
             //MARK: - 심박수 입력 버튼
             Button(action: {
+                navigationManager.push(to: .main)
             }, label: {
                 HStack{
-                    Text("심박수 입력하기")
-                    Image(systemName: "pencil")
+                    Text("대회 시작하기")
+                    Image(systemName: "arrowtriangle.right.fill")
                 }
                 .font(.system(size: 24))
                 .bold()
