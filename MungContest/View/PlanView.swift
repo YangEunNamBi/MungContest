@@ -381,6 +381,10 @@ struct PlanView: View {
                 print("Parsed Player: \(name), \(comment)")
                 
                 let player = Player(name: name, profileImage: Data(), comment: comment, defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
+                for _ in 1...measurementCount{
+                    player.heartrates.append(0)
+                    player.differenceHeartrates.append(0)
+                }
                 DispatchQueue.main.async {
                     players.append(player)
                 }
