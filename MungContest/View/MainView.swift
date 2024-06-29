@@ -9,14 +9,14 @@ struct MainView: View {
     @State private var selectedSegment = 0
     private let segments = ["chart.bar.fill", "tablecells.badge.ellipsis"]
     
+    @State private var hour: Int = 0 // UserDefaults의 시간을 받을 변수
+    @State private var minute: Int = 0 // UserDefaults의 분을 받을 변수
+    @State private var totalSeconds: Int = 0 // hour&minute를 초로환산해서 담을 변수
+    
     // MARK: 프로그레스 바 ( 타이머 )
     @State private var time: Double = 0
     @State private var initialTime: Double = 0
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // every 1 = 1초마다
-    
-    @State private var hour: Int = 0
-    @State private var minute: Int = 0
-    @State private var totalSeconds: Int = 0 // 이걸 나중에 time변수로 넣어야함
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // 1초마다
     
     var body: some View {
         VStack{
@@ -46,7 +46,6 @@ struct MainView: View {
                     .font(.system(size: 28))
                     .bold()
                 Spacer()
-                
             }
             
             HStack{
@@ -62,11 +61,11 @@ struct MainView: View {
                 
                 HStack{
                     Image(systemName: "timer")
-                    Text(formatTime(seconds: Int(time))) // 남은시간 Text
+                    
+                    Text("- \(formatTime(seconds: Int(time)))") // 남은시간 Text
                         .font(.system(size: 14))
                         .bold()
-                        .frame(width: 50)
-                    
+                        .frame(width: 80)
                 }
                 .padding(.leading)
             }
@@ -80,11 +79,11 @@ struct MainView: View {
                 }
             }
             .padding(.top)
-            
         }
         .padding(.horizontal, 50)
-        //       .padding(.top, 50) // Navigation영역이랑과의 Padding 값
-        .onAppear { /// UserDefaults에서 대회 시간받아서 초로 환산
+        //        .padding(.top, 50) // Navigation영역이랑과의 Padding 값
+        .onAppear {
+            // UserDefaults에서 대회 시간받아서 초로 환산
             loadSavedTime()
             calculateTotalSeconds()
             time = Double(totalSeconds)
@@ -103,13 +102,19 @@ struct MainView: View {
         totalSeconds = hour * 60 * 60 + minute * 60
     }
     
-    // MARK: 남은 시간 Text - 분&초로 변형
+    // MARK: 대회 남은 시간 Text - 시간:분:초로 변형
     private func formatTime(seconds: Int) -> String {
-        let minutes = seconds / 60
-        let remainingSeconds = seconds % 60
-        return String(format: "%02d:%02d", minutes, remainingSeconds)
+        if seconds >= 3600 {
+            let hours = seconds / 3600
+            let minutes = (seconds % 3600) / 60
+            let remainingSeconds = seconds % 60
+            return String(format: "%02d:%02d:%02d", hours, minutes, remainingSeconds)
+        } else {
+            let minutes = seconds / 60
+            let remainingSeconds = seconds % 60
+            return String(format: "%02d:%02d", minutes, remainingSeconds)
+        }
     }
-    
 }
 
 // MARK: ProgressBar

@@ -12,13 +12,11 @@ struct RankView: View {
     
     var players: [Player] = []
     
-    let columns: [GridItem] = [
-        GridItem(.flexible())
-    ]
-    
     init() {
         players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
     }
+    
+    let columns: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
         VStack {
@@ -33,15 +31,21 @@ struct RankView: View {
                 Spacer()
             }
             
+            // 상위권 1위 ~ 3위
             HStack(spacing: 20) {
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray800)
+                        .fill(
+                               LinearGradient(
+                                gradient: Gradient(colors: [Color(hex: "#FFF7AB").opacity(0.2), Color(hex: "#FFFFFF").opacity(0.2)]),
+                                   startPoint: .topLeading,
+                                   endPoint: .bottomTrailing
+                               )
+                           )
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
                     VStack {
-                        
                         Image("1stUnion")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -69,7 +73,13 @@ struct RankView: View {
                 }
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray800)
+                        .fill(
+                               LinearGradient(
+                                gradient: Gradient(colors: [Color(hex: "#FFFFFF").opacity(0.2), Color(hex: "#AAAAAA").opacity(0.2)]),
+                                   startPoint: .topLeading,
+                                   endPoint: .bottomTrailing
+                               )
+                           )
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
@@ -82,7 +92,6 @@ struct RankView: View {
                         VStack {
                             ZStack {
                                 Circle()
-                                
                                 
                                 Image(systemName: "house")
                                     .foregroundColor(.black)
@@ -98,12 +107,17 @@ struct RankView: View {
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
-                    
                 }
                 
                 ZStack {
                     Rectangle()
-                        .foregroundColor(.mcGray800)
+                        .fill(
+                               LinearGradient(
+                                gradient: Gradient(colors: [Color(hex: "#CCB17F").opacity(0.2), Color(hex: "#FFFFFF").opacity(0.2)]),
+                                   startPoint: .topLeading,
+                                   endPoint: .bottomTrailing
+                               )
+                           )
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
                     
@@ -145,6 +159,7 @@ struct RankView: View {
                 Spacer()
             }
             
+            // 하위권 3명
             HStack(spacing: 20) {
                 ZStack {
                     Rectangle()
@@ -236,7 +251,6 @@ struct RankView: View {
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
-                    
                 }
             }
             //            LazyHGrid(rows: columns, spacing: 15) {
@@ -375,16 +389,7 @@ struct RankView: View {
             resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
         )
         
-        let player13 = Player(
-            name: "루시아",
-            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
-            comment: "Comment 8",
-            defaultHeartrate:128,
-            heartrates: [90, 92, 91, 93],
-            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
-            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
-        )
-        return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12, player13]
+        return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12]
     }
 }
 
@@ -406,6 +411,33 @@ struct RankView: View {
 //        }
 //    }
 //}
+
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt64()
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue: Double(b) / 255,
+            opacity: Double(a) / 255
+        )
+    }
+}
 
 struct RankView_Previews: PreviewProvider {
     static var previews: some View {

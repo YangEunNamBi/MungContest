@@ -6,12 +6,16 @@ struct RankListView: View {
     
     let columns = [GridItem(.flexible())]
     
-    var players: [Player] = []
-    
     @State private var currentStartIndex = 0
-    private let interval: TimeInterval = 5.0
+    private let interval: TimeInterval = 5.0 // List 체인지 되는 시간(초)
+    
+    @State private var currentRanks: [UUID: Int] = [:] // Player들의 현재 순위 배열
+    @State private var previousRanks: [UUID: Int] = [:] // Player들의 이전 순위 배열
+    
+    var players: [Player] = [] // 임시 더미 데이터
     
     init() {
+        // resultHeartrate를 기준으로 계속 정렬해서 초기화
         players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
     }
     
@@ -58,20 +62,16 @@ struct RankListView: View {
                 
                 LazyVGrid(columns: columns, spacing: 15) {
                     ForEach(Array(players[currentStartIndex..<min(currentStartIndex + 6, players.count)]), id: \.id) { player in
-                        GridCellView(rank: players.firstIndex(where: { $0.id == player.id })! + 1, player: player)
-                        
-                        
+                        GridCellView(rank: players.firstIndex(where: { $0.id == player.id })! + 1, player: player, previousRank: previousRanks[player.id] ?? 0)
                     }
                 }
                 .frame(maxHeight: .infinity)
-                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .cornerRadius(30)
-        .onAppear {
+        .onAppear { // List 5초마다 계속 넘어가게
             Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
                 withAnimation {
                     if currentStartIndex + 6 >= players.count {
@@ -79,15 +79,25 @@ struct RankListView: View {
                     } else {
                         currentStartIndex += 6
                     }
+//                    updateRanks()
                 }
             }
+            updateRanks() // 순위 변동
+        }
+    }
+    
+    // 순위변동 함수
+    func updateRanks() {
+        previousRanks = currentRanks
+        for (index, player) in players.enumerated() {
+            currentRanks[player.id] = index + 1
         }
     }
     
     // 임시 데이터
     func createDummyPlayers() -> [Player] {
         func calculateDifferenceHeartrates(defaultHeartrate: Int, heartrates: [Int]) -> [Int] {
-            return heartrates.map { abs(defaultHeartrate - $0) }
+            return heartrates.map { abs(defaultHeartrate - $0) } // 절댓값으로 편차 계산
         }
         
         let player1 = Player(
@@ -210,24 +220,16 @@ struct RankListView: View {
             resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
         )
         
-        let player13 = Player(
-            name: "루시아",
-            profileImage: Data(), // 실제 이미지 데이터로 대체 필요
-            comment: "Comment 8",
-            defaultHeartrate:128,
-            heartrates: [90, 92, 91, 93],
-            differenceHeartrates: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]),
-            resultHeartrate: calculateDifferenceHeartrates(defaultHeartrate: 128, heartrates: [90, 92, 91, 93]).reduce(0, +)
-        )
-        
-        return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12, player13]
+        return [player1, player2, player3, player4, player5, player6, player7, player8,player9, player10, player11, player12]
     }
 }
 
 struct GridCellView: View {
     
-    let rank: Int
-    let player: Player
+    let rank: Int // 순위 표기
+    let player: Player // 데이터
+    
+    let previousRank: Int // 이전순위 (순위변동)
     
     var body: some View {
         HStack(spacing: 50){
@@ -239,7 +241,6 @@ struct GridCellView: View {
             playerName()
             playerBpm()
             totalDeviation()
-            
         }
         .frame(maxWidth: .infinity)
         .frame(height: 80)
@@ -249,16 +250,41 @@ struct GridCellView: View {
     }
     
     // 순위 변동
+    // func changeRank() -> some View {
+    //    VStack{
+    //        // 경우의 수에 따라 삼각형 모양을 다르게 설정해야함
+    //        Image(systemName: "arrowtriangle.down.fill")
+    //            .resizable()
+    //            .frame(width: 12, height: 12)
+    //            .foregroundColor(Color.mcBlue)
+    //
+    //        Text("3")
+    //            .font(.system(size: 12))
+    //    }
+    // }
+    
+    // 순위변동
     func changeRank() -> some View {
-        VStack{
-            // 경우의 수에 따라 삼각형 모양을 다르게 설정해야함
-            Image(systemName: "arrowtriangle.down.fill")
-                .resizable()
-                .frame(width: 12, height: 12)
-                .foregroundColor(Color.mcBlue)
-            
-            Text("3")
-                .font(.system(size: 12))
+        let rankChange = rank - previousRank
+        return HStack{
+            if rankChange > 0 { // 순위가 상승했다면
+                Image(systemName: "arrowtriangle.down.fill")
+                    .resizable()
+                    .frame(width: 12, height: 12)
+                    .foregroundColor(Color.mcBlue)
+                Text("\(rankChange)")
+                    .font(.system(size: 12))
+            } else if rankChange < 0 { // 순위가 하락했다면
+                Image(systemName: "arrowtriangle.up.fill")
+                    .resizable()
+                    .frame(width: 12, height: 12)
+                    .foregroundColor(.red)
+                Text("\(abs(rankChange))")
+                    .font(.system(size: 12))
+            } else { // 순위가 동일하다면
+                Text("-")
+                    .font(.system(size: 12))
+            }
         }
     }
     
