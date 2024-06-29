@@ -62,10 +62,10 @@ struct MainView: View {
                 
                 HStack{
                     Image(systemName: "timer")
-                    Text(formatTime(seconds: Int(time))) // 남은시간 Text
+                    Text("- \(formatTime(seconds: Int(time)))") // 남은시간 Text
                         .font(.system(size: 14))
                         .bold()
-                        .frame(width: 50)
+                        .frame(width: 70)
                     
                 }
                 .padding(.leading)
@@ -105,11 +105,17 @@ struct MainView: View {
     
     // MARK: 남은 시간 Text - 분&초로 변형
     private func formatTime(seconds: Int) -> String {
-        let minutes = seconds / 60
-        let remainingSeconds = seconds % 60
-        return String(format: "%02d:%02d", minutes, remainingSeconds)
+        if seconds >= 3600 {
+            let hours = seconds / 3600
+            let minutes = (seconds % 3600) / 60
+            let remainingSeconds = seconds % 60
+            return String(format: "%02d:%02d:%02d", hours, minutes, remainingSeconds)
+        } else {
+            let minutes = seconds / 60
+            let remainingSeconds = seconds % 60
+            return String(format: "%02d:%02d", minutes, remainingSeconds)
+        }
     }
-    
 }
 
 // MARK: ProgressBar

@@ -12,13 +12,11 @@ struct RankView: View {
     
     var players: [Player] = []
     
-    let columns: [GridItem] = [
-        GridItem(.flexible())
-    ]
-    
     init() {
         players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
     }
+    
+    let columns: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
         VStack {
@@ -33,6 +31,7 @@ struct RankView: View {
                 Spacer()
             }
             
+            // 상위권 1위 ~ 3위
             HStack(spacing: 20) {
                 ZStack {
                     Rectangle()
@@ -41,7 +40,6 @@ struct RankView: View {
                         .cornerRadius(10)
                     
                     VStack {
-                        
                         Image("1stUnion")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -83,7 +81,6 @@ struct RankView: View {
                             ZStack {
                                 Circle()
                                 
-                                
                                 Image(systemName: "house")
                                     .foregroundColor(.black)
                                     .font(.system(size: 80))
@@ -98,7 +95,6 @@ struct RankView: View {
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
-                    
                 }
                 
                 ZStack {
@@ -145,6 +141,7 @@ struct RankView: View {
                 Spacer()
             }
             
+            // 하위권 3명
             HStack(spacing: 20) {
                 ZStack {
                     Rectangle()
@@ -236,7 +233,6 @@ struct RankView: View {
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
-                    
                 }
             }
             //            LazyHGrid(rows: columns, spacing: 15) {
