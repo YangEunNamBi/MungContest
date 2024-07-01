@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F00C62B2C0BAE81007E03EB /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F00C62A2C0BAE81007E03EB /* RankView.swift */; };
 		1F00C62D2C0C411C007E03EB /* RankListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F00C62C2C0C411C007E03EB /* RankListView.swift */; };
+		1F969ED82C32BFC100A17637 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F969ED72C32BFC100A17637 /* Poppins-Bold.ttf */; };
 		510A28A22C0B61F70011A9A3 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A12C0B61F70011A9A3 /* NavigationManager.swift */; };
 		510A28A42C0B622D0011A9A3 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A32C0B622D0011A9A3 /* SplashView.swift */; };
 		510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A52C0B62800011A9A3 /* PlanView.swift */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		1F00C62A2C0BAE81007E03EB /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		1F00C62C2C0C411C007E03EB /* RankListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankListView.swift; sourceTree = "<group>"; };
+		1F969ED72C32BFC100A17637 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		510A28A12C0B61F70011A9A3 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		510A28A32C0B622D0011A9A3 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		510A28A52C0B62800011A9A3 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				510A39AE2C15B86F00C64B49 /* SpoqaHanSansNeo-Medium.otf */,
 				510A39B02C15B86F00C64B49 /* SpoqaHanSansNeo-Regular.otf */,
 				510A39AD2C15B86E00C64B49 /* SpoqaHanSansNeo-Thin.otf */,
+				1F969ED72C32BFC100A17637 /* Poppins-Bold.ttf */,
 				510A39AB2C15B84600C64B49 /* Poppins-Regular.ttf */,
 			);
 			path = Fonts;
@@ -220,6 +223,7 @@
 				510A39B52C15B87000C64B49 /* SpoqaHanSansNeo-Regular.otf in Resources */,
 				BDFCE3822C0B5D29004FAFAC /* .gitignore in Resources */,
 				BDFCE3782C0B5D03004FAFAC /* Assets.xcassets in Resources */,
+				1F969ED82C32BFC100A17637 /* Poppins-Bold.ttf in Resources */,
 				510A39AC2C15B84600C64B49 /* Poppins-Regular.ttf in Resources */,
 				510A39B32C15B87000C64B49 /* SpoqaHanSansNeo-Medium.otf in Resources */,
 			);

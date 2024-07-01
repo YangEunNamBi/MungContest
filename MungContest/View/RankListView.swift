@@ -21,25 +21,25 @@ struct RankListView: View {
         VStack{
             VStack{
                 HStack {
-                        Text("순위")
-                            .customStyle()
-                            .padding(.leading, 45)
-                            
-                        Text("순위 변동")
-                            .customStyle()
-                            .padding(.leading, 25)
-                   
-                        Text("이름")
-                            .customStyle()
-                            .padding(.leading, 50)
+                    Text("순위")
+                        .customStyle()
+                        .padding(.leading, 45)
                     
-                        Text("현재 심박수")
-                            .customStyle()
-                            .padding(.leading, 75)
-                   
-                        Text("편차 합계")
-                            .customStyle()
-                            .padding(.leading, 60)
+                    Text("순위 변동")
+                        .customStyle()
+                        .padding(.leading, 25)
+                    
+                    Text("이름")
+                        .customStyle()
+                        .padding(.leading, 60)
+                    
+                    Text("현재 심박수")
+                        .customStyle()
+                        .padding(.leading, 90)
+                    
+                    Text("편차 합계")
+                        .customStyle()
+                        .padding(.leading, 45)
                     
                     Spacer()
                 }
@@ -63,6 +63,7 @@ struct RankListView: View {
                 } else {
                     currentStartIndex += 6
                 }
+                
             }
             updateRanks() // 초기 순위 설정
         }
@@ -87,19 +88,31 @@ struct GridCellView: View {
     
     var body: some View {
         HStack {
-            Text("\(rank)") // 순위 1위부터
-                .font(.system(size: 20))
-                .bold()
-                .padding(.leading, 15)
+           
+                Text("\(rank)") // 순위 1위부터
+                    .font(.system(size: 20))
+                    .frame(width: 30, alignment: .center)
+                    .bold()
+                    .padding()
+          
+          
             
-            changeRank()
-                .padding(.leading, 35)
-            playerName()
-                .padding(.leading, 20)
-            playerBpm()
-                .padding(.leading, 20)
-            totalDeviation()
-                .padding(.leading, 20)
+            
+                changeRank()
+                    .padding()
+           
+            
+           
+                playerName()
+                    .padding()
+           
+           
+                playerBpm()
+           
+            
+          
+                totalDeviation()
+         
         }
         .frame(maxWidth: .infinity)
         .frame(height: 87)
@@ -138,11 +151,9 @@ struct GridCellView: View {
         VStack{
             HStack {
                 Text(player.name)
-                    .font(Font.custom("Spoqa Han Sans Neo", size: 20)
-                        .weight(.bold)
-                    )
+                    .font(Font.custom("SpoqaHanSansNeo-Bold", size: 20))
+                    .frame(width: 110, alignment: .center)
             }
-            .frame(width: 110)
         }
     }
     
@@ -169,7 +180,7 @@ struct GridCellView: View {
     func totalDeviation() -> some View {
         return ZStack {
             Capsule()
-                .frame(width: 52, height: 40)
+                .frame(width: 70, height: 40)
                 .foregroundColor(.black)
             
             HStack {

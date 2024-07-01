@@ -21,9 +21,7 @@ struct RankView: View {
         VStack {
             HStack {
                 Text("순위권")
-                    .font(Font.custom("Spoqa Han Sans Neo", size: 16)
-                        .weight(.bold)
-                    )
+                    .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                     .foregroundColor(Color.mcGray300)
                     .padding(.leading)
                 
@@ -55,7 +53,7 @@ struct RankView: View {
                         HStack{
                             Text("1")
                                 .fontWeight(.heavy)
-                                .font(Font.custom("Poppins-Regular", size: 24))
+                                .font(Font.custom("Poppins-Bold", size: 24))
                                 .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
                                 .padding(.leading, 20)
                                 .padding(.top, 10)
@@ -106,7 +104,7 @@ struct RankView: View {
                         HStack{
                             Text("2")
                                 .fontWeight(.heavy)
-                                .font(Font.custom("Poppins-Regular", size: 24))
+                                .font(Font.custom("Poppins-Bold", size: 24))
                                 .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
                                 .padding(.leading, 20)
                                 .padding(.top, 10)
@@ -156,7 +154,7 @@ struct RankView: View {
                         HStack{
                             Text("3")
                                 .fontWeight(.heavy)
-                                .font(Font.custom("Poppins-Regular", size: 24))
+                                .font(Font.custom("Poppins-Bold", size: 24))
                                 .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
                                 .padding(.leading, 20)
                                 .padding(.top, 10)
@@ -186,9 +184,7 @@ struct RankView: View {
             
             HStack {
                 Text("하위권")
-                    .font(Font.custom("Spoqa Han Sans Neo", size: 16)
-                        .weight(.bold)
-                    )
+                    .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                     .foregroundColor(Color.mcGray300)
                     .padding(.leading)
                 
