@@ -46,6 +46,15 @@ struct RankView: View {
                         .cornerRadius(10)
                     
                     VStack {
+                        HStack{
+                            Text("1")
+                                .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
+                                .font(.system(size: 24))
+                                .bold()
+                                .padding(.leading, 20)
+                                .padding(.top, 10)
+                            Spacer()
+                        }
                         Image("1stUnion")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -69,6 +78,7 @@ struct RankView: View {
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
+                    .padding(.bottom, 20)
                     
                 }
                 ZStack {
@@ -84,6 +94,15 @@ struct RankView: View {
                         .cornerRadius(10)
                     
                     VStack {
+                        HStack{
+                            Text("2")
+                                .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
+                                .font(.system(size: 24))
+                                .bold()
+                                .padding(.leading, 20)
+                                .padding(.top, 10)
+                            Spacer()
+                        }
                         Image("2ndUnion")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -107,6 +126,7 @@ struct RankView: View {
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
+                    .padding(.bottom, 20)
                 }
                 
                 ZStack {
@@ -122,6 +142,15 @@ struct RankView: View {
                         .cornerRadius(10)
                     
                     VStack {
+                        HStack{
+                            Text("3")
+                                .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
+                                .font(.system(size: 24))
+                                .bold()
+                                .padding(.leading, 20)
+                                .padding(.top, 10)
+                            Spacer()
+                        }
                         Image("3rdUnion")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -145,6 +174,7 @@ struct RankView: View {
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
+                    .padding(.bottom, 20)
                 }
             }
             

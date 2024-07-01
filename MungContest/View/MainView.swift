@@ -5,6 +5,9 @@ struct MainView: View {
     
     @Environment(NavigationManager.self) var navigationManager
     
+//  @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
+    @State private var contestTitle: String = ""
+    
     // MainView 세그먼트 컨트롤
     @State private var selectedSegment = 0
     private let segments = ["chart.bar.fill", "tablecells.badge.ellipsis"]
@@ -42,7 +45,7 @@ struct MainView: View {
             }
             
             HStack{
-                Text("원의 멍때리기 대회 ") // 나중에 제목 바인딩으로 받음
+                Text("대회이름 : \(contestTitle)")
                     .font(.system(size: 28))
                     .bold()
                 Spacer()
@@ -88,7 +91,13 @@ struct MainView: View {
             calculateTotalSeconds()
             time = Double(totalSeconds)
             initialTime = time
+            loadContestTitle()
         }
+    }
+    
+    // MARK: contestTitle - UserDefaults
+    private func loadContestTitle() {
+        contestTitle = UserDefaults.standard.string(forKey: "contestTitle") ?? "대회이름"
     }
     
     // MARK: UserDefaults에서 시간과 분 불러오기
