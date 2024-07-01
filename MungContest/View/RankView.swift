@@ -44,6 +44,13 @@ struct RankView: View {
                            )
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
+                    VStack {
+                            Spacer() // 상단 공간을 차지하는 Spacer 추가
+                            Rectangle()
+                                .fill(Color.mcGray800)
+                                .frame(height: UIScreen.main.bounds.height / 6) // 모서리 둥글게 설정
+                                .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                        }
                     
                     VStack {
                         HStack{
@@ -80,6 +87,7 @@ struct RankView: View {
                     }
                     .padding(.bottom, 20)
                     
+                   
                 }
                 ZStack {
                     Rectangle()
@@ -92,6 +100,14 @@ struct RankView: View {
                            )
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
+                    
+                    VStack {
+                            Spacer() // 상단 공간을 차지하는 Spacer 추가
+                            Rectangle()
+                                .fill(Color.mcGray800)
+                                .frame(height: UIScreen.main.bounds.height / 6) // 모서리 둥글게 설정
+                                .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                        }
                     
                     VStack {
                         HStack{
@@ -140,6 +156,14 @@ struct RankView: View {
                            )
                         .frame(maxWidth: .infinity)
                         .cornerRadius(10)
+                    
+                    VStack {
+                            Spacer() // 상단 공간을 차지하는 Spacer 추가
+                            Rectangle()
+                                .fill(Color.mcGray800)
+                                .frame(height: UIScreen.main.bounds.height / 6) // 모서리 둥글게 설정
+                                .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
+                        }
                     
                     VStack {
                         HStack{
@@ -442,6 +466,22 @@ struct RankView: View {
 //    }
 //}
 
+extension View {
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape(RoundedCorner(radius: radius, corners: corners))
+    }
+}
+
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+    
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+        return Path(path.cgPath)
+    }
+}
+
 extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
@@ -468,6 +508,7 @@ extension Color {
         )
     }
 }
+
 
 struct RankView_Previews: PreviewProvider {
     static var previews: some View {

@@ -5,8 +5,8 @@ struct MainView: View {
     
     @Environment(NavigationManager.self) var navigationManager
     
-//  @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
-    @State private var contestTitle: String = ""
+  @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
+//    @State private var contestTitle: String = ""
     
     // MainView 세그먼트 컨트롤
     @State private var selectedSegment = 0
@@ -45,7 +45,7 @@ struct MainView: View {
             }
             
             HStack{
-                Text("대회이름 : \(contestTitle)")
+                Text("\(contestTitle)")
                     .font(.system(size: 28))
                     .bold()
                 Spacer()
@@ -91,15 +91,15 @@ struct MainView: View {
             calculateTotalSeconds()
             time = Double(totalSeconds)
             initialTime = time
-            loadContestTitle()
+//            loadContestTitle()
         }
     }
     
     // MARK: contestTitle - UserDefaults
-    private func loadContestTitle() {
-        contestTitle = UserDefaults.standard.string(forKey: "contestTitle") ?? "대회이름"
-    }
-    
+//    private func loadContestTitle() {
+//        contestTitle = UserDefaults.standard.string(forKey: "contestTitle") ?? "대회이름"
+//    }
+//    
     // MARK: UserDefaults에서 시간과 분 불러오기
     private func loadSavedTime() {
         hour = UserDefaults.standard.integer(forKey: "selectedHours")
