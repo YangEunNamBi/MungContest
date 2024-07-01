@@ -5,8 +5,7 @@ struct MainView: View {
     
     @Environment(NavigationManager.self) var navigationManager
     
-//  @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
-    @State private var contestTitle: String = ""
+    @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
     
     // MainView 세그먼트 컨트롤
     @State private var selectedSegment = 0
@@ -24,10 +23,9 @@ struct MainView: View {
     var body: some View {
         VStack{
             HStack{
-                Text("MUNG-CON")
-                    .font(.system(size: 28))
+                Text("mung contest")
+                    .font(Font.custom("Poppins-Bold", size: 28))
                     .foregroundColor(Color.accentColor)
-                    .bold()
                 
                 Spacer()
                 
@@ -45,7 +43,7 @@ struct MainView: View {
             }
             
             HStack{
-                Text("대회이름 : \(contestTitle)")
+                Text("\(contestTitle)")
                     .font(.system(size: 28))
                     .bold()
                 Spacer()
@@ -84,20 +82,14 @@ struct MainView: View {
             .padding(.top)
         }
         .padding(.horizontal, 50)
-        //        .padding(.top, 50) // Navigation영역이랑과의 Padding 값
+//        .padding(.top, 50) // Navigation영역이랑과의 Padding 값
         .onAppear {
             // UserDefaults에서 대회 시간받아서 초로 환산
             loadSavedTime()
             calculateTotalSeconds()
             time = Double(totalSeconds)
             initialTime = time
-            loadContestTitle()
         }
-    }
-    
-    // MARK: contestTitle - UserDefaults
-    private func loadContestTitle() {
-        contestTitle = UserDefaults.standard.string(forKey: "contestTitle") ?? "대회이름"
     }
     
     // MARK: UserDefaults에서 시간과 분 불러오기
