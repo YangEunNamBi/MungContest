@@ -63,18 +63,7 @@ struct RankListView: View {
                 } else {
                     currentStartIndex += 6
                 }
-                updateRanks() // 초기 순위 설정
             }
-            updateRanks() // 초기 순위 설정
-        }
-    }
-    
-    // 순위변동 함수
-    func updateRanks() {
-        previousRanks = currentRanks
-        let sortedPlayerIDs = sortedPlayers.map { $0.id }
-        for (index, playerID) in sortedPlayerIDs.enumerated() {
-            currentRanks[playerID] = index + 1
         }
     }
 }
