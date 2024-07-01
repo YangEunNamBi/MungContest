@@ -201,7 +201,7 @@ struct PlanView: View {
                                 Text(canLoadFiles() ? "\(players.count)명의 참가자 명단 불러오기 완료" : "참가자 명단 불러오기")
                                     .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
-                                    
+                                
                                 Spacer().frame(width: 18)
                                 
                                 Image(systemName: canLoadFiles() ? "xmark" : "square.and.arrow.down")
@@ -277,9 +277,42 @@ struct PlanView: View {
                             }
                         }
                         
+                        // 전체 초기화
+                        Button(action: {
+                            resetPlayers()
+                            resetImages()
+                        }) {
+                            HStack {
+                                Spacer().frame(width: 12)
+                                
+                                // 조건에 따라 텍스트와 아이콘 변경
+                                if canLoadFiles() || canLoadImages() {
+                                    Text("전체 초기화")
+                                        .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
+                                        .padding(.vertical, 12)
+                                    
+                                    Image(systemName: "xmark")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .bold()
+                                        .frame(width: 18)
+                                        .padding(.vertical, 12)
+                                } else {
+                                    Text("")
+                                        .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
+                                        .padding(.vertical, 12)
+                                    
+                                    Image(systemName: "")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .bold()
+                                        .frame(width: 18)
+                                        .padding(.vertical, 12)
+                                }
+                            }
+                        }
                     }
-                    .foregroundStyle(Color.accentColor)
-                    .frame(height: 50)
+                    
                 }
                 .padding(.horizontal, 38)
                 Spacer()
@@ -433,7 +466,6 @@ struct PlanView: View {
         for player in players {
             if player.profileImage.isEmpty || player.name.isEmpty {
                 return false
-                print("둘 중 하나 없음")
             }
         }
         return !players.isEmpty
@@ -463,6 +495,18 @@ struct PlanView: View {
         }
     }
     
+    //MARK: - User Default, Model 초기화
+    func resetPlayers() {
+        players.removeAll()
+        canLoadFiles()
+    }
+
+    func resetImages() {
+        for player in players {
+            player.profileImage = Data()
+        }
+        canLoadImages()
+    }
 }
 
 #Preview {
