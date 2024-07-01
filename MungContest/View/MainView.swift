@@ -24,10 +24,10 @@ struct MainView: View {
     var body: some View {
         VStack{
             HStack{
-                Text("MUNG-CON")
-                    .font(.system(size: 28))
+                Text("mung contest")
+                    .fontWeight(.bold)
+                    .font(Font.custom("Poppins-Regular", size: 28))
                     .foregroundColor(Color.accentColor)
-                    .bold()
                 
                 Spacer()
                 

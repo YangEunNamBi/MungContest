@@ -61,28 +61,25 @@ struct RankView: View {
                                 .padding(.top, 10)
                             Spacer()
                         }
+                        
                         Image("1stUnion")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 36, height: 21 )
                         
-                        
                         Image(uiImage: UIImage(data: sortedPlayers[0].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
                             .clipShape(Circle())
                             .padding(.horizontal, 30)
                         
-                        
                         Text(sortedPlayers[0].name ?? "")
-                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
-                                .weight(.bold)
-                            )
+                            .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
+                            .padding(.bottom, 20)
                     }
                     .padding(.bottom, 20)
-                    
                     
                 }
                 ZStack {
@@ -122,16 +119,15 @@ struct RankView: View {
                         
                         Image(uiImage: UIImage(data: sortedPlayers[1].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
                             .clipShape(Circle())
                             .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[1].name ?? "")
-                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
-                                .weight(.bold)
-                            )
+                            .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
+                            .padding(.bottom, 20)
                     }
                     .padding(.bottom, 20)
                 }
@@ -173,16 +169,15 @@ struct RankView: View {
                         
                         Image(uiImage: UIImage(data: sortedPlayers[2].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .aspectRatio(contentMode: .fill)
                             .clipShape(Circle())
                             .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[2].name ?? "")
-                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
-                                .weight(.bold)
-                            )
+                            .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
+                            .padding(.bottom, 20)
                     }
                     .padding(.bottom, 20)
                 }
@@ -221,9 +216,7 @@ struct RankView: View {
                             .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count-1].name ?? "")
-                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
-                                .weight(.bold)
-                            )
+                            .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
@@ -247,9 +240,7 @@ struct RankView: View {
                             .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count-2].name ?? "")
-                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
-                                .weight(.bold)
-                            )
+                            .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
@@ -273,9 +264,7 @@ struct RankView: View {
                             .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count-3].name ?? "")
-                            .font(Font.custom("Spoqa Han Sans Neo", size: 16)
-                                .weight(.bold)
-                            )
+                            .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
