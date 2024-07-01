@@ -192,8 +192,12 @@ struct PlanView: View {
                         .padding(.horizontal, 12)
                     HStack {
                         Button(action: {
-                            requestFileAccessPermission()
-                            isShowingFilePicker.toggle()
+                            if canLoadFiles() {
+                                resetPlayers()
+                            } else {
+                                requestFileAccessPermission()
+                                isShowingFilePicker.toggle()
+                            }
                         }) {
                             HStack {
                                 Spacer().frame(width: 12)
@@ -236,8 +240,12 @@ struct PlanView: View {
                         
                         
                         Button(action: {
-                            requestFileAccessPermission()
-                            isShowingFileImage.toggle()
+                            if canLoadImages() {
+                                resetImages()
+                            } else {
+                                requestFileAccessPermission()
+                                isShowingFileImage.toggle()
+                            }
                         }) {
                             HStack {
                                 Spacer().frame(width: 12)
