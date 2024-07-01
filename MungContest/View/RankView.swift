@@ -10,12 +10,6 @@ import SwiftData
 
 struct RankView: View {
     
-    //    var players: [Player] = []
-    //
-    //    init() {
-    //        players = createDummyPlayers().sorted { $0.resultHeartrate < $1.resultHeartrate }
-    //    }
-    
     let columns: [GridItem] = [GridItem(.flexible())]
     
     @Query var players: [Player]
@@ -60,9 +54,9 @@ struct RankView: View {
                     VStack {
                         HStack{
                             Text("1")
+                                .fontWeight(.heavy)
+                                .font(Font.custom("Poppins-Regular", size: 24))
                                 .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
-                                .font(.system(size: 24))
-                                .bold()
                                 .padding(.leading, 20)
                                 .padding(.top, 10)
                             Spacer()
@@ -72,16 +66,13 @@ struct RankView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 36, height: 21 )
                         
-                        VStack {
-                            ZStack {
-                                Circle()
-                                
-                                Image(systemName: "house")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 80))
-                            }
-                        }
-                        .padding(.horizontal, 30)
+                        
+                        Image(uiImage: UIImage(data: sortedPlayers[0].profileImage) ?? UIImage(systemName: "photo")!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .padding(.horizontal, 30)
+                        
                         
                         Text(sortedPlayers[0].name ?? "")
                             .font(Font.custom("Spoqa Han Sans Neo", size: 16)
@@ -117,9 +108,9 @@ struct RankView: View {
                     VStack {
                         HStack{
                             Text("2")
+                                .fontWeight(.heavy)
+                                .font(Font.custom("Poppins-Regular", size: 24))
                                 .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
-                                .font(.system(size: 24))
-                                .bold()
                                 .padding(.leading, 20)
                                 .padding(.top, 10)
                             Spacer()
@@ -129,16 +120,11 @@ struct RankView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 36, height: 21 )
                         
-                        VStack {
-                            ZStack {
-                                Circle()
-                                
-                                Image(systemName: "house")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 80))
-                            }
-                        }
-                        .padding(.horizontal, 30)
+                        Image(uiImage: UIImage(data: sortedPlayers[1].profileImage) ?? UIImage(systemName: "photo")!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[1].name ?? "")
                             .font(Font.custom("Spoqa Han Sans Neo", size: 16)
@@ -173,9 +159,9 @@ struct RankView: View {
                     VStack {
                         HStack{
                             Text("3")
+                                .fontWeight(.heavy)
+                                .font(Font.custom("Poppins-Regular", size: 24))
                                 .foregroundColor(Color(hex: "FFFFFF").opacity(0.2))
-                                .font(.system(size: 24))
-                                .bold()
                                 .padding(.leading, 20)
                                 .padding(.top, 10)
                             Spacer()
@@ -185,16 +171,11 @@ struct RankView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 36, height: 21 )
                         
-                        VStack {
-                            ZStack {
-                                Circle()
-                                
-                                Image(systemName: "house")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 80))
-                            }
-                        }
-                        .padding(.horizontal, 30)
+                        Image(uiImage: UIImage(data: sortedPlayers[2].profileImage) ?? UIImage(systemName: "photo")!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[2].name ?? "")
                             .font(Font.custom("Spoqa Han Sans Neo", size: 16)
@@ -206,6 +187,7 @@ struct RankView: View {
                     .padding(.bottom, 20)
                 }
             }
+            .padding(.bottom, 10)
             
             HStack {
                 Text("하위권")
@@ -217,6 +199,7 @@ struct RankView: View {
                 
                 Spacer()
             }
+            .padding(.top, 10)
             
             // 하위권 3명
             HStack(spacing: 20) {
@@ -231,16 +214,11 @@ struct RankView: View {
                             .font(.system(size: 28))
                             .foregroundColor(.black)
                         
-                        VStack {
-                            ZStack {
-                                Circle()
-                                
-                                Image(systemName: "house")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 80))
-                            }
-                        }
-                        .padding(.horizontal, 30)
+                        Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count-1].profileImage) ?? UIImage(systemName: "photo")!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count-1].name ?? "")
                             .font(Font.custom("Spoqa Han Sans Neo", size: 16)
@@ -262,16 +240,11 @@ struct RankView: View {
                             .font(.system(size: 28))
                             .foregroundColor(.black)
                         
-                        VStack {
-                            ZStack {
-                                Circle()
-                                
-                                Image(systemName: "house")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 80))
-                            }
-                        }
-                        .padding(.horizontal, 30)
+                        Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count-2].profileImage) ?? UIImage(systemName: "photo")!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count-2].name ?? "")
                             .font(Font.custom("Spoqa Han Sans Neo", size: 16)
@@ -293,16 +266,11 @@ struct RankView: View {
                             .font(.system(size: 28))
                             .foregroundColor(.black)
                         
-                        VStack {
-                            ZStack {
-                                Circle()
-                                
-                                Image(systemName: "house")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 80))
-                            }
-                        }
-                        .padding(.horizontal, 30)
+                        Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count-3].profileImage) ?? UIImage(systemName: "photo")!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count-3].name ?? "")
                             .font(Font.custom("Spoqa Han Sans Neo", size: 16)
