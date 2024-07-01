@@ -63,7 +63,7 @@ struct RankListView: View {
                 } else {
                     currentStartIndex += 6
                 }
-                
+                updateRanks() // 초기 순위 설정
             }
             updateRanks() // 초기 순위 설정
         }
@@ -72,11 +72,11 @@ struct RankListView: View {
     // 순위변동 함수
     func updateRanks() {
         previousRanks = currentRanks
-        for (index, player) in players.enumerated() {
-            currentRanks[player.id] = index + 1
+        let sortedPlayerIDs = sortedPlayers.map { $0.id }
+        for (index, playerID) in sortedPlayerIDs.enumerated() {
+            currentRanks[playerID] = index + 1
         }
     }
-    
 }
 
 struct GridCellView: View {
@@ -88,37 +88,25 @@ struct GridCellView: View {
     
     var body: some View {
         HStack {
-           
-                Text("\(rank)") // 순위 1위부터
-                    .font(.system(size: 20))
-                    .frame(width: 30, alignment: .center)
-                    .bold()
-                    .padding()
-          
-          
+            Text("\(rank)") // 순위 1위부터
+                .font(.system(size: 20))
+                .frame(width: 30, alignment: .center)
+                .bold()
+                .padding()
+            changeRank()
+                .padding()
             
+            playerName()
+                .padding()
             
-                changeRank()
-                    .padding()
-           
+            playerBpm()
             
-           
-                playerName()
-                    .padding()
-           
-           
-                playerBpm()
-           
-            
-          
-                totalDeviation()
-         
+            totalDeviation()
         }
         .frame(maxWidth: .infinity)
         .frame(height: 87)
         .background(Color.mcGray800)
         .cornerRadius(20)
-        
     }
     
     // 순위변동
@@ -165,7 +153,7 @@ struct GridCellView: View {
                 .foregroundColor(.black)
             
             HStack {
-                Text("\(player.heartrates.last!)") // 심박수
+                Text("\(player.heartrates.filter { $0 != 0 }.last ?? 0)")
                     .bold()
                     .font(.system(size: 20))
                     .foregroundColor(Color.accentColor)

@@ -82,22 +82,16 @@ struct MainView: View {
             .padding(.top)
         }
         .padding(.horizontal, 50)
-        //        .padding(.top, 50) // Navigation영역이랑과의 Padding 값
+//        .padding(.top, 50) // Navigation영역이랑과의 Padding 값
         .onAppear {
             // UserDefaults에서 대회 시간받아서 초로 환산
             loadSavedTime()
             calculateTotalSeconds()
             time = Double(totalSeconds)
             initialTime = time
-            //            loadContestTitle()
         }
     }
     
-    // MARK: contestTitle - UserDefaults
-    //    private func loadContestTitle() {
-    //        contestTitle = UserDefaults.standard.string(forKey: "contestTitle") ?? "대회이름"
-    //    }
-    //
     // MARK: UserDefaults에서 시간과 분 불러오기
     private func loadSavedTime() {
         hour = UserDefaults.standard.integer(forKey: "selectedHours")
