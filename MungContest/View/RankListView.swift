@@ -21,41 +21,29 @@ struct RankListView: View {
         VStack{
             VStack{
                 HStack {
-                    Spacer()
-                    HStack(alignment: .center){
                         Text("순위")
                             .customStyle()
-                    }
-                    
-                    Spacer()
-                    HStack(alignment: .center){
+                            .padding(.leading, 45)
+                            
                         Text("순위 변동")
                             .customStyle()
-                    }
-                    
-                    Spacer()
-                    HStack(alignment: .center){
+                            .padding(.leading, 25)
+                   
                         Text("이름")
                             .customStyle()
-                    }
+                            .padding(.leading, 50)
                     
-                    Spacer()
-                    HStack(alignment: .center){
                         Text("현재 심박수")
                             .customStyle()
-                    }
-                    .padding(.horizontal, 45)
-                    Spacer()
-                    
-                    HStack(alignment: .center){
+                            .padding(.leading, 75)
+                   
                         Text("편차 합계")
                             .customStyle()
-                    }
-                    .padding(.leading, 10)
-                    Spacer()
+                            .padding(.leading, 60)
                     
+                    Spacer()
                 }
-                .padding(.trailing, 20)
+                .frame(maxWidth: .infinity)
                 
                 LazyVGrid(columns: columns, spacing: 15) {
                     ForEach(Array(sortedPlayers[currentStartIndex..<min(currentStartIndex + 6, sortedPlayers.count)]), id: \.id) { player in
@@ -105,7 +93,7 @@ struct GridCellView: View {
                 .padding(.leading, 15)
             
             changeRank()
-                .padding(.leading, 25)
+                .padding(.leading, 35)
             playerName()
                 .padding(.leading, 20)
             playerBpm()
@@ -114,7 +102,7 @@ struct GridCellView: View {
                 .padding(.leading, 20)
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 82)
+        .frame(height: 87)
         .background(Color.mcGray800)
         .cornerRadius(20)
         
@@ -154,7 +142,7 @@ struct GridCellView: View {
                         .weight(.bold)
                     )
             }
-            .frame(width: 100)
+            .frame(width: 110)
         }
     }
     
