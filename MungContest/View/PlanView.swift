@@ -238,7 +238,6 @@ struct PlanView: View {
                             }
                         }
                         
-                        
                         Button(action: {
                             if canLoadImages() {
                                 resetImages()
@@ -309,13 +308,6 @@ struct PlanView: View {
                                     Text("")
                                         .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                         .padding(.vertical, 12)
-                                    
-                                    Image(systemName: "")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .bold()
-                                        .frame(width: 18)
-                                        .padding(.vertical, 12)
                                 }
                             }
                         }
@@ -330,6 +322,8 @@ struct PlanView: View {
             //MARK: - 대기 화면으로
             HStack {
                 Spacer()
+                
+                Text("\(players.count)명")
                 
                 Button {
                     saveTime(hours: hours, minutes: minutes)
@@ -352,10 +346,10 @@ struct PlanView: View {
                     .padding(.horizontal, 30)
                     .background(Color.accentColor)
                     .cornerRadius(25)
-                    
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.horizontal, 12)
+                .disabled(!(canLoadImages() && canLoadFiles()))
             }
             .padding(.horizontal, 38)
         }
@@ -410,30 +404,29 @@ struct PlanView: View {
     
     func parseCSV(fileContent: String) {
         let rows = fileContent.components(separatedBy: "\n")
-        for (index, row) in rows.enumerated() {
-            // Skip the header row
-            if index == 0 { continue }
-            
-            let columns = row.split(separator: ",", omittingEmptySubsequences: false).map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-            if columns.count >= 4 {
-                let name = columns[1]
-                let comment = columns[2]
-                
-                print("Parsed Player: \(name), \(comment)")
-                
-                let player = Player(name: name, profileImage: Data(), comment: comment, defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
-                for _ in 1...measurementCount{
-                    player.heartrates.append(0)
-                    player.differenceHeartrates.append(0)
+                for (index, row) in rows.enumerated() {
+                    // Skip the header row
+                    if index == 0 { continue }
+                    
+                    let columns = row.split(separator: ",", omittingEmptySubsequences: false).map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                    if columns.count >= 4 {
+                        let name = columns[1]
+                        let comment = columns[2]
+                        
+                        print("Parsed Player: \(name), \(comment)")
+                        
+                        let player = Player(name: name, profileImage: Data(), comment: comment, defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
+                        for _ in 1...measurementCount {
+                            player.heartrates.append(0)
+                            player.differenceHeartrates.append(0)
+                        }
+                        players.append(player)
+                        savePlayer(player)
+                    } else {
+                        print("Skipping row: \(row)")
+                    }
                 }
-                DispatchQueue.main.async {
-                    players.append(player)
-                }
-            } else {
-                print("Skipping row: \(row)")
-            }
         }
-    }
     
     func savePlayer(_ player: Player) {
         do {
@@ -505,7 +498,11 @@ struct PlanView: View {
     
     //MARK: - User Default, Model 초기화
     func resetPlayers() {
+        for player in players {
+            modelContext.delete(player)
+        }
         players.removeAll()
+        saveContext()
         canLoadFiles()
     }
 
@@ -513,8 +510,23 @@ struct PlanView: View {
         for player in players {
             player.profileImage = Data()
         }
+        for player in players {
+            modelContext.delete(player)
+        }
+        players.removeAll()
+        selectedImageURLs.removeAll()
+        saveContext()
         canLoadImages()
     }
+    
+    private func saveContext() {
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context: \(error.localizedDescription)")
+        }
+    }
+
 }
 
 #Preview {
