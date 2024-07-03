@@ -192,8 +192,12 @@ struct PlanView: View {
                         .padding(.horizontal, 12)
                     HStack {
                         Button(action: {
-                            requestFileAccessPermission()
-                            isShowingFilePicker.toggle()
+                            if canLoadFiles() {
+                                resetPlayers()
+                            } else {
+                                requestFileAccessPermission()
+                                isShowingFilePicker.toggle()
+                            }
                         }) {
                             HStack {
                                 Spacer().frame(width: 12)
@@ -201,7 +205,7 @@ struct PlanView: View {
                                 Text(canLoadFiles() ? "\(players.count)명의 참가자 명단 불러오기 완료" : "참가자 명단 불러오기")
                                     .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
-                                    
+                                
                                 Spacer().frame(width: 18)
                                 
                                 Image(systemName: canLoadFiles() ? "xmark" : "square.and.arrow.down")
@@ -234,10 +238,13 @@ struct PlanView: View {
                             }
                         }
                         
-                        
                         Button(action: {
-                            requestFileAccessPermission()
-                            isShowingFileImage.toggle()
+                            if canLoadImages() {
+                                resetImages()
+                            } else {
+                                requestFileAccessPermission()
+                                isShowingFileImage.toggle()
+                            }
                         }) {
                             HStack {
                                 Spacer().frame(width: 12)
@@ -277,9 +284,35 @@ struct PlanView: View {
                             }
                         }
                         
+                        // 전체 초기화
+                        Button(action: {
+                            resetPlayers()
+                            resetImages()
+                        }) {
+                            HStack {
+                                Spacer().frame(width: 12)
+                                
+                                // 조건에 따라 텍스트와 아이콘 변경
+                                if canLoadFiles() || canLoadImages() {
+                                    Text("전체 초기화")
+                                        .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
+                                        .padding(.vertical, 12)
+                                    
+                                    Image(systemName: "xmark")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .bold()
+                                        .frame(width: 18)
+                                        .padding(.vertical, 12)
+                                } else {
+                                    Text("")
+                                        .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
+                                        .padding(.vertical, 12)
+                                }
+                            }
+                        }
                     }
-                    .foregroundStyle(Color.accentColor)
-                    .frame(height: 50)
+                    
                 }
                 .padding(.horizontal, 38)
                 Spacer()
@@ -289,6 +322,8 @@ struct PlanView: View {
             //MARK: - 대기 화면으로
             HStack {
                 Spacer()
+                
+                Text("\(players.count)명")
                 
                 Button {
                     saveTime(hours: hours, minutes: minutes)
@@ -311,10 +346,10 @@ struct PlanView: View {
                     .padding(.horizontal, 30)
                     .background(Color.accentColor)
                     .cornerRadius(25)
-                    
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.horizontal, 12)
+                .disabled(!(canLoadImages() && canLoadFiles()))
             }
             .padding(.horizontal, 38)
         }
@@ -369,30 +404,29 @@ struct PlanView: View {
     
     func parseCSV(fileContent: String) {
         let rows = fileContent.components(separatedBy: "\n")
-        for (index, row) in rows.enumerated() {
-            // Skip the header row
-            if index == 0 { continue }
-            
-            let columns = row.split(separator: ",", omittingEmptySubsequences: false).map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-            if columns.count >= 4 {
-                let name = columns[1]
-                let comment = columns[2]
-                
-                print("Parsed Player: \(name), \(comment)")
-                
-                let player = Player(name: name, profileImage: Data(), comment: comment, defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
-                for _ in 1...measurementCount{
-                    player.heartrates.append(0)
-                    player.differenceHeartrates.append(0)
+                for (index, row) in rows.enumerated() {
+                    // Skip the header row
+                    if index == 0 { continue }
+                    
+                    let columns = row.split(separator: ",", omittingEmptySubsequences: false).map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                    if columns.count >= 4 {
+                        let name = columns[1]
+                        let comment = columns[2]
+                        
+                        print("Parsed Player: \(name), \(comment)")
+                        
+                        let player = Player(name: name, profileImage: Data(), comment: comment, defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
+                        for _ in 1...measurementCount {
+                            player.heartrates.append(0)
+                            player.differenceHeartrates.append(0)
+                        }
+                        players.append(player)
+                        savePlayer(player)
+                    } else {
+                        print("Skipping row: \(row)")
+                    }
                 }
-                DispatchQueue.main.async {
-                    players.append(player)
-                }
-            } else {
-                print("Skipping row: \(row)")
-            }
         }
-    }
     
     func savePlayer(_ player: Player) {
         do {
@@ -433,7 +467,6 @@ struct PlanView: View {
         for player in players {
             if player.profileImage.isEmpty || player.name.isEmpty {
                 return false
-                print("둘 중 하나 없음")
             }
         }
         return !players.isEmpty
@@ -463,6 +496,37 @@ struct PlanView: View {
         }
     }
     
+    //MARK: - User Default, Model 초기화
+    func resetPlayers() {
+        for player in players {
+            modelContext.delete(player)
+        }
+        players.removeAll()
+        saveContext()
+        canLoadFiles()
+    }
+
+    func resetImages() {
+        for player in players {
+            player.profileImage = Data()
+        }
+        for player in players {
+            modelContext.delete(player)
+        }
+        players.removeAll()
+        selectedImageURLs.removeAll()
+        saveContext()
+        canLoadImages()
+    }
+    
+    private func saveContext() {
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context: \(error.localizedDescription)")
+        }
+    }
+
 }
 
 #Preview {
