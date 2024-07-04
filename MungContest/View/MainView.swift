@@ -1,5 +1,6 @@
 
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
     
@@ -19,6 +20,8 @@ struct MainView: View {
     @State private var time: Double = 0
     @State private var initialTime: Double = 0
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // 1초마다
+    
+    @Query var players: [Player]
     
     var body: some View {
         VStack{
@@ -73,8 +76,14 @@ struct MainView: View {
             
             HStack(spacing: 20){
                 if selectedSegment == 0 {
-                    RankView() // 상위/하위 3명 랭킹 뷰
-                    RankListView() // 전체 인원 랭킹 리스트 뷰
+                    if allHeartratesEmpty() { // 표준편차가 아직 없다면 Lock 이미지
+                        Image("lock")
+                            .resizable()
+                            .frame(width: .infinity, height: .infinity)
+                    } else { // 표준편차가 있다면 랭킹 보여주기
+                        RankView() // 상위&하위 3명 랭킹 뷰
+                        RankListView() // 전체 인원 랭킹 리스트 뷰
+                    }
                 } else {
                     RecordView() // 심박 수 측정 뷰
                 }
@@ -82,7 +91,6 @@ struct MainView: View {
             .padding(.top)
         }
         .padding(.horizontal, 50)
-//        .padding(.top, 50) // Navigation영역이랑과의 Padding 값
         .onAppear {
             // UserDefaults에서 대회 시간받아서 초로 환산
             loadSavedTime()
@@ -90,6 +98,11 @@ struct MainView: View {
             time = Double(totalSeconds)
             initialTime = time
         }
+    }
+    
+    // MARK: Lock 이미지 on/off 여부 ( 모든 resultHeartrate가 비어있는지 확인하는 함수 )
+    private func allHeartratesEmpty() -> Bool {
+        players.allSatisfy { $0.resultHeartrate == 0 }
     }
     
     // MARK: UserDefaults에서 시간과 분 불러오기

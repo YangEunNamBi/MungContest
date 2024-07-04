@@ -8,6 +8,7 @@ struct RankListView: View {
     
     @State private var currentStartIndex = 0
     private let interval: TimeInterval = 5.0 // List 체인지 되는 시간(초)
+    private var timer: Timer?
     
     @State private var currentRanks: [UUID: Int] = [:] // Player들의 현재 순위 배열
     @State private var previousRanks: [UUID: Int] = [:] // Player들의 이전 순위 배열
@@ -57,12 +58,16 @@ struct RankListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .cornerRadius(30)
         .onAppear {
-            Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
-                if currentStartIndex + 6 >= players.count {
-                    currentStartIndex = 0
-                } else {
-                    currentStartIndex += 6
-                }
+            startTimer() // 이 뷰가 뜰때마다 timer의 시간마다 List를 자동으로 넘기면서 보여줍니다.
+        }
+    }
+    
+    private func startTimer() {
+        Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+            if currentStartIndex + 6 >= players.count {
+                currentStartIndex = 0
+            } else {
+                currentStartIndex += 6
             }
         }
     }
