@@ -1,6 +1,46 @@
-
 import SwiftUI
 import SwiftData
+
+class RankViewModel: ObservableObject {
+    @Published var currentRanks: [UUID: Int] = [:] {
+        didSet {
+            saveToUserDefaults()
+        }
+    }
+    @Published var previousRanks: [UUID: Int] = [:] {
+        didSet {
+            saveToUserDefaults()
+        }
+    }
+    
+    private let currentRanksKey = "currentRanks"
+    private let previousRanksKey = "previousRanks"
+    
+    init() {
+        loadFromUserDefaults()
+    }
+    
+    private func saveToUserDefaults() {
+        UserDefaults.standard.set(currentRanks.map { "\($0.key.uuidString):\($0.value)" }, forKey: currentRanksKey)
+        UserDefaults.standard.set(previousRanks.map { "\($0.key.uuidString):\($0.value)" }, forKey: previousRanksKey)
+    }
+    
+    private func loadFromUserDefaults() {
+        if let currentRanksData = UserDefaults.standard.stringArray(forKey: currentRanksKey) {
+            currentRanks = Dictionary(uniqueKeysWithValues: currentRanksData.map {
+                let parts = $0.split(separator: ":")
+                return (UUID(uuidString: String(parts[0]))!, Int(parts[1])!)
+            })
+        }
+        
+        if let previousRanksData = UserDefaults.standard.stringArray(forKey: previousRanksKey) {
+            previousRanks = Dictionary(uniqueKeysWithValues: previousRanksData.map {
+                let parts = $0.split(separator: ":")
+                return (UUID(uuidString: String(parts[0]))!, Int(parts[1])!)
+            })
+        }
+    }
+}
 
 struct RankListView: View {
     
@@ -8,10 +48,8 @@ struct RankListView: View {
     
     @State private var currentStartIndex = 0
     private let interval: TimeInterval = 5.0 // List 체인지 되는 시간(초)
-    private var timer: Timer?
     
-    @State private var currentRanks: [UUID: Int] = [:] // Player들의 현재 순위 배열
-    @State private var previousRanks: [UUID: Int] = [:] // Player들의 이전 순위 배열
+    @StateObject private var viewModel = RankViewModel()
     
     @Query var players: [Player]
     var sortedPlayers: [Player] {
@@ -48,7 +86,7 @@ struct RankListView: View {
                 
                 LazyVGrid(columns: columns, spacing: 15) {
                     ForEach(Array(sortedPlayers[currentStartIndex..<min(currentStartIndex + 6, sortedPlayers.count)]), id: \.id) { player in
-                        GridCellView(rank: sortedPlayers.firstIndex(where: { $0.id == player.id })! + 1, player: player, previousRank: previousRanks[player.id] ?? 0)
+                        GridCellView(rank: sortedPlayers.firstIndex(where: { $0.id == player.id })! + 1, player: player, previousRank: viewModel.previousRanks[player.id] ?? 0, currentRank: viewModel.currentRanks[player.id] ?? 0)
                     }
                 }
                 .frame(maxHeight: .infinity)
@@ -59,6 +97,7 @@ struct RankListView: View {
         .cornerRadius(30)
         .onAppear {
             startTimer() // 이 뷰가 뜰때마다 timer의 시간마다 List를 자동으로 넘기면서 보여줍니다.
+            updateRanks()
         }
     }
     
@@ -71,6 +110,19 @@ struct RankListView: View {
             }
         }
     }
+    
+    private func updateRanks() {
+        var newRanks: [UUID: Int] = [:]
+        
+        for (index, player) in sortedPlayers.enumerated() {
+            newRanks[player.id] = index + 1
+        }
+        
+        viewModel.previousRanks = viewModel.currentRanks
+        print("previousRanks : \(viewModel.previousRanks)")
+        viewModel.currentRanks = newRanks
+        print("currentRanks : \(viewModel.currentRanks)")
+    }
 }
 
 struct GridCellView: View {
@@ -79,6 +131,7 @@ struct GridCellView: View {
     let player: Player // 데이터
     
     let previousRank: Int // 이전순위 (순위변동)
+    let currentRank: Int
     
     var body: some View {
         HStack {
@@ -105,8 +158,8 @@ struct GridCellView: View {
     
     // 순위변동
     func changeRank() -> some View {
-        let rankChange = rank - previousRank
-        return HStack{
+        let rankChange = currentRank - previousRank
+        return HStack {
             if rankChange > 0 { // 순위가 상승했다면
                 Image(systemName: "arrowtriangle.down.fill")
                     .resizable()
@@ -130,7 +183,7 @@ struct GridCellView: View {
     
     // 유저 이름
     func playerName() -> some View {
-        VStack{
+        VStack {
             HStack {
                 Text(player.name)
                     .font(Font.custom("SpoqaHanSansNeo-Bold", size: 20))
