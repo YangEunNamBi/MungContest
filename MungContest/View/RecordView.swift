@@ -55,7 +55,7 @@ struct RecordView: View {
         HStack{
             ScrollView{
                 HStack{
-                    LazyVStack{
+                    VStack{
                         Text("번호")
                             .font(.custom("SpoqaHanSansNeo-Bold", size:20))
                             .foregroundStyle(Color("AccentColor"))
@@ -68,7 +68,7 @@ struct RecordView: View {
                             Divider()
                         }
                     }.frame(width:100)
-                    LazyVStack{
+                    VStack{
                         Text("이름")
                             .font(.custom("SpoqaHanSansNeo-Bold", size:20))
                             .foregroundStyle(Color("AccentColor"))
@@ -81,7 +81,7 @@ struct RecordView: View {
                             Divider()
                         }
                     }.frame(width:100)
-                    LazyVStack {
+                    VStack {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHStack{
