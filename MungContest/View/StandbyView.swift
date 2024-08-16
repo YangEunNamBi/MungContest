@@ -185,13 +185,13 @@ struct StandbyView: View {
 //                }
                 
                 // 마지막 배열의 첫번째일 때 (우측으로 스크롤)
-                if currentIndex >= itemCount * 2 {
+                if currentIndex == itemCount * 2 {
                     print("마지막 배열의 첫번째다")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
                         let removedElement = itemsTemp.removeFirst()
                         itemsTemp.append(removedElement)
                         print(itemsTemp)
-//                        self.currentIndex = currentIndex - itemCount
+                        self.currentIndex = currentIndex - itemCount
                     }
                 }
             }
