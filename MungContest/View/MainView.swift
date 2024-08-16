@@ -30,7 +30,6 @@ struct MainView: View {
     @State private var measureIntervals: [Int] = [] // 알림을 띄울 시간 목록
     @State private var alertIndex = 0 // 현재 띄워진 알림의 인덱스
     
-    
     var body: some View {
         VStack{
             HStack{
@@ -97,7 +96,14 @@ struct MainView: View {
             calculateTotalSeconds()
             time = Double(totalSeconds)
             initialTime = time
-            setNotRandomMeasure()
+            
+            randomValue = UserDefaults.standard.bool(forKey: "isRandom")
+            if randomValue {
+                setRandomMeasure()
+            } else {
+                setNotRandomMeasure()
+            }
+            //            setNotRandomMeasure()
             startTimer() // 타이머 시작
         }
         .alert(isPresented: $showingAlert) {
@@ -135,9 +141,10 @@ struct MainView: View {
         }
     }
     
-    // MARK: 심박수 측정 주기위한 세팅
+    // MARK: 심박수 측정 주기 랜덤아닐때
     private func setNotRandomMeasure() {
         print(#function)
+        print("측정주기는 랜덤이 아닙니다.")
         measureCount = UserDefaults.standard.integer(forKey: "measurementCount")
         
         // 측정 시간 간격 계산
@@ -145,6 +152,29 @@ struct MainView: View {
             let interval = totalSeconds / (measureCount - 1)
             measureIntervals = (1..<measureCount).map { totalSeconds - $0 * interval }
         }
+        print("Alert가 등장할 시간(s): \(measureIntervals)")
+    }
+    
+    // MARK: 심박수 측정 주기 랜덤일 때
+    private func setRandomMeasure() {
+        print(#function)
+        print("측정주기는 랜덤입니다.")
+        measureCount = UserDefaults.standard.integer(forKey: "measurementCount")
+        
+        if measureCount > 1 {
+            let interval = totalSeconds / (measureCount - 1)
+            measureIntervals = (1..<measureCount).map { index in
+                if index == 0 || index == measureCount - 1 {
+                    return totalSeconds - index * interval // 첫 번째와 마지막은 정확히 일정한 시간
+                } else {
+                    // 중간 시점들은 ±60초 범위에서 랜덤 오프셋 적용
+                    let baseTime = totalSeconds - index * interval
+                    let randomOffset = Int.random(in: -5...5)
+                    return baseTime + randomOffset
+                }
+            }
+        }
+        print("Alert가 등장할 시간(s): \(measureIntervals)")
     }
     
     // MARK: 타이머 시작
@@ -154,15 +184,13 @@ struct MainView: View {
             .sink { _ in
                 if time > 0 {
                     time -= 1
-                    
-                    print("CurrentTime: \(time)")
+                    print("현재 남은 시간: \(Int(time))초")
                     
                     // 현재 시간이 다음 알림 시간과 일치하는지 확인
                     if alertIndex < measureIntervals.count && Int(time) == measureIntervals[alertIndex] {
                         showingAlert = true
                         alertIndex += 1 // 다음 알림을 준비
                     }
-                    
                 } else { // 게임종료시
                     showingAlert = true
                     stopTimer() // 타이머 중지
