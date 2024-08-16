@@ -8,23 +8,25 @@ struct MainView: View {
     
     @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
     
-    // MainView 세그먼트 컨트롤
-    @State private var selectedSegment = 0
+    /// MainView 세그먼트 컨트롤
+    @State private var selectedSegment = 1
     @State private var segments = ["chart.bar.fill", "tablecells.badge.ellipsis"]
     
     @State private var hour: Int = 0 // UserDefaults의 시간을 받을 변수
     @State private var minute: Int = 0 // UserDefaults의 분을 받을 변수
     @State private var totalSeconds: Int = 0 // hour&minute를 초로환산해서 담을 변수
     
-    // MARK: 프로그레스 바 ( 타이머 )
+    /// 프로그레스 바 ( 타이머 )
     @State private var time: Double = 0
     @State private var initialTime: Double = 0
     @State private var timer: AnyCancellable? // 타이머를 관리할 변수
     
     @Query var players: [Player]
     
-    // 랜덤여부에 따른 측정 Alert
+    /// 랜덤여부에 따른 측정 Alert
     @State private var showingAlert = false
+    @State private var FinishAlert = false
+    
     @State private var randomValue = false /// 랜덤여부 Bool
     @State private var measureCount = 0 // 측정횟수
     @State private var measureIntervals: [Int] = [] // 알림을 띄울 시간 목록
@@ -105,7 +107,10 @@ struct MainView: View {
             startTimer()
         }
         .alert(isPresented: $showingAlert) {
-            Alert(title: Text("알림"), message: Text("측정시간이 되었습니다."), dismissButton: .default(Text("OK")))
+            Alert(title: Text("알림"), message: Text("측정시간이 되었습니다."), dismissButton: .default(Text("확인")))
+        }
+        .alert(isPresented: $FinishAlert) {
+            Alert(title: Text("알림"), message: Text("게임시간이 종료되었습니다.\n마지막 심박수 측정을 해주세요."), dismissButton: .default(Text("확인")))
         }
     }
     
@@ -190,7 +195,7 @@ struct MainView: View {
                         alertIndex += 1 // 다음 알림을 준비
                     }
                 } else { // 게임종료시
-                    showingAlert = true
+                    FinishAlert = true
                     stopTimer() // 타이머 중지
                 }
             }
