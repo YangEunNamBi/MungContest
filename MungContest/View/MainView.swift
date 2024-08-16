@@ -1,6 +1,6 @@
-
 import SwiftUI
 import SwiftData
+import Combine
 
 struct MainView: View {
     
@@ -19,9 +19,17 @@ struct MainView: View {
     // MARK: 프로그레스 바 ( 타이머 )
     @State private var time: Double = 0
     @State private var initialTime: Double = 0
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect() // 1초마다
+    @State private var timer: AnyCancellable? // 타이머를 관리할 변수
     
     @Query var players: [Player]
+    
+    // 랜덤여부에 따른 측정 Alert
+    @State private var showingAlert = false
+    @State private var randomValue = false /// 랜덤여부 Bool
+    @State private var measureCount = 0 // 측정횟수
+    @State private var measureIntervals: [Int] = [] // 알림을 띄울 시간 목록
+    @State private var alertIndex = 0 // 현재 띄워진 알림의 인덱스
+    
     
     var body: some View {
         VStack{
@@ -54,14 +62,6 @@ struct MainView: View {
             
             HStack{
                 CustomProgressView(time: time, initialTime: initialTime)
-                    .onReceive(timer) { _ in
-                        if time > 0 { // 설정한 시간이 0초 이상 남았을경우 감소
-                            time -= 1
-                        } else {
-                            // print("게임종료")
-                            // 0초일 경우 게임 종료
-                        }
-                    }
                 
                 HStack{
                     Image(systemName: "timer")
@@ -97,6 +97,11 @@ struct MainView: View {
             calculateTotalSeconds()
             time = Double(totalSeconds)
             initialTime = time
+            setNotRandomMeasure()
+            startTimer() // 타이머 시작
+        }
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("알림"), message: Text("측정시간이 되었습니다."), dismissButton: .default(Text("OK")))
         }
     }
     
@@ -128,6 +133,47 @@ struct MainView: View {
             let remainingSeconds = seconds % 60
             return String(format: "%02d:%02d", minutes, remainingSeconds)
         }
+    }
+    
+    // MARK: 심박수 측정 주기위한 세팅
+    private func setNotRandomMeasure() {
+        print(#function)
+        measureCount = UserDefaults.standard.integer(forKey: "measurementCount")
+        
+        // 측정 시간 간격 계산
+        if measureCount > 1 {
+            let interval = totalSeconds / (measureCount - 1)
+            measureIntervals = (1..<measureCount).map { totalSeconds - $0 * interval }
+        }
+    }
+    
+    // MARK: 타이머 시작
+    private func startTimer() {
+        timer = Timer.publish(every: 1, on: .main, in: .common)
+            .autoconnect()
+            .sink { _ in
+                if time > 0 {
+                    time -= 1
+                    
+                    print("CurrentTime: \(time)")
+                    
+                    // 현재 시간이 다음 알림 시간과 일치하는지 확인
+                    if alertIndex < measureIntervals.count && Int(time) == measureIntervals[alertIndex] {
+                        showingAlert = true
+                        alertIndex += 1 // 다음 알림을 준비
+                    }
+                    
+                } else { // 게임종료시
+                    showingAlert = true
+                    stopTimer() // 타이머 중지
+                }
+            }
+    }
+    
+    // MARK: 타이머 중지
+    private func stopTimer() {
+        timer?.cancel()
+        timer = nil
     }
 }
 
