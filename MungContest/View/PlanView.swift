@@ -29,6 +29,7 @@ struct PlanView: View {
         VStack {
             TextField("대회 제목을 입력해주세요", text: $title)
                 .font(.custom("SpoqaHanSansNeo-Medium", size: 28))
+                .font(.custom("SpoqaHanSansNeo-Medium", size: 28))
                 .padding(.horizontal, 30)
                 .padding(.vertical, 20)
                 .background(
