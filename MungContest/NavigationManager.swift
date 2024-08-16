@@ -24,6 +24,7 @@ extension PathType {
             
         case .main:
             MainView()
+                .navigationBarHidden(true)
             
         case .plan:
             PlanView()

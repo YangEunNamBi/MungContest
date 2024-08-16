@@ -10,6 +10,7 @@
 		<string>SpoqaHanSansNeo-Regular.otf</string>
 		<string>SpoqaHanSansNeo-Thin.otf</string>
 		<string>Poppins-Regular.ttf</string>
+		<string>Poppins-Bold.ttf</string>
 	</array>
 	<key>NSFileProviderDomainUsageDescription</key>
 	<string>CSV 파일 접근</string>

@@ -10,7 +10,7 @@ import SwiftUI
 struct PlanView: View {
     @Environment(NavigationManager.self) var navigationManager
     @Environment(\.modelContext) var modelContext
-    @State private var title: String = UserDefaults.standard.contestTitle
+    @State private var title: String = ""
     @State var hours: Int = 0
     @State var minutes: Int = 0
     @State private var measurementCount: Int = {
@@ -35,7 +35,7 @@ struct PlanView: View {
                     RoundedRectangle(cornerRadius: 40)
                         .fill(Color.mcGray800)
                 )
-                .padding(.horizontal, 50)
+                .padding(.horizontal, 30)
             
             HStack {
                 Group {
@@ -151,7 +151,7 @@ struct PlanView: View {
                                     .overlay {
                                         Text("O")
                                             .font(.custom("Poppins-Regular", size: 64))
-                                            .foregroundColor(isRandom ? .black : .white)
+                                            .foregroundColor(isRandom ? .black : .mcGray300)
                                     }
                             }
                             
@@ -167,7 +167,7 @@ struct PlanView: View {
                                     .overlay {
                                         Text("X")
                                             .font(.custom("Poppins-Regular", size: 64))
-                                            .foregroundColor(isRandom ? .white : .black)
+                                            .foregroundColor(isRandom ? .mcGray300 : .black)
                                     }
                             }
                         }
@@ -192,22 +192,26 @@ struct PlanView: View {
                         .padding(.horizontal, 12)
                     HStack {
                         Button(action: {
-                            requestFileAccessPermission()
-                            isShowingFilePicker.toggle()
+                            if canLoadFiles() {
+                                resetPlayers()
+                            } else {
+                                requestFileAccessPermission()
+                                isShowingFilePicker.toggle()
+                            }
                         }) {
                             HStack {
                                 Spacer().frame(width: 12)
                                 
-                                Text("구글 폼 불러오기")
+                                Text(canLoadFiles() ? "\(players.count)명의 참가자 명단 불러오기 완료" : "참가자 명단 불러오기")
                                     .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
                                 
                                 Spacer().frame(width: 18)
                                 
-                                Image(systemName: "square.and.arrow.down")
+                                Image(systemName: canLoadFiles() ? "xmark" : "square.and.arrow.down")
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .bold()
-                                    .scaledToFit()
                                     .frame(width: 18)
                                     .padding(.vertical, 12)
                                 
@@ -215,6 +219,7 @@ struct PlanView: View {
                             }
                             .padding(.horizontal, 12)
                             .background(Color.mcGray800)
+                            .foregroundColor(canLoadFiles() ? Color.accentColor : Color.mcGray300)
                             .cornerRadius(40)
                             .padding(.horizontal, 10)
                         }
@@ -234,23 +239,26 @@ struct PlanView: View {
                         }
                         
                         Button(action: {
-                            requestFileAccessPermission()
-                            isShowingFileImage.toggle()
-                            
+                            if canLoadImages() {
+                                resetImages()
+                            } else {
+                                requestFileAccessPermission()
+                                isShowingFileImage.toggle()
+                            }
                         }) {
                             HStack {
                                 Spacer().frame(width: 12)
                                 
-                                Text("참가자 이미지 불러오기")
+                                Text(canLoadImages() ? "\(players.count)명의 참가자 불러오기 완료" : "참가자 이미지 불러오기")
                                     .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
                                     .padding(.vertical, 12)
                                 
                                 Spacer().frame(width: 18)
                                 
-                                Image(systemName: "square.and.arrow.down")
+                                Image(systemName: canLoadImages() ? "xmark" : "square.and.arrow.down")
                                     .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .bold()
-                                    .scaledToFit()
                                     .frame(width: 18)
                                     .padding(.vertical, 12)
                                 
@@ -258,6 +266,7 @@ struct PlanView: View {
                             }
                             .padding(.horizontal, 12)
                             .background(Color.mcGray800)
+                            .foregroundColor(canLoadImages() ? Color.accentColor : Color.mcGray300)
                             .cornerRadius(40)
                             .padding(.horizontal, 10)
                         }
@@ -275,28 +284,35 @@ struct PlanView: View {
                             }
                         }
                         
-                        //MARK: - 명단과 이미지를 불러왔을 때 보는용도, 추후 삭제 바람
-//                        List(players, id: \.id) { player in
-//                            VStack {
-//                                if let uiImage = UIImage(data: player.profileImage) {
-//                                    Image(uiImage: uiImage)
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 50, height: 50)
-//                                        .clipShape(Circle())
-//                                        .padding(.trailing, 10)
-//                                }
-//                                VStack(alignment: .leading) {
-//                                    Text(player.name)
-//                                        .font(.headline)
-//                                    Text(player.comment)
-//                                        .font(.subheadline)
-//                                }
-//                            }
-//                        }
-                        
+                        // 전체 초기화
+                        Button(action: {
+                            resetPlayers()
+                            resetImages()
+                        }) {
+                            HStack {
+                                Spacer().frame(width: 12)
+                                
+                                // 조건에 따라 텍스트와 아이콘 변경
+                                if canLoadFiles() || canLoadImages() {
+                                    Text("전체 초기화")
+                                        .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
+                                        .padding(.vertical, 12)
+                                    
+                                    Image(systemName: "xmark")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .bold()
+                                        .frame(width: 18)
+                                        .padding(.vertical, 12)
+                                } else {
+                                    Text("")
+                                        .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
+                                        .padding(.vertical, 12)
+                                }
+                            }
+                        }
                     }
-                    .foregroundStyle(Color.accentColor)
+                    
                 }
                 .padding(.horizontal, 38)
                 Spacer()
@@ -307,9 +323,12 @@ struct PlanView: View {
             HStack {
                 Spacer()
                 
+                Text("\(players.count)명")
+                
                 Button {
                     saveTime(hours: hours, minutes: minutes)
                     print("\(hours), \(minutes),")
+                    UserDefaults.standard.contestTitle = title
                     navigationManager.push(to: .standby)
                 } label: {
                     HStack {
@@ -327,10 +346,10 @@ struct PlanView: View {
                     .padding(.horizontal, 30)
                     .background(Color.accentColor)
                     .cornerRadius(25)
-                    
                 }
                 .buttonStyle(PlainButtonStyle())
                 .padding(.horizontal, 12)
+                .disabled(!(canLoadImages() && canLoadFiles()))
             }
             .padding(.horizontal, 38)
         }
@@ -385,26 +404,29 @@ struct PlanView: View {
     
     func parseCSV(fileContent: String) {
         let rows = fileContent.components(separatedBy: "\n")
-        for (index, row) in rows.enumerated() {
-            // Skip the header row
-            if index == 0 { continue }
-            
-            let columns = row.split(separator: ",", omittingEmptySubsequences: false).map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
-            if columns.count >= 4 {
-                let name = columns[1]
-                let comment = columns[2]
-                
-                print("Parsed Player: \(name), \(comment)")
-                
-                let player = Player(name: name, profileImage: Data(), comment: comment, defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
-                DispatchQueue.main.async {
-                    players.append(player)
+                for (index, row) in rows.enumerated() {
+                    // Skip the header row
+                    if index == 0 { continue }
+                    
+                    let columns = row.split(separator: ",", omittingEmptySubsequences: false).map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+                    if columns.count >= 4 {
+                        let name = columns[1]
+                        let comment = columns[2]
+                        
+                        print("Parsed Player: \(name), \(comment)")
+                        
+                        let player = Player(name: name, profileImage: Data(), comment: comment, defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
+                        for _ in 1...measurementCount {
+                            player.heartrates.append(0)
+                            player.differenceHeartrates.append(0)
+                        }
+                        players.append(player)
+                        savePlayer(player)
+                    } else {
+                        print("Skipping row: \(row)")
+                    }
                 }
-            } else {
-                print("Skipping row: \(row)")
-            }
         }
-    }
     
     func savePlayer(_ player: Player) {
         do {
@@ -417,25 +439,46 @@ struct PlanView: View {
     
     //MARK: - 이미지 불러오기
     func loadImages() {
-        
         for imageURL in selectedImageURLs {
             guard imageURL.startAccessingSecurityScopedResource() else {
                 return
             }
             
             defer { imageURL.stopAccessingSecurityScopedResource() }
+            
             guard let imageData = try? Data(contentsOf: imageURL) else {
                 print("Failed to load image data from URL: \(imageURL)")
                 continue
             }
-            let playerName = imageURL.lastPathComponent.replacingOccurrences(of: ".jpeg", with: "")
             
-            // 가져온 플레이어 이름으로 모델을 만듭니다.
-            let player = Player(name: playerName, profileImage: imageData, comment: "", defaultHeartrate: 0, heartrates: [], differenceHeartrates: [], resultHeartrate: 0)
-            
-            // 생성된 플레이어를 리스트에 추가합니다.
-            players.append(player)
+            let playerName = imageURL.lastPathComponent.split(separator: ".").dropLast().joined(separator: ".")
+
+            if let existingPlayer = players.first(where: { $0.name == playerName }) {
+                existingPlayer.profileImage = imageData
+                savePlayer(existingPlayer)
+            } else {
+                print("No player found with name: \(playerName)")
+            }
         }
+    }
+
+    
+    func canLoadImages() -> Bool {
+        for player in players {
+            if player.profileImage.isEmpty || player.name.isEmpty {
+                return false
+            }
+        }
+        return !players.isEmpty
+    }
+    
+    func canLoadFiles() -> Bool {
+        for player in players {
+            if player.name.isEmpty {
+                return false
+            }
+        }
+        return !players.isEmpty
     }
     
     func requestFileAccessPermission() {
@@ -453,6 +496,37 @@ struct PlanView: View {
         }
     }
     
+    //MARK: - User Default, Model 초기화
+    func resetPlayers() {
+        for player in players {
+            modelContext.delete(player)
+        }
+        players.removeAll()
+        saveContext()
+        canLoadFiles()
+    }
+
+    func resetImages() {
+        for player in players {
+            player.profileImage = Data()
+        }
+        for player in players {
+            modelContext.delete(player)
+        }
+        players.removeAll()
+        selectedImageURLs.removeAll()
+        saveContext()
+        canLoadImages()
+    }
+    
+    private func saveContext() {
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save context: \(error.localizedDescription)")
+        }
+    }
+
 }
 
 #Preview {

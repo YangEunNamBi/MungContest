@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct RecordView: View {
     @Environment(NavigationManager.self) var navigationManager
@@ -17,6 +18,8 @@ struct RecordView: View {
     @State var columnIndex: Int = 0
     @State var rowIndex: Int = 0
     
+    @Query() var players: [Player]
+
     enum CalcButton: String {
         case one = "1"
         case two = "2"
@@ -40,67 +43,45 @@ struct RecordView: View {
             }
         }
     }
-    
-    var dummieData : [Player] = [
-        Player(name: "준요", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "원", profileImage: Data(), comment: "내가 준요는 이긴다 ㅋㅋ", defaultHeartrate: 422, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "젠", profileImage: Data(), comment: "내가 원은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "해시", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "마스", profileImage: Data(), comment: "내가 해시는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "자운드", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "하래", profileImage: Data(), comment: "내가 준요는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "헤디", profileImage: Data(), comment: "내가 원은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "베로", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "예", profileImage: Data(), comment: "내가 해시는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "제니스", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "나다", profileImage: Data(), comment: "내가 준요는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "루시아", profileImage: Data(), comment: "내가 원은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "테오", profileImage: Data(), comment: "내가 젠은 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0),
-        Player(name: "스카일라", profileImage: Data(), comment: "내가 해시는 이긴다 ㅋㅋ", defaultHeartrate: 0, heartrates: [0, 0, 0, 0], differenceHeartrates: [0, 0, 0, 0], resultHeartrate: 0)
-    ]
-    
+        
     var body: some View {
         
         let buttons: [[CalcButton]] = [
             [.one, .two, .three],
             [.four, .five, .six],
             [.seven, .eight, .nine]
-            //            [.empty, .zero, .enter]
         ]
-        //        VStack {
-        //            Button("대회 설정 화면으로") {
-        //                navigationManager.push(to: .finish)
-        //            }
+        
         HStack{
             ScrollView{
                 HStack{
-                    LazyVStack{
+                    VStack{
                         Text("번호")
                             .font(.custom("SpoqaHanSansNeo-Bold", size:20))
                             .foregroundStyle(Color("AccentColor"))
                             .frame(height:45)
                         Divider()
-                        ForEach(dummieData.indices){ index in
+                        ForEach(players.indices){ index in
                             Text("\(index+1)")
                                 .font(.custom("SpoqaHanSansNeo-Medium", size:20))
                                 .frame(height:45)
                             Divider()
                         }
                     }.frame(width:100)
-                    LazyVStack{
+                    VStack{
                         Text("이름")
                             .font(.custom("SpoqaHanSansNeo-Bold", size:20))
                             .foregroundStyle(Color("AccentColor"))
                             .frame(height:45)
                         Divider()
-                        ForEach(dummieData){ player in
+                        ForEach(players){ player in
                             Text(player.name)
                                 .font(.custom("SpoqaHanSansNeo-Medium", size:20))
                                 .frame(height:45)
                             Divider()
                         }
                     }.frame(width:100)
-                    LazyVStack {
+                    VStack {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHStack{
@@ -109,7 +90,7 @@ struct RecordView: View {
                                     .foregroundStyle(Color("AccentColor"))
                                     .frame(width:96)
                                 Divider()
-                                ForEach(dummieData[0].heartrates.indices, id: \.self){ index in
+                                ForEach(players[0].heartrates.indices, id: \.self){ index in
                                     Text("\(index+1)차")
                                         .font(.custom("SpoqaHanSansNeo-Bold", size:20))
                                         .foregroundStyle(Color("AccentColor"))
@@ -118,11 +99,11 @@ struct RecordView: View {
                                 }
                             }.frame(height:45)
                             Divider()
-                            ForEach(dummieData.indices) { index in
+                            ForEach(players.indices) { index in
                                 LazyHStack {
                                     Button(action:{
-                                        playerToInput = dummieData[index]
-                                        numToInput = String(dummieData[index].defaultHeartrate)
+                                        playerToInput = players[index]
+                                        numToInput = String(players[index].defaultHeartrate)
                                         columnIndex = 0
                                         rowIndex = index
                                     }, label:{
@@ -135,20 +116,18 @@ struct RecordView: View {
                                                         .opacity(0.5)
                                                         .foregroundStyle(Color.gray))
                                         } else{
-                                            Text("\(dummieData[index].defaultHeartrate)")
+                                            Text("\(players[index].defaultHeartrate)")
                                                 .font(.custom("SpoqaHanSansNeo-Medium", size:20))
                                                 .foregroundStyle(Color("mcGray300"))
-                                            
                                                 .frame(width:96)
                                         }
-                                        
                                     })
                                     Divider()
                                         .background(Color.white)
-                                    ForEach(dummieData[0].heartrates.indices , id: \.self) { colIndex in
+                                    ForEach(players[0].heartrates.indices , id: \.self) { colIndex in
                                         Button(action:{
-                                            playerToInput = dummieData[index]
-                                            numToInput = String(dummieData[index].heartrates[colIndex])
+                                            playerToInput = players[index]
+                                            numToInput = String(players[index].heartrates[colIndex])
                                             columnIndex = colIndex+1
                                             rowIndex = index
                                         }, label:{
@@ -162,8 +141,8 @@ struct RecordView: View {
                                                             .opacity(0.5)
                                                             .foregroundStyle(Color.gray))
                                             } else{
-                                                Text("\(dummieData[index].heartrates[colIndex])")
-                                                    .font(.custom("SpoqaHanSansNeo-Bold", size:20))
+                                                Text("\(players[index].heartrates[colIndex])")
+                                                    .font(.custom("SpoqaHanSansNeo-Medium", size:20))
                                                     .foregroundStyle(Color("mcGray300"))
                                                     .frame(width:96)
                                             }
@@ -248,13 +227,28 @@ struct RecordView: View {
                                     })
                                     Button(action:{
                                         if columnIndex == 0{
-                                            dummieData[rowIndex].defaultHeartrate = Int(numToInput) ?? 0
-                                            rowIndex += 1
+                                            players[rowIndex].defaultHeartrate = Int(numToInput) ?? 0
+                                            if rowIndex == players.count-1 {
+                                                rowIndex = 0
+                                            }else{
+                                                rowIndex += 1
+                                            }                                            
                                             numToInput = "0"
                                         } else{
-                                            dummieData[rowIndex].heartrates[columnIndex-1] = Int(numToInput) ?? 0
-                                            rowIndex += 1
-                                            numToInput = "0"
+                                            DispatchQueue.main.asyncAfter(deadline: .now()){
+                                                players[rowIndex].heartrates[columnIndex-1] = Int(numToInput) ?? 0
+                                                if numToInput != "0"{
+                                                    players[rowIndex].differenceHeartrates[columnIndex-1] = abs(players[rowIndex].defaultHeartrate - (Int(numToInput) ?? 0))
+                                                }
+                                                players[rowIndex].resultHeartrate = players[rowIndex].differenceHeartrates.reduce(0, +)
+                                                
+                                                if rowIndex == players.count-1 {
+                                                    rowIndex = 0
+                                                } else{
+                                                    rowIndex += 1
+                                                }
+                                                numToInput = "0"
+                                            }
                                         }
                                     }, label:{
                                         Text("Input")
@@ -281,4 +275,16 @@ struct RecordView_Previews: PreviewProvider {
             .previewInterfaceOrientation(.landscapeLeft)
             .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
     }
+}
+
+func calculateDifferencesWithDefault(_ array: [Int], defaultValue: Int) -> [Int] {
+    var result: [Int] = []
+    
+    for value in array {
+        if value != 0{
+            let difference = abs(value - defaultValue)
+            result.append(difference)
+        }
+    }
+    return result
 }
