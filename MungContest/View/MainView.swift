@@ -23,10 +23,10 @@ struct MainView: View {
     
     @Query var players: [Player]
     
-    /// 랜덤여부에 따른 측정 Alert
-    @State private var showingAlert = false
-    @State private var FinishAlert = false
+    /// 측정 Alert
+    @State private var activeAlert: MeasureAlertType?
     
+    /// 랜덤 여부에 따른 측정주기 계산 변수
     @State private var randomValue = false /// 랜덤여부 Bool
     @State private var measureCount = 0 // 측정횟수
     @State private var measureIntervals: [Int] = [] // 알림을 띄울 시간 목록
@@ -55,9 +55,8 @@ struct MainView: View {
             }
             
             HStack{
-                Text("\(contestTitle)")
-                    .font(.system(size: 28))
-                    .bold()
+                Text("\(UserDefaults.standard.contestTitle)")
+                    .font(.system(size: 28, weight: .bold))
                 Spacer()
             }
             
@@ -68,8 +67,7 @@ struct MainView: View {
                     Image(systemName: "timer")
                     
                     Text("- \(formatTime(seconds: Int(time)))") // 남은시간 Text
-                        .font(.system(size: 14))
-                        .bold()
+                        .font(.system(size: 14, weight: .bold))
                         .frame(width: 80)
                 }
                 .padding(.leading)
@@ -106,12 +104,11 @@ struct MainView: View {
             }
             startTimer()
         }
-        .alert(isPresented: $showingAlert) {
-            Alert(title: Text("알림"), message: Text("측정시간이 되었습니다."), dismissButton: .default(Text("확인")))
+        .alert(item: $activeAlert) { alertType in
+            MeasureAlertType.alert(for: alertType)
         }
-        .alert(isPresented: $FinishAlert) {
-            Alert(title: Text("알림"), message: Text("게임시간이 종료되었습니다.\n마지막 심박수 측정을 해주세요."), dismissButton: .default(Text("확인")))
-        }
+        
+        
     }
     
     /// Lock 이미지 on/off 여부 ( 모든 resultHeartrate가 비어있는지 확인하는 함수 )
@@ -191,12 +188,15 @@ struct MainView: View {
                     
                     // 현재 시간이 다음 알림 시간과 일치하는지 확인
                     if alertIndex < measureIntervals.count && Int(time) == measureIntervals[alertIndex] {
-                        showingAlert = true
+                        activeAlert = .measurement
                         alertIndex += 1 // 다음 알림을 준비
                     }
-                } else { // 게임종료시
-                    FinishAlert = true
+                }
+                
+                if time == 0 {
+                    activeAlert = .finish
                     stopTimer() // 타이머 중지
+                    print("대회시간 종료")
                 }
             }
     }
@@ -206,13 +206,5 @@ struct MainView: View {
         timer?.cancel()
         timer = nil
     }
-}
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-        MainView()
-            .environment(NavigationManager())
-            .previewInterfaceOrientation(.landscapeLeft)
-            .preferredColorScheme(.dark)
-    }
+    
 }
