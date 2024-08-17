@@ -78,8 +78,8 @@ struct RankView: View {
                             .padding(.bottom, 20)
                     }
                     .padding(.bottom, 20)
-                    
                 }
+                
                 ZStack {
                     Rectangle()
                         .fill(
@@ -205,7 +205,7 @@ struct RankView: View {
                             .font(.system(size: 28))
                             .foregroundColor(.black)
                         
-                        Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count-1].profileImage) ?? UIImage(systemName: "photo")!)
+                        Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count - 1].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .clipShape(Circle())
@@ -229,13 +229,13 @@ struct RankView: View {
                             .font(.system(size: 28))
                             .foregroundColor(.black)
                         
-                        Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count-2].profileImage) ?? UIImage(systemName: "photo")!)
+                        Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count - 2].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .clipShape(Circle())
                             .padding(.horizontal, 30)
                         
-                        Text(sortedPlayers[sortedPlayers.count-2].name ?? "")
+                        Text(sortedPlayers[sortedPlayers.count - 2].name ?? "")
                             .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
@@ -259,37 +259,15 @@ struct RankView: View {
                             .clipShape(Circle())
                             .padding(.horizontal, 30)
                         
-                        Text(sortedPlayers[sortedPlayers.count-3].name ?? "")
+                        Text(sortedPlayers[sortedPlayers.count - 3].name ?? "")
                             .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
                             .padding(.top, 10)
                             .foregroundColor(.mcGray300)
                     }
                 }
             }
-            //            LazyHGrid(rows: columns, spacing: 15) {
-            //                ForEach(players.suffix(3).reversed(), id: \.name) { player in
-            //                    RankCellView(player: player)
-            //                }
-            //            }
-            //            .padding()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-}
-
-extension View {
-    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
-        clipShape(RoundedCorner(radius: radius, corners: corners))
-    }
-}
-
-struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
-    
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
-        return Path(path.cgPath)
     }
 }
 

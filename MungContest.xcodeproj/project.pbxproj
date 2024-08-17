@@ -14,6 +14,7 @@
 		1FAFD6072C70688900A0CF39 /* Measure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAFD6062C70688900A0CF39 /* Measure.swift */; };
 		1FAFD60A2C7078CF00A0CF39 /* MeasureTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAFD6092C7078CF00A0CF39 /* MeasureTimer.swift */; };
 		1FAFD60C2C708C3300A0CF39 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAFD60B2C708C3300A0CF39 /* Color+.swift */; };
+		1FAFD60F2C708DCB00A0CF39 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAFD60E2C708DCB00A0CF39 /* RoundedCorner.swift */; };
 		510A28A22C0B61F70011A9A3 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A12C0B61F70011A9A3 /* NavigationManager.swift */; };
 		510A28A42C0B622D0011A9A3 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A32C0B622D0011A9A3 /* SplashView.swift */; };
 		510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A52C0B62800011A9A3 /* PlanView.swift */; };
@@ -44,6 +45,7 @@
 		1FAFD6062C70688900A0CF39 /* Measure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Measure.swift; sourceTree = "<group>"; };
 		1FAFD6092C7078CF00A0CF39 /* MeasureTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureTimer.swift; sourceTree = "<group>"; };
 		1FAFD60B2C708C3300A0CF39 /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
+		1FAFD60E2C708DCB00A0CF39 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		510A28A12C0B61F70011A9A3 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		510A28A32C0B622D0011A9A3 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		510A28A52C0B62800011A9A3 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
@@ -85,6 +87,14 @@
 				1FAFD6092C7078CF00A0CF39 /* MeasureTimer.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		1FAFD60D2C708DC200A0CF39 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				1FAFD60E2C708DCB00A0CF39 /* RoundedCorner.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		510A28A02C0B61D90011A9A3 /* View */ = {
@@ -147,6 +157,7 @@
 		BDFCE3722C0B5D02004FAFAC /* MungContest */ = {
 			isa = PBXGroup;
 			children = (
+				1FAFD60D2C708DC200A0CF39 /* Helper */,
 				1FAFD6082C7078BA00A0CF39 /* Service */,
 				510A39A52C149E3300C64B49 /* Fonts */,
 				510A39A22C1277EC00C64B49 /* Info.plist */,
@@ -268,6 +279,7 @@
 				1F00C62D2C0C411C007E03EB /* RankListView.swift in Sources */,
 				510A28A22C0B61F70011A9A3 /* NavigationManager.swift in Sources */,
 				510A28A82C0B629F0011A9A3 /* StandbyView.swift in Sources */,
+				1FAFD60F2C708DCB00A0CF39 /* RoundedCorner.swift in Sources */,
 				1F00C62B2C0BAE81007E03EB /* RankView.swift in Sources */,
 				1FAFD6052C6FC34200A0CF39 /* TimerProgressBar.swift in Sources */,
 				510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */,
