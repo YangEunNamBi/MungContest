@@ -2,11 +2,13 @@ import SwiftUI
 import SwiftData
 
 class RankViewModel: ObservableObject {
+    
     @Published var currentRanks: [UUID: Int] = [:] {
         didSet {
             saveToUserDefaults()
         }
     }
+    
     @Published var previousRanks: [UUID: Int] = [:] {
         didSet {
             saveToUserDefaults()
@@ -225,20 +227,6 @@ struct GridCellView: View {
                     .bold()
             }
         }
-    }
-}
-
-// MARK: Text 속성 - 뷰 모디파이어
-struct CustomTextStyle: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.system(size: 12))
-            .foregroundColor(.white.opacity(0.6))
-    }
-}
-extension Text {
-    func customStyle() -> some View {
-        self.modifier(CustomTextStyle())
     }
 }
 
