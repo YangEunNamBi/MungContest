@@ -1,10 +1,3 @@
-//
-//  MeasureTimer.swift
-//  MungContest
-//
-//  Created by 이상도 on 8/17/24.
-//
-
 import Combine
 import SwiftUI
 
@@ -61,22 +54,29 @@ class MeasureTimer: ObservableObject {
     /// 측정주기 -> 랜덤아닐때
     func setNotRandomMeasure(measureCount: Int, totalSeconds: Int) {
         print(#function)
-        print("측정주기는 미랜덤입니다.")
-        if measureCount > 1 {
-            let interval = totalSeconds / (measureCount - 1)
-            measureIntervals = (1..<measureCount).map { totalSeconds - $0 * interval }
+        print("랜덤여부 : \(UserDefaults.standard.bool(forKey: "isRandom"))")
+        
+        let adjustedMeasureCount = measureCount
+        
+        if adjustedMeasureCount > 0 {
+            let interval = totalSeconds / adjustedMeasureCount
+            measureIntervals = (1...adjustedMeasureCount).map { totalSeconds - $0 * interval }
         }
+        
         print("측정 알림 시간(초) : \(measureIntervals)")
     }
     
     /// 측정주기 -> 랜덤일때
     func setRandomMeasure(measureCount: Int, totalSeconds: Int) {
         print(#function)
-        print("측정주기는 랜덤입니다.")
-        if measureCount > 1 {
-            let interval = totalSeconds / (measureCount - 1)
-            measureIntervals = (1..<measureCount).map { index in
-                if index == 0 || index == measureCount - 1 {
+        print("랜덤여부 : \(UserDefaults.standard.bool(forKey: "isRandom"))")
+        
+        let adjustedMeasureCount = measureCount
+        
+        if adjustedMeasureCount > 0 {
+            let interval = totalSeconds / adjustedMeasureCount
+            measureIntervals = (1...adjustedMeasureCount).map { index in
+                if index == 0 || index == adjustedMeasureCount - 1 {
                     return totalSeconds - index * interval
                 } else {
                     let baseTime = totalSeconds - index * interval

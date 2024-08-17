@@ -17,6 +17,7 @@
 		1FAFD60F2C708DCB00A0CF39 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAFD60E2C708DCB00A0CF39 /* RoundedCorner.swift */; };
 		1FAFD6112C7092FB00A0CF39 /* RankCustomTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAFD6102C7092FB00A0CF39 /* RankCustomTextStyle.swift */; };
 		1FAFD6132C70984D00A0CF39 /* RankListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAFD6122C70984D00A0CF39 /* RankListCellView.swift */; };
+		1FAFD6152C709AAF00A0CF39 /* LastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FAFD6142C709AAF00A0CF39 /* LastView.swift */; };
 		510A28A22C0B61F70011A9A3 /* NavigationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A12C0B61F70011A9A3 /* NavigationManager.swift */; };
 		510A28A42C0B622D0011A9A3 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A32C0B622D0011A9A3 /* SplashView.swift */; };
 		510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 510A28A52C0B62800011A9A3 /* PlanView.swift */; };
@@ -50,6 +51,7 @@
 		1FAFD60E2C708DCB00A0CF39 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		1FAFD6102C7092FB00A0CF39 /* RankCustomTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankCustomTextStyle.swift; sourceTree = "<group>"; };
 		1FAFD6122C70984D00A0CF39 /* RankListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankListCellView.swift; sourceTree = "<group>"; };
+		1FAFD6142C709AAF00A0CF39 /* LastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastView.swift; sourceTree = "<group>"; };
 		510A28A12C0B61F70011A9A3 /* NavigationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManager.swift; sourceTree = "<group>"; };
 		510A28A32C0B622D0011A9A3 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		510A28A52C0B62800011A9A3 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				1FAFD6042C6FC34200A0CF39 /* TimerProgressBar.swift */,
 				510A28AC2C0B62DA0011A9A3 /* FinishView.swift */,
 				90B300492C22EFB000157872 /* RecordView.swift */,
+				1FAFD6142C709AAF00A0CF39 /* LastView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				1FAFD60F2C708DCB00A0CF39 /* RoundedCorner.swift in Sources */,
 				1F00C62B2C0BAE81007E03EB /* RankView.swift in Sources */,
 				1FAFD6052C6FC34200A0CF39 /* TimerProgressBar.swift in Sources */,
+				1FAFD6152C709AAF00A0CF39 /* LastView.swift in Sources */,
 				510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */,
 				BDFCE3852C0B6D84004FAFAC /* Player.swift in Sources */,
 				1FAFD6112C7092FB00A0CF39 /* RankCustomTextStyle.swift in Sources */,

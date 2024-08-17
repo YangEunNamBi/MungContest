@@ -32,7 +32,7 @@ struct MainView: View {
                     .foregroundColor(Color.accentColor)
                 
                 Spacer()
-                
+        
                 HStack{
                     Picker("SegmentControl", selection: $selectedSegment) {
                         ForEach(0..<segments.count) { index in
