@@ -138,9 +138,8 @@ struct GridCellView: View {
     var body: some View {
         HStack {
             Text("\(rank)") // 순위 1위부터
-                .font(.system(size: 20))
+                .font(.system(size: 20, weight: .bold))
                 .frame(width: 30, alignment: .center)
-                .bold()
                 .padding()
             changeRank()
                 .padding()
@@ -158,7 +157,7 @@ struct GridCellView: View {
         .cornerRadius(20)
     }
     
-    // 순위변동
+    /// 순위변동
     func changeRank() -> some View {
         let rankChange = currentRank - previousRank
         return HStack {
@@ -183,7 +182,7 @@ struct GridCellView: View {
         }
     }
     
-    // 유저 이름
+    /// 유저 이름
     func playerName() -> some View {
         VStack {
             HStack {
@@ -194,7 +193,7 @@ struct GridCellView: View {
         }
     }
     
-    // 현재 심박수
+    /// 현재 심박수
     func playerBpm() -> some View {
         ZStack {
             Capsule()
@@ -203,8 +202,7 @@ struct GridCellView: View {
             
             HStack {
                 Text("\(player.heartrates.filter { $0 != 0 }.last ?? 0)")
-                    .bold()
-                    .font(.system(size: 20))
+                    .font(.system(size: 20, weight: .bold))
                     .foregroundColor(Color.accentColor)
                 
                 Text("bpm")
@@ -223,8 +221,7 @@ struct GridCellView: View {
             HStack {
                 Text("\(player.resultHeartrate)")
                     .foregroundColor(Color.accentColor)
-                    .font(.system(size: 20))
-                    .bold()
+                    .font(.system(size: 20, weight: .bold))
             }
         }
     }
