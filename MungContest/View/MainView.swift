@@ -6,6 +6,7 @@ struct MainView: View {
     
     @Environment(NavigationManager.self) var navigationManager
     
+    @Query var players: [Player]
     @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
     
     /// MainView 세그먼트 컨트롤
@@ -16,21 +17,12 @@ struct MainView: View {
     @State private var minute: Int = 0 // UserDefaults의 분을 받을 변수
     @State private var totalSeconds: Int = 0 // hour&minute를 초로환산해서 담을 변수
     
-    /// 프로그레스 바 ( 타이머 )
-    @State private var time: Double = 0
-    @State private var initialTime: Double = 0
-    @State private var timer: AnyCancellable? // 타이머를 관리할 변수
+    @State private var randomValue: Bool = false
+    @StateObject private var timerService: MeasureTimer
     
-    @Query var players: [Player]
-    
-    /// 측정 Alert
-    @State private var activeAlert: MeasureAlertType?
-    
-    /// 랜덤 여부에 따른 측정주기 계산 변수
-    @State private var randomValue = false /// 랜덤여부 Bool
-    @State private var measureCount = 0 // 측정횟수
-    @State private var measureIntervals: [Int] = [] // 알림을 띄울 시간 목록
-    @State private var alertIndex = 0 // 현재 띄워진 알림의 인덱스
+    init() {
+        _timerService = StateObject(wrappedValue: MeasureTimer(initialTime: 0))
+    }
     
     var body: some View {
         VStack{
@@ -61,12 +53,12 @@ struct MainView: View {
             }
             
             HStack{
-                TimerProgressBar(time: time, initialTime: initialTime)
+                TimerProgressBar(time: timerService.time, initialTime: Double(totalSeconds))
                 
                 HStack{
                     Image(systemName: "timer")
                     
-                    Text("- \(formatTime(seconds: Int(time)))") // 남은시간 Text
+                    Text("- \((Int(timerService.time)).formatTime())")
                         .font(.system(size: 14, weight: .bold))
                         .frame(width: 80)
                 }
@@ -90,25 +82,20 @@ struct MainView: View {
         }
         .padding(.horizontal, 50)
         .onAppear {
-            // UserDefaults에서 대회 시간받아서 초로 환산
             loadSavedTime()
             calculateTotalSeconds()
-            time = Double(totalSeconds)
-            initialTime = time
-            
+            timerService.time = Double(totalSeconds)
             randomValue = UserDefaults.standard.bool(forKey: "isRandom")
             if randomValue {
-                setRandomMeasure()
+                timerService.setRandomMeasure(measureCount: UserDefaults.standard.integer(forKey: "measurementCount"), totalSeconds: totalSeconds)
             } else {
-                setNotRandomMeasure()
+                timerService.setNotRandomMeasure(measureCount: UserDefaults.standard.integer(forKey: "measurementCount"), totalSeconds: totalSeconds)
             }
-            startTimer()
+            timerService.startTimer()
         }
-        .alert(item: $activeAlert) { alertType in
+        .alert(item: $timerService.activeAlert) { alertType in
             MeasureAlertType.alert(for: alertType)
         }
-        
-        
     }
     
     /// Lock 이미지 on/off 여부 ( 모든 resultHeartrate가 비어있는지 확인하는 함수 )
@@ -127,84 +114,20 @@ struct MainView: View {
         totalSeconds = hour * 60 * 60 + minute * 60
     }
     
+}
+
+extension Int {
     /// 대회 남은 시간 Text - 시간:분:초로 변형
-    private func formatTime(seconds: Int) -> String {
-        if seconds >= 3600 {
-            let hours = seconds / 3600
-            let minutes = (seconds % 3600) / 60
-            let remainingSeconds = seconds % 60
+    func formatTime() -> String {
+        if self >= 3600 {
+            let hours = self / 3600
+            let minutes = (self % 3600) / 60
+            let remainingSeconds = self % 60
             return String(format: "%02d:%02d:%02d", hours, minutes, remainingSeconds)
         } else {
-            let minutes = seconds / 60
-            let remainingSeconds = seconds % 60
+            let minutes = self / 60
+            let remainingSeconds = self % 60
             return String(format: "%02d:%02d", minutes, remainingSeconds)
         }
     }
-    
-    /// 심박수 측정 주기 랜덤아닐때
-    private func setNotRandomMeasure() {
-        print(#function)
-        print("측정주기는 랜덤이 아닙니다.")
-        measureCount = UserDefaults.standard.integer(forKey: "measurementCount")
-        
-        // 측정 시간 간격 계산
-        if measureCount > 1 {
-            let interval = totalSeconds / (measureCount - 1)
-            measureIntervals = (1..<measureCount).map { totalSeconds - $0 * interval }
-        }
-        print("Alert가 등장할 시간(s): \(measureIntervals)")
-    }
-    
-    /// 심박수 측정 주기 랜덤일 때
-    private func setRandomMeasure() {
-        print(#function)
-        print("측정주기는 랜덤입니다.")
-        measureCount = UserDefaults.standard.integer(forKey: "measurementCount")
-        
-        if measureCount > 1 {
-            let interval = totalSeconds / (measureCount - 1)
-            measureIntervals = (1..<measureCount).map { index in
-                if index == 0 || index == measureCount - 1 {
-                    return totalSeconds - index * interval // 첫 번째와 마지막은 정확히 일정한 시간
-                } else {
-                    // 중간 시점들은 ±60초 범위에서 랜덤 오프셋 적용
-                    let baseTime = totalSeconds - index * interval
-                    let randomOffset = Int.random(in: -5...5)
-                    return baseTime + randomOffset
-                }
-            }
-        }
-        print("Alert가 등장할 시간(s): \(measureIntervals)")
-    }
-    
-    /// 타이머 시작
-    private func startTimer() {
-        timer = Timer.publish(every: 1, on: .main, in: .common)
-            .autoconnect()
-            .sink { _ in
-                if time > 0 {
-                    time -= 1
-                    print("현재 남은 시간: \(Int(time))초")
-                    
-                    // 현재 시간이 다음 알림 시간과 일치하는지 확인
-                    if alertIndex < measureIntervals.count && Int(time) == measureIntervals[alertIndex] {
-                        activeAlert = .measurement
-                        alertIndex += 1 // 다음 알림을 준비
-                    }
-                }
-                
-                if time == 0 {
-                    activeAlert = .finish
-                    stopTimer() // 타이머 중지
-                    print("대회시간 종료")
-                }
-            }
-    }
-    
-    /// 타이머 중지
-    private func stopTimer() {
-        timer?.cancel()
-        timer = nil
-    }
-    
 }

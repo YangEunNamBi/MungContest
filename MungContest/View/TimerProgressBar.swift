@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TimerProgressBar: View {
+    
     var time: Double
     var initialTime: Double
     
