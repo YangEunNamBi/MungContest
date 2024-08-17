@@ -47,24 +47,16 @@ struct LastView: View {
                             Text("순위")
                                 .customStyle()
                                 .padding(.leading, 45)
-                            
-                            Text("순위 변동")
-                                .customStyle()
-                                .padding(.leading, 25)
-                            
+                            Spacer()
                             Text("이름")
                                 .customStyle()
-                                .padding(.leading, 60)
-                            
-                            Text("현재 심박수")
-                                .customStyle()
-                                .padding(.leading, 90)
-                            
-                            Text("편차 합계")
-                                .customStyle()
-                                .padding(.leading, 45)
-                            
                             Spacer()
+                            Text("평균 심박수")
+                                .customStyle()
+                            Spacer()
+                            Text("편차 평균")
+                                .customStyle()
+                                .padding(.trailing, 55)
                         }
                         .frame(maxWidth: .infinity)
                     }
@@ -75,36 +67,30 @@ struct LastView: View {
                             Text("순위")
                                 .customStyle()
                                 .padding(.leading, 45)
-                            
-                            Text("순위 변동")
-                                .customStyle()
-                                .padding(.leading, 25)
-                            
+                            Spacer()
                             Text("이름")
                                 .customStyle()
-                                .padding(.leading, 60)
-                            
-                            Text("현재 심박수")
-                                .customStyle()
-                                .padding(.leading, 90)
-                            
-                            Text("편차 합계")
-                                .customStyle()
-                                .padding(.leading, 45)
-                            
                             Spacer()
+                            Text("평균 심박수")
+                                .customStyle()
+                            Spacer()
+                            Text("편차 평균")
+                                .customStyle()
+                                .padding(.trailing, 55)
+                            
                         }
                         .frame(maxWidth: .infinity)
                     }
                     
                     // 플레이어 리스트
                     ForEach(Array(sortedPlayers[nowStartIndex..<min(nowStartIndex + 12, sortedPlayers.count)]), id: \.id) { player in
-                        RankListCellView(rank: sortedPlayers.firstIndex(where: { $0.id == player.id })! + 1, player: player, previousRank: viewModel.previousRanks[player.id] ?? 0, currentRank: viewModel.currentRanks[player.id] ?? 0)
+                        LastRankCellView(rank: sortedPlayers.firstIndex(where: { $0.id == player.id })! + 1, player: player)
                     }
                 }
                 .frame(maxHeight: .infinity)
             }
             .padding(.horizontal, 20)
+            .padding(.bottom, 20)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .cornerRadius(30)
             .onAppear {
@@ -128,6 +114,83 @@ struct LastView: View {
         }
     }
 }
+
+struct LastRankCellView: View {
+    
+    let rank: Int // 순위 표기
+    let player: Player // 데이터
+    
+    var body: some View {
+        HStack {
+            Text("\(rank)") // 순위 1위부터
+                .font(.system(size: 20, weight: .bold))
+                .frame(width: 30, alignment: .center)
+                .padding(.leading, 45)
+            
+            Spacer()
+            
+            playerName()
+            
+            Spacer()
+            
+            playerBpm()
+            
+            Spacer()
+            
+            totalDeviation()
+                .padding(.trailing, 45)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 87)
+        .background(Color.mcGray800)
+        .cornerRadius(20)
+    }
+    
+    /// 유저 이름
+    func playerName() -> some View {
+        VStack {
+            HStack {
+                Text(player.name)
+                    .font(Font.custom("SpoqaHanSansNeo-Bold", size: 20))
+                    .frame(width: 110, alignment: .center)
+            }
+        }
+    }
+    
+    /// 평균 심박수
+    func playerBpm() -> some View {
+        ZStack {
+            Capsule()
+                .frame(width: 114, height: 40)
+                .foregroundColor(.black)
+            
+            HStack {
+                Text("\(player.heartrates.reduce(0, +) / player.heartrates.count)")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(Color.accentColor)
+                
+                Text("bpm")
+                    .font(.system(size: 14))
+            }
+        }
+    }
+    
+    // 편차 평균
+    func totalDeviation() -> some View {
+        return ZStack {
+            Capsule()
+                .frame(width: 70, height: 40)
+                .foregroundColor(.black)
+            
+            HStack {
+                Text("\(player.resultHeartrate / player.heartrates.count)")
+                    .foregroundColor(Color.accentColor)
+                    .font(.system(size: 20, weight: .bold))
+            }
+        }
+    }
+}
+
 
 #Preview {
     LastView()
