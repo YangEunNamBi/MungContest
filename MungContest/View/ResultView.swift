@@ -10,6 +10,7 @@ import SwiftData
 
 struct ResultView: View {
     @ObservedObject var presenter: NVFlipCardPresenter
+//    @Environment(NavigationManager.self) var navigationManager
     
     @State var showingInfoToggle: Bool = false
     
@@ -21,6 +22,8 @@ struct ResultView: View {
     @State var timesForMeasure: Int = 3
     @State var awardedList: [Player] = []
     @State var orderForAward: Int = 0
+    
+    private let nameAward = ["3등", "2등", "1등", "요동요동상"]
     
     var body: some View {
         VStack{
@@ -35,10 +38,12 @@ struct ResultView: View {
                 .font(Font.custom("SpoqaHanSansNeo-Medium", size: 16))
                 .foregroundColor(Color.mcGray300)
                 .padding(.leading)
-            Text("Who is the Winner?")
-                .font(Font.custom("SpoqaHanSansNeo-Bold", size: 28))
-                .foregroundColor(Color.white)
-                .padding(.leading)
+            if orderForAward < nameAward.count {
+                Text("Who is the \(nameAward[orderForAward])?")
+                    .font(Font.custom("SpoqaHanSansNeo-Bold", size: 28))
+                    .foregroundColor(Color.white)
+                    .padding(.leading)
+            }
             HStack{
                 Spacer()
                 Button(action:{
@@ -77,6 +82,7 @@ struct ResultView: View {
                 })
                 .disabled(showingInfoToggle)
                 if showingInfoToggle {
+                    let showingPlayer = awardedList[orderForAward]
                     VStack {
                         HStack {
                             Text(" ")
@@ -97,9 +103,9 @@ struct ResultView: View {
                                         .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
                                         .foregroundStyle(Color("AccentColor"))
                                         .frame(width: 80, alignment: .center)
-                                    Text("110")
+                                    Text("\(showingPlayer.defaultHeartrate)")
                                         .frame(width: 100, alignment: .center)
-                                    Text("330")
+                                    Text("")
                                         .frame(width: 100, alignment: .center)
                                 }
                                 .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
@@ -110,9 +116,9 @@ struct ResultView: View {
                                         .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
                                         .foregroundStyle(Color("AccentColor"))
                                         .frame(width: 80, alignment: .center)
-                                    Text("110")
+                                    Text("\(showingPlayer.heartrates[index-1])")
                                         .frame(width: 100, alignment: .center)
-                                    Text("330")
+                                    Text("\(showingPlayer.differenceHeartrates[index-1])")
                                         .frame(width: 100, alignment: .center)
                                 }
                                 .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
@@ -123,9 +129,9 @@ struct ResultView: View {
                                         .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
                                         .foregroundStyle(Color("AccentColor"))
                                         .frame(width: 80, alignment: .center)
-                                    Text("110")
+                                    Text("\(showingPlayer.heartrates.reduce(0,+) / showingPlayer.heartrates.count)")
                                         .frame(width: 100, alignment: .center)
-                                    Text("330")
+                                    Text("\(showingPlayer.resultHeartrate)")
                                         .frame(width: 100, alignment: .center)
                                 }
                                 .font(.custom("SpoqaHanSansNeo-Bold", size: 20))
@@ -133,6 +139,42 @@ struct ResultView: View {
                             
                         }
                         Spacer()
+                        if presenter.isFlipped{
+                            if orderForAward != 3{
+                                Button(action:{
+                                    orderForAward += 1
+                                    showingInfoToggle = false
+                                    presenter.isFlipped = false
+                                }, label:{
+                                    HStack {
+                                        Text("수상 축하드립니다!")
+                                            .font(.system(size: 24))
+                                            .bold()
+                                            .foregroundColor(Color.black)
+                                    }
+                                    .padding(.vertical, 14)
+                                    .padding(.horizontal, 30)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(25)
+                                })
+                            } else{
+                                Button(action:{
+                                    
+                                }, label:{
+                                    HStack {
+                                        Text("최종 결과 화면으로")
+                                            .font(.system(size: 24))
+                                            .bold()
+                                            .foregroundColor(Color.black)
+                                    }
+                                    .padding(.vertical, 14)
+                                    .padding(.horizontal, 30)
+                                    .background(Color.accentColor)
+                                    .cornerRadius(25)
+                                })
+                            }
+                            
+                        }
                     }
                     .frame(width: 400, height: 470)
                 }
@@ -146,12 +188,11 @@ struct ResultView: View {
                 timesForMeasure = players[0].heartrates.count
             }
             DispatchQueue.main.async{
-                for player in Array(sortedPlayers.prefix(3)){
-                    awardedList.append(player)
-                }
-                if let player = sortedPlayers.last{
-                    awardedList.append(player)
-                }
+                awardedList = [sortedPlayers[2],
+                               sortedPlayers[1],
+                               sortedPlayers[sortedPlayers.count-1],
+                               sortedPlayers[0]
+                ]
             }
         }
     }
@@ -169,14 +210,14 @@ struct ResultView: View {
     }
 }
 
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ResultView(presenter: NVFlipCardPresenter())
-            .previewInterfaceOrientation(.landscapeLeft)
-            .preferredColorScheme(.dark)
-    }
-}
+//
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ResultView(presenter: NVFlipCardPresenter())
+//            .previewInterfaceOrientation(.landscapeLeft)
+//            .preferredColorScheme(.dark)
+//    }
+//}
 
 protocol NVFlipCardPresenterProtocol: ObservableObject {
     var isFlipped: Bool { get }
