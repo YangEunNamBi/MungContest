@@ -20,6 +20,8 @@ struct MainView: View {
     @State private var randomValue: Bool = false
     @StateObject private var timerService: MeasureTimer
     
+    @State private var isInitialized = false // 화면이 초기화되었는지 여부를 추적하는 상태 변수
+    
     init() {
         _timerService = StateObject(wrappedValue: MeasureTimer(initialTime: 0))
     }
@@ -32,7 +34,7 @@ struct MainView: View {
                     .foregroundColor(Color.accentColor)
                 
                 Spacer()
-                
+        
                 HStack{
                     Picker("SegmentControl", selection: $selectedSegment) {
                         ForEach(0..<segments.count) { index in
@@ -82,16 +84,20 @@ struct MainView: View {
         }
         .padding(.horizontal, 50)
         .onAppear {
-            loadSavedTime()
-            calculateTotalSeconds()
-            timerService.time = Double(totalSeconds)
-            randomValue = UserDefaults.standard.bool(forKey: "isRandom")
-            if randomValue {
-                timerService.setRandomMeasure(measureCount: UserDefaults.standard.integer(forKey: "measurementCount"), totalSeconds: totalSeconds)
-            } else {
-                timerService.setNotRandomMeasure(measureCount: UserDefaults.standard.integer(forKey: "measurementCount"), totalSeconds: totalSeconds)
+            if !isInitialized {
+                loadSavedTime()
+                calculateTotalSeconds()
+                timerService.time = Double(totalSeconds)
+                randomValue = UserDefaults.standard.bool(forKey: "isRandom")
+                if randomValue {
+                    timerService.setRandomMeasure(measureCount: UserDefaults.standard.integer(forKey: "measurementCount"), totalSeconds: totalSeconds)
+                } else {
+                    timerService.setNotRandomMeasure(measureCount: UserDefaults.standard.integer(forKey: "measurementCount"), totalSeconds: totalSeconds)
+                }
+                timerService.startTimer()
+                
+                isInitialized = true // 초기화가 완료되었음을 표시
             }
-            timerService.startTimer()
         }
         .alert(item: $timerService.activeAlert) { alertType in
             MeasureAlertType.alert(for: alertType)
@@ -113,7 +119,6 @@ struct MainView: View {
     private func calculateTotalSeconds() {
         totalSeconds = hour * 60 * 60 + minute * 60
     }
-    
 }
 
 extension Int {
