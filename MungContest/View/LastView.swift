@@ -19,72 +19,71 @@ struct LastView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                Text("mung contest")
-                    .font(Font.custom("Poppins-Bold", size: 28))
-                    .foregroundColor(Color.accentColor)
-                    .padding(.leading)
+            // 헤더 부분 (고정)
+            VStack(spacing: 10) {
+                HStack {
+                    Text("mung contest")
+                        .font(Font.custom("Poppins-Bold", size: 28))
+                        .foregroundColor(Color.accentColor)
+                        .padding(.leading)
+                    
+                    Spacer()
+                }
                 
-                Spacer()
+                VStack(alignment: .center, spacing: 10) {
+                    Text(contestTitle)
+                        .font(Font.custom("SpoqaHanSansNeo-Medium", size: 16))
+                        .foregroundColor(.mcGray300)
+                    
+                    Text("최종 순위를 확인해보세요!")
+                        .font(Font.custom("SpoqaHanSansNeo-Bold", size: 28))
+                        .foregroundColor(.white)
+                }
+                .padding()
             }
             
-            VStack(alignment: .center, spacing: 10) {
-                Text(contestTitle)
-                    .font(Font.custom("SpoqaHanSansNeo-Medium", size: 16))
-                    .foregroundColor(.mcGray300)
-                
-                Text("최종 순위를 확인해보세요!")
-                    .font(Font.custom("SpoqaHanSansNeo-Bold", size: 28))
-                    .foregroundColor(.white)
-            }
-            .padding()
-            
+            // 그리드 및 리스트 부분
             VStack {
                 LazyVGrid(columns: columns, spacing: 15) {
-                    // 첫 번째 열의 헤더
-                    VStack {
-                        HStack {
-                            Text("순위")
-                                .customStyle()
-                                .padding(.leading, 45)
-                            Spacer()
-                            Text("이름")
-                                .customStyle()
-                            Spacer()
-                            Text("평균 심박수")
-                                .customStyle()
-                            Spacer()
-                            Text("편차 평균")
-                                .customStyle()
-                                .padding(.trailing, 55)
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    
-                    // 두 번째 열의 헤더
-                    VStack {
-                        HStack {
-                            Text("순위")
-                                .customStyle()
-                                .padding(.leading, 45)
-                            Spacer()
-                            Text("이름")
-                                .customStyle()
-                            Spacer()
-                            Text("평균 심박수")
-                                .customStyle()
-                            Spacer()
-                            Text("편차 평균")
-                                .customStyle()
-                                .padding(.trailing, 55)
+                    // 그리드 안의 각 열
+                    ForEach(0..<2, id: \.self) { column in
+                        VStack {
+                            HStack {
+                                Text("순위")
+                                    .customStyle()
+                                    .padding(.leading, 45)
+                                Spacer()
+                                Text("이름")
+                                    .customStyle()
+                                Spacer()
+                                Text("평균 심박수")
+                                    .customStyle()
+                                Spacer()
+                                Text("편차 평균")
+                                    .customStyle()
+                                    .padding(.trailing, 55)
+                            }
+                            .frame(maxWidth: .infinity)
                             
+                            // 플레이어 리스트
+                            LazyVStack(spacing: 15) {
+                                let start = nowStartIndex + column * 6
+                                let end = min(nowStartIndex + (column + 1) * 6, sortedPlayers.count)
+                                let numberOfPlayersInColumn = end - start
+                                
+                                if start < end { // 유효한 범위인지 확인
+                                    ForEach(Array(sortedPlayers[start..<end]), id: \.id) { player in
+                                        LastRankCellView(rank: sortedPlayers.firstIndex(where: { $0.id == player.id })! + 1, player: player)
+                                    }
+                                }
+                                
+                                // 빈 셀 채우기
+                                ForEach(0..<(6 - numberOfPlayersInColumn), id: \.self) { _ in
+                                    EmptyRankCellView() // 빈 셀을 넣어서 공간 유지
+                                }
+                            }
                         }
-                        .frame(maxWidth: .infinity)
-                    }
-                    
-                    // 플레이어 리스트
-                    ForEach(Array(sortedPlayers[nowStartIndex..<min(nowStartIndex + 12, sortedPlayers.count)]), id: \.id) { player in
-                        LastRankCellView(rank: sortedPlayers.firstIndex(where: { $0.id == player.id })! + 1, player: player)
+                        .frame(maxWidth: .infinity, alignment: .top)
                     }
                 }
                 .frame(maxHeight: .infinity)
@@ -191,6 +190,43 @@ struct LastRankCellView: View {
     }
 }
 
+struct EmptyRankCellView: View {
+    var body: some View {
+        // 빈 셀에 대한 레이아웃을 만들어 주는 부분
+        HStack {
+            Text(" ") // 텍스트를 사용하여 빈 공간을 차지하도록 설정
+                .font(.system(size: 20, weight: .bold))
+                .frame(width: 30, alignment: .center)
+                .padding(.leading, 45)
+            
+            Spacer()
+            
+            Text(" ")
+                .frame(width: 110, alignment: .center)
+            
+            Spacer()
+            
+            ZStack {
+                Capsule()
+                    .frame(width: 114, height: 40)
+                    .foregroundColor(.clear)
+            }
+            
+            Spacer()
+            
+            ZStack {
+                Capsule()
+                    .frame(width: 70, height: 40)
+                    .foregroundColor(.clear)
+            }
+            .padding(.trailing, 45)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 87)
+        .background(Color.clear)
+        .cornerRadius(20)
+    }
+}
 
 #Preview {
     LastView()

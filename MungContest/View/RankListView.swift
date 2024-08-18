@@ -92,15 +92,6 @@ struct RankListView: View {
                     }
                 }
                 .frame(maxHeight: .infinity)
-                
-                NavigationLink(destination: LastView()) {
-                                           Text("Go to LastView")
-                                               .font(.system(size: 16, weight: .bold))
-                                               .foregroundColor(Color.accentColor)
-                                               .padding()
-                                               .background(Color.black)
-                                               .cornerRadius(10)
-                                       }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
