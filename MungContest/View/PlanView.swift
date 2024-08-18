@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PlanView: View {
     @Environment(NavigationManager.self) var navigationManager
@@ -24,6 +25,7 @@ struct PlanView: View {
     @State private var selectedImageURLs: [URL] = []
     
     @State private var players: [Player] = []
+    @Query private var defaultPlayers: [Player]
     
     var body: some View {
         VStack {
@@ -285,33 +287,6 @@ struct PlanView: View {
                             }
                         }
                         
-                        // 전체 초기화
-                        Button(action: {
-                            resetPlayers()
-                            resetImages()
-                        }) {
-                            HStack {
-                                Spacer().frame(width: 12)
-                                
-                                // 조건에 따라 텍스트와 아이콘 변경
-                                if canLoadFiles() || canLoadImages() {
-                                    Text("전체 초기화")
-                                        .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
-                                        .padding(.vertical, 12)
-                                    
-                                    Image(systemName: "xmark")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .bold()
-                                        .frame(width: 18)
-                                        .padding(.vertical, 12)
-                                } else {
-                                    Text("")
-                                        .font(.custom("SpoqaHanSansNeo-Medium", size: 24))
-                                        .padding(.vertical, 12)
-                                }
-                            }
-                        }
                     }
                     
                 }
@@ -324,7 +299,26 @@ struct PlanView: View {
             HStack {
                 Spacer()
                 
-                Text("\(players.count)명")
+                Button {
+                    resetPlayers()
+                    resetImages()
+                } label: {
+                    HStack {
+                        Text("초기화")
+                            .font(.system(size: 24))
+                            .bold()
+                            .foregroundColor(Color.black)
+                        
+                        Image(systemName: "trash")
+                            .resizable()
+                            .foregroundColor(Color.black)
+                            .frame(width: 22, height: 22)
+                    }
+                    .padding(.vertical, 14)
+                    .padding(.horizontal, 30)
+                    .background(.mcGray300)
+                    .cornerRadius(25)
+                }
                 
                 Button {
                     saveTime(hours: hours, minutes: minutes)
@@ -499,12 +493,10 @@ struct PlanView: View {
     
     //MARK: - User Default, Model 초기화
     func resetPlayers() {
-        for player in players {
+        for player in defaultPlayers {
             modelContext.delete(player)
         }
-        players.removeAll()
         saveContext()
-        canLoadFiles()
     }
 
     func resetImages() {
@@ -520,7 +512,7 @@ struct PlanView: View {
         canLoadImages()
     }
     
-    private func saveContext() {
+    func saveContext() {
         do {
             try modelContext.save()
         } catch {
