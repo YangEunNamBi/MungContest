@@ -162,6 +162,21 @@ struct RecordView: View {
             
             VStack {
                 Spacer()
+                Button(action:{
+                    navigationManager.push(to:.result)
+                }, label:{
+                    HStack {
+                        Text("대회 종료!")
+                            .font(.custom("SpoqaHanSansNeo-Bold", size: 40))
+                            .bold()
+                            .foregroundColor(Color.black)
+                    }
+                    .padding(.vertical, 14)
+                    .padding(.horizontal, 30)
+                    .background(Color.accentColor)
+                    .cornerRadius(25)
+                })
+                Spacer()
                 RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
                     .frame(width:396, height:516)
                     .foregroundStyle(Color("mcGray800"))

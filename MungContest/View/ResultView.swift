@@ -10,7 +10,8 @@ import SwiftData
 
 struct ResultView: View {
     @ObservedObject var presenter: NVFlipCardPresenter
-//    @Environment(NavigationManager.self) var navigationManager
+    @Environment(NavigationManager.self) var navigationManager
+    @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
     
     @State var showingInfoToggle: Bool = false
     
@@ -22,8 +23,9 @@ struct ResultView: View {
     @State var timesForMeasure: Int = 3
     @State var awardedList: [Player] = []
     @State var orderForAward: Int = 0
+    @State var showingPlayer: Player = Player(name: "", profileImage: Data(), comment: "", defaultHeartrate: 0, heartrates: [0], differenceHeartrates: [0], resultHeartrate: 0)
     
-    private let nameAward = ["3등", "2등", "1등", "요동요동상"]
+    private let nameAward = ["3등", "2등", "요동요동상", "1등"]
     
     var body: some View {
         VStack{
@@ -34,7 +36,7 @@ struct ResultView: View {
                 Spacer()
             }
             Spacer()
-            Text("원의 1차 멍때리기 대회")
+            Text(contestTitle)
                 .font(Font.custom("SpoqaHanSansNeo-Medium", size: 16))
                 .foregroundColor(Color.mcGray300)
                 .padding(.leading)
@@ -48,7 +50,10 @@ struct ResultView: View {
                 Spacer()
                 Button(action:{
                     showingInfoToggle = true
-                    showItemsWithDelay()
+                    DispatchQueue.main.async{
+                        showingPlayer = awardedList[orderForAward]
+                        showItemsWithDelay()
+                    }
                 }, label:{
                     ZStack{
                         RoundedRectangle(cornerRadius: 12)
@@ -67,11 +72,20 @@ struct ResultView: View {
                                     .frame(width:320, height:470)
                             )
                         if presenter.isFlipped{
-                            Image("junyo")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 260, height: 260)
-                                .clipShape(Circle())
+                            VStack{
+                                if let image = UIImage(data:showingPlayer.profileImage){
+                                    Image(uiImage:image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 260, height: 260)
+                                        .clipShape(Circle())
+                                }
+                                Text("\(showingPlayer.name)")
+                                    .font(.custom("SpoqaHanSansNeo-Bold", size: 40))
+                                    .foregroundStyle(Color("AccentColor"))
+                                    .scaleEffect(x: -1, y: 1)
+                            }
+                            
                         } else {
                             Image("WhoIsWinnerQuestionMark")
                                 .frame(width:48, height:86)
@@ -82,7 +96,6 @@ struct ResultView: View {
                 })
                 .disabled(showingInfoToggle)
                 if showingInfoToggle {
-                    let showingPlayer = awardedList[orderForAward]
                     VStack {
                         HStack {
                             Text(" ")
@@ -159,7 +172,7 @@ struct ResultView: View {
                                 })
                             } else{
                                 Button(action:{
-                                    
+                                    navigationManager.push(to: .last)
                                 }, label:{
                                     HStack {
                                         Text("최종 결과 화면으로")

@@ -12,6 +12,8 @@ enum PathType: Hashable {
     case plan
     case standby
     case main
+    case result
+    case last
     case finish
 }
 
@@ -31,6 +33,12 @@ extension PathType {
             
         case .standby:
             StandbyView()
+            
+        case .result:
+            ResultView(presenter: NVFlipCardPresenter())
+            
+        case .last:
+            LastView()
             
         case .finish:
             FinishView()
