@@ -84,7 +84,6 @@ class MeasureTimer: ObservableObject {
                     return baseTime + randomOffset
                 }
             }
-            
             // 마지막 값을 정확히 0으로 설정
             intervals[adjustedMeasureCount - 1] = 0
             

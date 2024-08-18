@@ -98,13 +98,16 @@ struct RankListView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .cornerRadius(30)
         .onAppear {
-            startTimer() // 이 뷰가 뜰때마다 timer의 시간마다 List를 자동으로 넘기면서 보여줍니다.
+            Task {
+                await startTimer()
+            } // 이 뷰가 뜰때마다 timer의 시간마다 List를 자동으로 넘기면서 보여줍니다.
             updateRanks()
         }
     }
     
-    private func startTimer() {
-        Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+    private func startTimer() async {
+        while true {
+            await Task.sleep(UInt64(interval * 1_000_000_000)) // TimeInterval을 나노초로 변환
             if currentStartIndex + 6 >= players.count {
                 currentStartIndex = 0
             } else {
