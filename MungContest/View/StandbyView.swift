@@ -90,11 +90,9 @@ struct StandbyView: View {
                 .clipShape(Circle())
             }
             .padding(.bottom, 64)
-            .fullScreenCover(isPresented: $isFullScreenPresented) {
-                VStack(alignment: .center) {
+            .sheet(isPresented: $isFullScreenPresented) {
                     AddPlayerView(isFullScreenPresented: $isFullScreenPresented)
-                }
-                .background(Color.clear)
+                    .presentationBackground(.clear)
             }
             
             //MARK: - 말풍선

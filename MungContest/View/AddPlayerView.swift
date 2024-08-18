@@ -120,7 +120,6 @@ struct AddPlayerView: View {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color.mcGray800)
         )
-        .frame(width: 542)
     }
     
     ///새로운 player을 SwiftData에 저장하는 함수
@@ -178,9 +177,6 @@ struct AddPlayerView: View {
                 
                 return
             }
-            
-            let playerName = imageURL.lastPathComponent.split(separator: ".").dropLast().joined(separator: ".")
-
             
             image = imageData
         }
