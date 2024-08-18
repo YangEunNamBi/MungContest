@@ -17,6 +17,7 @@ struct AddPlayerView: View {
     @State private var selectedImageURL: URL?
     
     @State private var player: Player?
+    @Binding var isFullScreenPresented: Bool
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12){
@@ -100,6 +101,7 @@ struct AddPlayerView: View {
                 Spacer()
                 Button(action: {
                     addNewPlayer()
+                    isFullScreenPresented.toggle()
                 }, label: {
                     HStack{
                         Text("등록")
@@ -186,5 +188,5 @@ struct AddPlayerView: View {
 }
 
 #Preview {
-    AddPlayerView()
+    AddPlayerView(isFullScreenPresented: .constant(true))
 }

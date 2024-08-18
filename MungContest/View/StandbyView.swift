@@ -18,6 +18,8 @@ struct StandbyView: View {
     private let animationDuration: CGFloat = 0.3
     @State private var scrollViewProxy: ScrollViewProxy?
     
+    @State private var isFullScreenPresented = false
+    
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY년 M월 d일"
@@ -29,11 +31,6 @@ struct StandbyView: View {
         
         let today = dateFormatter.string(from: Date())
         
-        //                VStack {
-        //                    Button("대회 메인 화면으로") {itemsTemp
-        //                        navigationManager.push(to: .main)
-        //                    }
-        //                }
         VStack(spacing: 0){
             HStack(spacing: 30) {
                 
@@ -79,6 +76,7 @@ struct StandbyView: View {
                 
                 // MARK: - 새로운 참가자 추가 버튼
                 Button(action: {
+                    isFullScreenPresented.toggle()
                 }, label: {
                     HStack{
                         Image(systemName: "person.crop.circle.badge.plus")
@@ -92,6 +90,12 @@ struct StandbyView: View {
                 .clipShape(Circle())
             }
             .padding(.bottom, 64)
+            .fullScreenCover(isPresented: $isFullScreenPresented) {
+                VStack(alignment: .center) {
+                    AddPlayerView(isFullScreenPresented: $isFullScreenPresented)
+                }
+                .background(Color.clear)
+            }
             
             //MARK: - 말풍선
             VStack(spacing: -8){
