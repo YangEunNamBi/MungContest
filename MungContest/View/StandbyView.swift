@@ -70,7 +70,7 @@ struct StandbyView: View {
                 }
                 .font(.system(size: 28))
                 .fontWeight(.medium)
-                .frame(width: 978, height: 76)
+                .frame(height: 76)
                 .background(.mcGray800)
                 .clipShape(Capsule())
                 
@@ -89,6 +89,7 @@ struct StandbyView: View {
                 .background(.mcGray800)
                 .clipShape(Circle())
             }
+            .padding(.horizontal, 60)
             .padding(.bottom, 64)
             .sheet(isPresented: $isFullScreenPresented) {
                     AddPlayerView(isFullScreenPresented: $isFullScreenPresented)
@@ -133,6 +134,7 @@ struct StandbyView: View {
                         .rotationEffect(.degrees(180))
                 }
             }
+            .padding(.bottom, -6)
             
             //MARK: - 참가자 이미지 스크롤
             ScrollView(.horizontal) {
@@ -140,25 +142,64 @@ struct StandbyView: View {
                     HStack(spacing: 0) {
                         ForEach(0..<itemsTemp.count, id: \.self) { i in
                             if let image = UIImage(data: players[i % players.count].profileImage){
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 260, height: 260)
-                                    .clipShape(Circle())
-                                    .overlay {
+                                if i == currentIndex {
+                                    ZStack{
                                         Circle()
-                                            .stroke(i == currentIndex ? Color.accent : Color.gray, lineWidth: 6)
-                                            .stroke(i == currentIndex ? Color.accent.opacity(0.3) : Color.clear, lineWidth: i == currentIndex ? 25 : 0)
-                                            .stroke(i == currentIndex ? Color.accent.opacity(0.2) : Color.clear, lineWidth: i == currentIndex ? 40 : 0)
+                                            .foregroundColor(.accent.opacity(0.2))
+                                            .frame(width: 352, height: 352)
+                                        
+                                        Circle()
+                                            .foregroundColor(.accent.opacity(0.3))
+                                            .frame(width: 322, height: 322)
+                                        
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 292, height: 292)
+                                            .clipShape(Circle())
+                                            .overlay {
+                                                Circle()
+                                                    .stroke(Color.accent, lineWidth: 8)
+                                            }
                                     }
-                                    .frame(width: 280, height: 321)
+                                    .frame(width: 352, height: 352)
+                                    .padding()
+                                }
+                                else if i == currentIndex! - 1 || i == currentIndex! + 1 {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 232, height: 232)
+                                        .clipShape(Circle())
+                                        .overlay {
+                                            Circle()
+                                                .stroke(Color.gray, lineWidth: 8)
+                                        }
+                                        .opacity(0.6)
+                                        .frame(width: 232, height: 232)
+                                        .padding()
+                                }
+                                else {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 192, height: 192)
+                                        .clipShape(Circle())
+                                        .overlay {
+                                            Circle()
+                                                .stroke(Color.gray, lineWidth: 8)
+                                        }
+                                        .opacity(0.3)
+                                        .frame(width: 192, height: 192)
+                                        .padding()
+                                }
                             }
                         }
-                    }
-                    .onChange(of: currentIndex) {
-                        guard let currentIndex = currentIndex else { return }
-                        withAnimation {
-                            proxy.scrollTo(currentIndex, anchor: .center)
+                        .onChange(of: currentIndex) {
+                            guard let currentIndex = currentIndex else { return }
+                            withAnimation {
+                                proxy.scrollTo(currentIndex, anchor: .center)
+                            }
                         }
                     }
                 }
@@ -175,7 +216,7 @@ struct StandbyView: View {
                 let itemCount = players.count
                 
                 // 마지막 배열의 첫번째일 때 (우측으로 스크롤)
-                if currentIndex == itemCount * 2 {
+                if currentIndex >= itemCount * 2 {
                     print("마지막 배열의 첫번째다")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
                         let removedElement = itemsTemp.removeFirst()
@@ -200,19 +241,13 @@ struct StandbyView: View {
                     Text("대회 시작하기")
                     Image(systemName: "arrowtriangle.right.fill")
                 }
-                .font(.system(size: 24))
-                .bold()
-                .fontWeight(.bold)
+                .font(.system(size: 24, weight: .bold))
                 .foregroundColor(.black)
             })
             .padding(.horizontal, 30)
             .padding(.vertical, 14)
             .background(.accent)
             .clipShape(Capsule())
-            .overlay(
-                Capsule()
-                    .stroke(.pink, lineWidth: 1)
-            )
             .padding(.top, 50)
         }
     }
