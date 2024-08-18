@@ -268,14 +268,14 @@ struct RecordView: View {
 }
 //}
 
-struct RecordView_Previews: PreviewProvider {
-    static var previews: some View {
-        RecordView()
-            .environment(NavigationManager())
-            .previewInterfaceOrientation(.landscapeLeft)
-            .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
-    }
-}
+//struct RecordView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RecordView()
+//            .environment(NavigationManager())
+//            .previewInterfaceOrientation(.landscapeLeft)
+//            .preferredColorScheme(/*@START_MENU_TOKEN@*/.dark/*@END_MENU_TOKEN@*/)
+//    }
+//}
 
 func calculateDifferencesWithDefault(_ array: [Int], defaultValue: Int) -> [Int] {
     var result: [Int] = []
