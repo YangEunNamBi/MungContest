@@ -94,6 +94,24 @@ struct AddPlayerView: View {
                     }
                 }
             }
+            
+            //MARK: - 등록
+            HStack{
+                Spacer()
+                Button(action: {
+                    addNewPlayer()
+                }, label: {
+                    HStack{
+                        Text("등록")
+                    }
+                    .font(.system(size: 24, weight: .bold))
+                    .foregroundColor(.black)
+                })
+                .padding(.horizontal, 30)
+                .padding(.vertical, 14)
+                .background(.accent)
+                .clipShape(Capsule())
+            }
         }
         .padding(30)
         .background(
@@ -101,6 +119,31 @@ struct AddPlayerView: View {
                 .fill(Color.mcGray800)
         )
         .frame(width: 542)
+    }
+    
+    ///새로운 player을 SwiftData에 저장하는 함수
+    func addNewPlayer() {
+        guard !name.isEmpty, !comment.isEmpty, !image.isEmpty else {
+            print("플레이어 정보를 등록하세요!!!!!!")
+            return
+        }
+        
+        let newPlayer = Player(
+            name: name,
+            profileImage: image,
+            comment: comment,
+            defaultHeartrate: 0,
+            heartrates: [],
+            differenceHeartrates: [],
+            resultHeartrate: 0
+        )
+        
+        do {
+            modelContext.insert(newPlayer)
+            try modelContext.save()
+        } catch {
+            print("Failed to save player: \(error.localizedDescription)")
+        }
     }
     
     ///파일 액세스 관련 함수
