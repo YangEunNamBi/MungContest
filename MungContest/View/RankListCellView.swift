@@ -99,7 +99,7 @@ struct RankListCellView: View {
                 .foregroundColor(.black)
             
             HStack {
-                Text("\(player.resultHeartrate)")
+                Text("\(player.resultHeartrate / player.heartrates.count)")
                     .foregroundColor(Color.accentColor)
                     .font(.system(size: 20, weight: .bold))
             }

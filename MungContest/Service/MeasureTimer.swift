@@ -75,16 +75,22 @@ class MeasureTimer: ObservableObject {
         
         if adjustedMeasureCount > 0 {
             let interval = totalSeconds / adjustedMeasureCount
-            measureIntervals = (1...adjustedMeasureCount).map { index in
+            var intervals = (1...adjustedMeasureCount).map { index in
                 if index == 0 || index == adjustedMeasureCount - 1 {
                     return totalSeconds - index * interval
                 } else {
                     let baseTime = totalSeconds - index * interval
-                    let randomOffset = Int.random(in: -5...5) // +-랜덤 범위 ( 초 단위 )
+                    let randomOffset = Int.random(in: -5...5) // +-랜덤 범위 (초 단위)
                     return baseTime + randomOffset
                 }
             }
+            
+            // 마지막 값을 정확히 0으로 설정
+            intervals[adjustedMeasureCount - 1] = 0
+            
+            measureIntervals = intervals
         }
         print("측정 알림 시간(초) : \(measureIntervals)")
     }
+
 }

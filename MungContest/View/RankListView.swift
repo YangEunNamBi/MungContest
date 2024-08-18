@@ -78,7 +78,7 @@ struct RankListView: View {
                         .customStyle()
                         .padding(.leading, 90)
                     
-                    Text("편차 합계")
+                    Text("편차 평균")
                         .customStyle()
                         .padding(.leading, 45)
                     
