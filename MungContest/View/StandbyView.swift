@@ -159,7 +159,7 @@ struct StandbyView: View {
                                             .clipShape(Circle())
                                             .overlay {
                                                 Circle()
-                                                    .stroke(Color.accent, lineWidth: 8)
+                                                    .strokeBorder(Color.accent, lineWidth: 6)
                                             }
                                     }
                                     .frame(width: 352, height: 352)
@@ -170,12 +170,12 @@ struct StandbyView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 232, height: 232)
+                                        .opacity(0.6)
                                         .clipShape(Circle())
                                         .overlay {
                                             Circle()
-                                                .stroke(Color.gray, lineWidth: 8)
+                                                .strokeBorder(Color.mcGray500, lineWidth: 6)
                                         }
-                                        .opacity(0.6)
                                         .frame(width: 232, height: 232)
                                         .padding()
                                 }
@@ -184,12 +184,12 @@ struct StandbyView: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 192, height: 192)
+                                        .opacity(0.3)
                                         .clipShape(Circle())
                                         .overlay {
                                             Circle()
-                                                .stroke(Color.gray, lineWidth: 8)
+                                                .strokeBorder(Color.mcGray700, lineWidth: 6)
                                         }
-                                        .opacity(0.3)
                                         .frame(width: 192, height: 192)
                                         .padding()
                                 }
