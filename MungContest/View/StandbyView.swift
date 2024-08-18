@@ -18,6 +18,8 @@ struct StandbyView: View {
     private let animationDuration: CGFloat = 0.3
     @State private var scrollViewProxy: ScrollViewProxy?
     
+    @State private var isFullScreenPresented = false
+    
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "YYYY년 M월 d일"
@@ -29,11 +31,6 @@ struct StandbyView: View {
         
         let today = dateFormatter.string(from: Date())
         
-        //                VStack {
-        //                    Button("대회 메인 화면으로") {itemsTemp
-        //                        navigationManager.push(to: .main)
-        //                    }
-        //                }
         VStack(spacing: 0){
             HStack(spacing: 30) {
                 
@@ -79,6 +76,7 @@ struct StandbyView: View {
                 
                 // MARK: - 새로운 참가자 추가 버튼
                 Button(action: {
+                    isFullScreenPresented.toggle()
                 }, label: {
                     HStack{
                         Image(systemName: "person.crop.circle.badge.plus")
@@ -92,6 +90,10 @@ struct StandbyView: View {
                 .clipShape(Circle())
             }
             .padding(.bottom, 64)
+            .sheet(isPresented: $isFullScreenPresented) {
+                    AddPlayerView(isFullScreenPresented: $isFullScreenPresented)
+                    .presentationBackground(.clear)
+            }
             
             //MARK: - 말풍선
             VStack(spacing: -8){
@@ -173,12 +175,13 @@ struct StandbyView: View {
                 let itemCount = players.count
                 
                 // 마지막 배열의 첫번째일 때 (우측으로 스크롤)
-                if currentIndex >= itemCount * 2 {
+                if currentIndex == itemCount * 2 {
                     print("마지막 배열의 첫번째다")
                     DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
                         let removedElement = itemsTemp.removeFirst()
                         itemsTemp.append(removedElement)
-                        //                        self.currentIndex = currentIndex - itemCount
+                        print(itemsTemp)
+                        self.currentIndex = currentIndex - itemCount
                     }
                 }
             }
