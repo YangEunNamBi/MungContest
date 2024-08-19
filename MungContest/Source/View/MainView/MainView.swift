@@ -18,7 +18,7 @@ struct MainView: View {
     @State private var totalSeconds: Int = 0 // hour&minute를 초로환산해서 담을 변수
     
     @State private var randomValue: Bool = false
-    @StateObject private var timerService: MeasureTimer
+    @StateObject var timerService: MeasureTimer
     
     @State private var isInitialized = false // 화면이 초기화되었는지 여부를 추적하는 상태 변수
     
@@ -77,7 +77,7 @@ struct MainView: View {
                         RankListView() // 전체 인원 랭킹 리스트 뷰
                     }
                 } else {
-                    RecordView() // 심박 수 측정 뷰
+                    RecordView(timerService: timerService) // 심박 수 측정 뷰
                 }
             }
             .padding(.top)

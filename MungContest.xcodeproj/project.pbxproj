@@ -94,7 +94,6 @@
 		1FAFD6082C7078BA00A0CF39 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				510A28A12C0B61F70011A9A3 /* NavigationManager.swift */,
 				1FAFD6092C7078CF00A0CF39 /* MeasureTimer.swift */,
 			);
 			path = Service;
@@ -113,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */,
+				510A28A12C0B61F70011A9A3 /* NavigationManager.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";

@@ -6,6 +6,7 @@ class MeasureTimer: ObservableObject {
     @Published var time: Double
     @Published var initialTime: Double
     @Published var activeAlert: MeasureAlertType?
+    @Published var isTimerFinished: Bool = false // 타이머 완료 여부 추가
     
     private var timer: AnyCancellable?
     private var measureIntervals: [Int] = [] // 알림을 띄울 시간 목록
@@ -47,6 +48,7 @@ class MeasureTimer: ObservableObject {
         if time <= 0 {
             activeAlert = .finish
             stopTimer()
+            isTimerFinished = true // 타이머 종료 시 isTimerFinished를 true로 설정
             print("대회시간 종료")
         }
     }
@@ -76,11 +78,11 @@ class MeasureTimer: ObservableObject {
         if adjustedMeasureCount > 0 {
             let interval = totalSeconds / adjustedMeasureCount
             var intervals = (1...adjustedMeasureCount).map { index in
-                if index == 0 || index == adjustedMeasureCount - 1 {
+                if index == 0 || index == adjustedMeasureCount {
                     return totalSeconds - index * interval
                 } else {
                     let baseTime = totalSeconds - index * interval
-                    let randomOffset = Int.random(in: -5...5) // +-랜덤 범위 (초 단위)
+                    let randomOffset = Int.random(in: -60...60) // +-랜덤 범위 (초 단위)
                     return baseTime + randomOffset
                 }
             }
