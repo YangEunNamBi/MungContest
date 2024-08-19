@@ -56,6 +56,10 @@ struct RankListCellView: View {
                 Text("\(abs(rankChange))")
                     .font(.system(size: 12))
             } else { // 순위가 동일하다면
+                Image(systemName: "arrowtriangle.up.fill") // 레이아웃유지위해서 일단 임시로 박아둠
+                    .resizable()
+                    .frame(width: 12, height: 12)
+                    .foregroundColor(.clear)
                 Text("-")
                     .font(.system(size: 12))
             }
