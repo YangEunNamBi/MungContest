@@ -3,6 +3,8 @@ import SwiftData
 
 struct LastView: View {
     
+    @Environment(NavigationManager.self) var navigationManager
+    
     @AppStorage("contestTitle") private var contestTitle: String = UserDefaults.standard.contestTitle
     
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
@@ -232,4 +234,5 @@ struct EmptyRankCellView: View {
     LastView()
         .previewInterfaceOrientation(.landscapeLeft)
         .preferredColorScheme(.dark)
+        .environment(NavigationManager())
 }
