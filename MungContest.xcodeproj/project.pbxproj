@@ -96,6 +96,7 @@
 		1FAFD6082C7078BA00A0CF39 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				510A28A12C0B61F70011A9A3 /* NavigationManager.swift */,
 				1FAFD6092C7078CF00A0CF39 /* MeasureTimer.swift */,
 			);
 			path = Service;
@@ -110,24 +111,110 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
-		510A28A02C0B61D90011A9A3 /* View */ = {
+		1FAFD6162C7327DB00A0CF39 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				510A28A32C0B622D0011A9A3 /* SplashView.swift */,
-				BDFCE3752C0B5D02004FAFAC /* ContentView.swift */,
-				510A28A52C0B62800011A9A3 /* PlanView.swift */,
-				510A28A72C0B629F0011A9A3 /* StandbyView.swift */,
-				90C34A232C730F1E00019945 /* StandbyViewOverlay.swift */,
-				BD3E374B2C6F38430088B15D /* AddPlayerView.swift */,
+				BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		1FAFD6172C73282900A0CF39 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				1FAFD6042C6FC34200A0CF39 /* TimerProgressBar.swift */,
 				1F00C62A2C0BAE81007E03EB /* RankView.swift */,
 				1F00C62C2C0C411C007E03EB /* RankListView.swift */,
 				1FAFD6122C70984D00A0CF39 /* RankListCellView.swift */,
 				510A28AA2C0B62C30011A9A3 /* MainView.swift */,
-				1FAFD6042C6FC34200A0CF39 /* TimerProgressBar.swift */,
-				510A28AC2C0B62DA0011A9A3 /* FinishView.swift */,
+			);
+			path = MainView;
+			sourceTree = "<group>";
+		};
+		1FAFD6182C73284200A0CF39 /* PlanView */ = {
+			isa = PBXGroup;
+			children = (
+				510A28A52C0B62800011A9A3 /* PlanView.swift */,
+			);
+			path = PlanView;
+			sourceTree = "<group>";
+		};
+		1FAFD6192C73284E00A0CF39 /* StandbyView */ = {
+			isa = PBXGroup;
+			children = (
+				510A28A72C0B629F0011A9A3 /* StandbyView.swift */,
+				BD3E374B2C6F38430088B15D /* AddPlayerView.swift */,
+				90C34A232C730F1E00019945 /* StandbyViewOverlay.swift */,
+			);
+			path = StandbyView;
+			sourceTree = "<group>";
+		};
+		1FAFD61A2C73296200A0CF39 /* RecordView */ = {
+			isa = PBXGroup;
+			children = (
 				90B300492C22EFB000157872 /* RecordView.swift */,
+			);
+			path = RecordView;
+			sourceTree = "<group>";
+		};
+		1FAFD61B2C73297500A0CF39 /* ResultView */ = {
+			isa = PBXGroup;
+			children = (
 				90F75F8E2C6F371200836035 /* ResultView.swift */,
+			);
+			path = ResultView;
+			sourceTree = "<group>";
+		};
+		1FAFD61C2C73298D00A0CF39 /* LastView */ = {
+			isa = PBXGroup;
+			children = (
 				1FAFD6142C709AAF00A0CF39 /* LastView.swift */,
+			);
+			path = LastView;
+			sourceTree = "<group>";
+		};
+		1FAFD61D2C7329C900A0CF39 /* SplashView */ = {
+			isa = PBXGroup;
+			children = (
+				510A28A32C0B622D0011A9A3 /* SplashView.swift */,
+				BDFCE3752C0B5D02004FAFAC /* ContentView.swift */,
+			);
+			path = SplashView;
+			sourceTree = "<group>";
+		};
+		1FAFD61E2C732AE800A0CF39 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				510A28AE2C0B9B590011A9A3 /* Extensions */,
+				1FAFD60D2C708DC200A0CF39 /* Helper */,
+				1FAFD6082C7078BA00A0CF39 /* Service */,
+				BDFCE3832C0B6927004FAFAC /* Model */,
+				510A28A02C0B61D90011A9A3 /* View */,
+				1FAFD6162C7327DB00A0CF39 /* Application */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		1FAFD61F2C732B1800A0CF39 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				510A39A52C149E3300C64B49 /* Fonts */,
+				BDFCE3772C0B5D03004FAFAC /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		510A28A02C0B61D90011A9A3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1FAFD61D2C7329C900A0CF39 /* SplashView */,
+				1FAFD6182C73284200A0CF39 /* PlanView */,
+				1FAFD6192C73284E00A0CF39 /* StandbyView */,
+				1FAFD6172C73282900A0CF39 /* MainView */,
+				510A28AC2C0B62DA0011A9A3 /* FinishView.swift */,
+				1FAFD61A2C73296200A0CF39 /* RecordView */,
+				1FAFD61B2C73297500A0CF39 /* ResultView */,
+				1FAFD61C2C73298D00A0CF39 /* LastView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -175,16 +262,9 @@
 		BDFCE3722C0B5D02004FAFAC /* MungContest */ = {
 			isa = PBXGroup;
 			children = (
-				1FAFD60D2C708DC200A0CF39 /* Helper */,
-				1FAFD6082C7078BA00A0CF39 /* Service */,
-				510A39A52C149E3300C64B49 /* Fonts */,
+				1FAFD61F2C732B1800A0CF39 /* Resource */,
+				1FAFD61E2C732AE800A0CF39 /* Source */,
 				510A39A22C1277EC00C64B49 /* Info.plist */,
-				510A28AE2C0B9B590011A9A3 /* Extensions */,
-				BDFCE3832C0B6927004FAFAC /* Model */,
-				510A28A02C0B61D90011A9A3 /* View */,
-				BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */,
-				510A28A12C0B61F70011A9A3 /* NavigationManager.swift */,
-				BDFCE3772C0B5D03004FAFAC /* Assets.xcassets */,
 				BDFCE3792C0B5D03004FAFAC /* Preview Content */,
 			);
 			path = MungContest;
