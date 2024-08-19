@@ -14,18 +14,34 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack(path: $navigationManager.path) {
-            VStack {
-                Text("여기는 실제로 보이지 않는 화면입니다.")
-                Button("대회 설정 화면으로") {
-                    navigationManager.push(to: .plan)
+            ZStack {
+                LinearGradient(
+                    stops: [
+                        Gradient.Stop(color: Color.black.opacity(0), location: 0.00),
+                        Gradient.Stop(color: Color.black.opacity(0.2), location: 0.30),
+                        Gradient.Stop(color: Color.accentColor.opacity(0.2), location: 1.00),
+                    ],
+                    startPoint: UnitPoint(x: 0.5, y: 0),
+                    endPoint: UnitPoint(x: 0.5, y: 1)
+                )
+                .ignoresSafeArea()
+                
+                VStack {
+                    Text("mung \ncontest")
+                        .font(Font.custom("Poppins-Bold", size: 36))
+                }
+                .navigationDestination(for: PathType.self) { pathType in
+                    pathType.NavigatingView()
                 }
             }
-            .navigationDestination(for: PathType.self) { pathType in
-                pathType.NavigatingView()
-            }
+            
         }
         .environment(navigationManager)
-        
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                navigationManager.push(to: .plan)
+            }
+        }
     }
 }
 
