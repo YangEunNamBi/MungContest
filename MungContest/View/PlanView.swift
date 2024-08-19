@@ -348,6 +348,7 @@ struct PlanView: View {
             }
             .padding(.horizontal, 38)
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     //MARK: - 대회 시간 저장
