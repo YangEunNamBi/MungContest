@@ -82,7 +82,7 @@ class MeasureTimer: ObservableObject {
                     return totalSeconds - index * interval
                 } else {
                     let baseTime = totalSeconds - index * interval
-                    let randomOffset = Int.random(in: -60...60) // +-랜덤 범위 (초 단위)
+                    let randomOffset = Int.random(in: -120...120) // +-랜덤 범위 (초 단위)
                     return baseTime + randomOffset
                 }
             }
