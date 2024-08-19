@@ -97,13 +97,22 @@ struct RankListCellView: View {
     
     // 편차 합계
     func totalDeviation() -> some View {
+        let nonZeroCount = player.heartrates.filter { $0 != 0 }.count
+        let deviationValue: Int
+        
+        if nonZeroCount > 0 {
+            deviationValue = player.resultHeartrate / nonZeroCount
+        } else {
+            deviationValue = 0 // Handle division by zero if there are no non-zero heart rates
+        }
+        
         return ZStack {
             Capsule()
                 .frame(width: 70, height: 40)
                 .foregroundColor(.black)
             
             HStack {
-                Text("\(player.resultHeartrate / player.heartrates.count)")
+                Text("\(deviationValue)")
                     .foregroundColor(Color.accentColor)
                     .font(.system(size: 20, weight: .bold))
             }
