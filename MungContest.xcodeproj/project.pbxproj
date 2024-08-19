@@ -32,6 +32,7 @@
 		510A39B52C15B87000C64B49 /* SpoqaHanSansNeo-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 510A39B02C15B86F00C64B49 /* SpoqaHanSansNeo-Regular.otf */; };
 		510A39B62C15B87000C64B49 /* SpoqaHanSansNeo-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 510A39B12C15B87000C64B49 /* SpoqaHanSansNeo-Light.otf */; };
 		90B3004A2C22EFB000157872 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90B300492C22EFB000157872 /* RecordView.swift */; };
+		90C34A242C730F1E00019945 /* StandbyViewOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C34A232C730F1E00019945 /* StandbyViewOverlay.swift */; };
 		90F75F8F2C6F371200836035 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F75F8E2C6F371200836035 /* ResultView.swift */; };
 		BD3E374C2C6F38430088B15D /* AddPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3E374B2C6F38430088B15D /* AddPlayerView.swift */; };
 		BDFCE3742C0B5D02004FAFAC /* MungContestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDFCE3732C0B5D02004FAFAC /* MungContestApp.swift */; };
@@ -69,6 +70,7 @@
 		510A39B02C15B86F00C64B49 /* SpoqaHanSansNeo-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Regular.otf"; sourceTree = "<group>"; };
 		510A39B12C15B87000C64B49 /* SpoqaHanSansNeo-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SpoqaHanSansNeo-Light.otf"; sourceTree = "<group>"; };
 		90B300492C22EFB000157872 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
+		90C34A232C730F1E00019945 /* StandbyViewOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandbyViewOverlay.swift; sourceTree = "<group>"; };
 		90F75F8E2C6F371200836035 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		BD3E374B2C6F38430088B15D /* AddPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerView.swift; sourceTree = "<group>"; };
 		BDFCE3702C0B5D02004FAFAC /* MungContest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MungContest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 				BDFCE3752C0B5D02004FAFAC /* ContentView.swift */,
 				510A28A52C0B62800011A9A3 /* PlanView.swift */,
 				510A28A72C0B629F0011A9A3 /* StandbyView.swift */,
+				90C34A232C730F1E00019945 /* StandbyViewOverlay.swift */,
 				BD3E374B2C6F38430088B15D /* AddPlayerView.swift */,
 				1F00C62A2C0BAE81007E03EB /* RankView.swift */,
 				1F00C62C2C0C411C007E03EB /* RankListView.swift */,
@@ -303,6 +306,7 @@
 				1FAFD6152C709AAF00A0CF39 /* LastView.swift in Sources */,
 				510A28A62C0B62800011A9A3 /* PlanView.swift in Sources */,
 				BDFCE3852C0B6D84004FAFAC /* Player.swift in Sources */,
+				90C34A242C730F1E00019945 /* StandbyViewOverlay.swift in Sources */,
 				1FAFD6112C7092FB00A0CF39 /* RankCustomTextStyle.swift in Sources */,
 				510A28AD2C0B62DA0011A9A3 /* FinishView.swift in Sources */,
 			);
