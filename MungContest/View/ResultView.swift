@@ -33,6 +33,7 @@ struct ResultView: View {
                 Text("mung contest")
                     .font(Font.custom("Poppins-Bold", size: 28))
                     .foregroundColor(Color.accentColor)
+                    .padding(.leading)
                 Spacer()
             }
             Spacer()
