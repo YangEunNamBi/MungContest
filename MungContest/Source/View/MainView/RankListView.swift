@@ -87,8 +87,15 @@ struct RankListView: View {
                 .frame(maxWidth: .infinity)
                 
                 LazyVGrid(columns: columns, spacing: 15) {
-                    ForEach(Array(sortedPlayers[currentStartIndex..<min(currentStartIndex + 6, sortedPlayers.count)]), id: \.id) { player in
+                    let playersToShow = Array(sortedPlayers[currentStartIndex..<min(currentStartIndex + 6, sortedPlayers.count)])
+                    
+                    ForEach(playersToShow, id: \.id) { player in
                         RankListCellView(rank: sortedPlayers.firstIndex(where: { $0.id == player.id })! + 1, player: player, previousRank: viewModel.previousRanks[player.id] ?? 0, currentRank: viewModel.currentRanks[player.id] ?? 0)
+                    }
+                    
+                    // Add empty cells if fewer than 6 items
+                    ForEach(0..<(6 - playersToShow.count), id: \.self) { _ in
+                        EmptyRankCellView()
                     }
                 }
                 .frame(maxHeight: .infinity)

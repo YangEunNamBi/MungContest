@@ -14,7 +14,6 @@ enum PathType: Hashable {
     case main
     case result
     case last
-    case finish
 }
 
 extension PathType {
@@ -39,9 +38,6 @@ extension PathType {
             
         case .last:
             LastView()
-            
-        case .finish:
-            FinishView()
         }
     }
 }

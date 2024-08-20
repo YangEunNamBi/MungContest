@@ -19,6 +19,7 @@ struct StandbyView: View {
     @State private var scrollViewProxy: ScrollViewProxy?
     
     @State private var isFullScreenPresented = false
+    @State private var showAllNamesforDelete = false
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -48,14 +49,18 @@ struct StandbyView: View {
                         .frame(width: 1)
                         .foregroundColor(.mcGray700)
                     
-                    HStack(spacing: 12){
-                        Text("\(Image(systemName: "person.crop.circle"))")
-                            .foregroundStyle(.accent)
-                        Text("\(players.count)명")
-                    }
-                    .padding(.horizontal, 30)
-                    .padding(.vertical, 20)
-                    
+                    Button(action:{
+                        showAllNamesforDelete = true
+                    }, label:{
+                        HStack(spacing: 12){
+                            Text("\(Image(systemName: "person.crop.circle"))")
+                                .foregroundStyle(.accent)
+                            Text("\(players.count)명")
+                        }
+                        .padding(.horizontal, 30)
+                        .padding(.vertical, 20)
+                    })
+
                     Rectangle()
                         .frame(width: 1)
                         .foregroundColor(.mcGray700)
@@ -268,6 +273,9 @@ struct StandbyView: View {
             .clipShape(Capsule())
             .padding(.top, 50)
         }
+        .sheet(isPresented: $showAllNamesforDelete, content: {
+            StandbyViewOverlay()
+        })
     }
 }
 

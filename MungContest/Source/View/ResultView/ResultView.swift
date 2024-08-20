@@ -33,6 +33,7 @@ struct ResultView: View {
                 Text("mung contest")
                     .font(Font.custom("Poppins-Bold", size: 28))
                     .foregroundColor(Color.accentColor)
+                    .padding(.leading)
                 Spacer()
             }
             Spacer()
@@ -144,7 +145,7 @@ struct ResultView: View {
                                         .frame(width: 80, alignment: .center)
                                     Text("\(showingPlayer.heartrates.reduce(0,+) / showingPlayer.heartrates.count)")
                                         .frame(width: 100, alignment: .center)
-                                    Text("\(showingPlayer.resultHeartrate)")
+                                    Text("\(showingPlayer.resultHeartrate / showingPlayer.heartrates.count)")
                                         .frame(width: 100, alignment: .center)
                                 }
                                 .font(.custom("SpoqaHanSansNeo-Bold", size: 20))

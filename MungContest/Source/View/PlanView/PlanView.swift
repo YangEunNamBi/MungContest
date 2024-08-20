@@ -27,6 +27,8 @@ struct PlanView: View {
     @State private var players: [Player] = []
     @Query private var defaultPlayers: [Player]
     
+    @State private var showAlert = false
+    
     var body: some View {
         VStack {
             TextField("대회 제목을 입력해주세요", text: $title)
@@ -300,8 +302,7 @@ struct PlanView: View {
                 Spacer()
                 
                 Button {
-                    resetPlayers()
-                    resetImages()
+                    showAlert = true
                 } label: {
                     HStack {
                         Text("초기화")
@@ -318,6 +319,17 @@ struct PlanView: View {
                     .padding(.horizontal, 30)
                     .background(.mcGray300)
                     .cornerRadius(25)
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("초기화 확인"),
+                        message: Text("ㄹㅇ 초기화 할거임? \n다 날라감 ㅅㄱ"),
+                        primaryButton: .destructive(Text("초기화")) {
+                            resetPlayers()
+                            resetImages()
+                        },
+                        secondaryButton: .cancel(Text("취소"))
+                    )
                 }
                 
                 Button {
@@ -348,6 +360,7 @@ struct PlanView: View {
             }
             .padding(.horizontal, 38)
         }
+        .navigationBarBackButtonHidden(true)
     }
     
     //MARK: - 대회 시간 저장
