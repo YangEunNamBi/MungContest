@@ -25,7 +25,7 @@ struct ResultView: View {
     @State var orderForAward: Int = 0
     @State var showingPlayer: Player = Player(name: "", profileImage: Data(), comment: "", defaultHeartrate: 0, heartrates: [0], differenceHeartrates: [0], resultHeartrate: 0)
     
-    private let nameAward = ["멍대장", "멍부대장", "요동요동상", "멍장"]
+    private let nameAward = ["멍장", "멍부대장", "요동요동상", "멍대장"]
     
     var body: some View {
         VStack{
