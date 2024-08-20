@@ -67,9 +67,9 @@ struct RankView: View {
                         
                         Image(uiImage: UIImage(data: sortedPlayers[0].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
                             .clipShape(Circle())
-                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[0].name ?? "")
                             .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
@@ -117,9 +117,9 @@ struct RankView: View {
                         
                         Image(uiImage: UIImage(data: sortedPlayers[1].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
                             .clipShape(Circle())
-                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[1].name ?? "")
                             .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
@@ -167,9 +167,9 @@ struct RankView: View {
                         
                         Image(uiImage: UIImage(data: sortedPlayers[2].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fill)
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
                             .clipShape(Circle())
-                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[2].name ?? "")
                             .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
@@ -207,9 +207,9 @@ struct RankView: View {
                         
                         Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count - 1].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
                             .clipShape(Circle())
-                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count-1].name ?? "")
                             .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
@@ -231,9 +231,9 @@ struct RankView: View {
                         
                         Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count - 2].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
                             .clipShape(Circle())
-                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count - 2].name ?? "")
                             .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
@@ -255,9 +255,9 @@ struct RankView: View {
                         
                         Image(uiImage: UIImage(data: sortedPlayers[sortedPlayers.count-3].profileImage) ?? UIImage(systemName: "photo")!)
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
                             .clipShape(Circle())
-                            .padding(.horizontal, 30)
                         
                         Text(sortedPlayers[sortedPlayers.count - 3].name ?? "")
                             .font(Font.custom("SpoqaHanSansNeo-Bold", size: 16))
