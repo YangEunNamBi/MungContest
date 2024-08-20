@@ -165,7 +165,8 @@ struct StandbyView: View {
                                         
                                         Image(uiImage: image)
                                             .resizable()
-                                            .scaledToFit()
+//                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fill)
                                             .frame(width: 292, height: 292)
                                             .clipShape(Circle())
                                             .overlay {
@@ -185,7 +186,8 @@ struct StandbyView: View {
                                         
                                         Image(uiImage: image)
                                             .resizable()
-                                            .scaledToFit()
+//                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fill)
                                             .frame(width: 232, height: 232)
                                             .opacity(0.6)
                                             .clipShape(Circle())
@@ -206,7 +208,7 @@ struct StandbyView: View {
                                         
                                         Image(uiImage: image)
                                             .resizable()
-                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fill)
                                             .frame(width: 192, height: 192)
                                             .opacity(0.3)
                                             .clipShape(Circle())
