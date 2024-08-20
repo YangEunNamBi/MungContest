@@ -19,6 +19,11 @@ struct AddPlayerView: View {
     @State private var player: Player?
     @Binding var isFullScreenPresented: Bool
     
+    @State private var measurementCount: Int = {
+        let count = UserDefaults.standard.integer(forKey: "measurementCount")
+        return count == 0 ? 1 : count
+    }()
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 12){
             //MARK: - 이름
@@ -138,6 +143,11 @@ struct AddPlayerView: View {
             differenceHeartrates: [],
             resultHeartrate: 0
         )
+        
+        for _ in 1...measurementCount {
+            newPlayer.heartrates.append(0)
+            newPlayer.differenceHeartrates.append(0)
+        }
         
         do {
             modelContext.insert(newPlayer)

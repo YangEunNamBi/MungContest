@@ -14,7 +14,7 @@ struct StandbyView: View {
     @Query var players: [Player]
     
     @State private var itemsArray: [[Player]] = []
-    private let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    private let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     private let animationDuration: CGFloat = 0.3
     @State private var scrollViewProxy: ScrollViewProxy?
     
@@ -152,6 +152,10 @@ struct StandbyView: View {
                                             .foregroundColor(.accent.opacity(0.3))
                                             .frame(width: 322, height: 322)
                                         
+                                        Circle()
+                                            .foregroundColor(.white)
+                                            .frame(width: 292, height: 292)
+                                        
                                         Image(uiImage: image)
                                             .resizable()
                                             .scaledToFit()
@@ -166,32 +170,46 @@ struct StandbyView: View {
                                     .padding()
                                 }
                                 else if i == currentIndex! - 1 || i == currentIndex! + 1 {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 232, height: 232)
-                                        .opacity(0.6)
-                                        .clipShape(Circle())
-                                        .overlay {
-                                            Circle()
-                                                .strokeBorder(Color.mcGray500, lineWidth: 6)
-                                        }
-                                        .frame(width: 232, height: 232)
-                                        .padding()
+                                    ZStack{
+                                        Circle()
+                                            .foregroundColor(.white)
+                                            .frame(width: 232, height: 232)
+                                            .opacity(0.6)
+                                        
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 232, height: 232)
+                                            .opacity(0.6)
+                                            .clipShape(Circle())
+                                            .overlay {
+                                                Circle()
+                                                    .strokeBorder(Color.mcGray500, lineWidth: 6)
+                                            }
+                                            .frame(width: 232, height: 232)
+                                            .padding()
+                                    }
                                 }
                                 else {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 192, height: 192)
-                                        .opacity(0.3)
-                                        .clipShape(Circle())
-                                        .overlay {
-                                            Circle()
-                                                .strokeBorder(Color.mcGray700, lineWidth: 6)
-                                        }
-                                        .frame(width: 192, height: 192)
-                                        .padding()
+                                    ZStack{
+                                        Circle()
+                                            .foregroundColor(.white)
+                                            .frame(width: 192, height: 192)
+                                            .opacity(0.3)
+                                        
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 192, height: 192)
+                                            .opacity(0.3)
+                                            .clipShape(Circle())
+                                            .overlay {
+                                                Circle()
+                                                    .strokeBorder(Color.mcGray700, lineWidth: 6)
+                                            }
+                                            .frame(width: 192, height: 192)
+                                            .padding()
+                                    }
                                 }
                             }
                         }
